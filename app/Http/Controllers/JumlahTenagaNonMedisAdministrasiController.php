@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class JumlahTenagaPerawatController extends Controller
+class JumlahTenagaNonMedisAdministrasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +20,10 @@ class JumlahTenagaPerawatController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPerawat = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/perawat');
-        $jsonPerawat = $dataPerawat->json();
-        $perawat = $jsonPerawat['data'];
-        return view('layers.jumlah-tenaga-perawat.index',["datas"=>$perawat['datas'], 'active'=>'perawat', 'savedData' => session('savedData')]);
+        $dataNonMedisAdministrasi = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/non_medis_administrasi');
+        $jsonNonMedisAdministrasi = $dataNonMedisAdministrasi->json();
+        $nonMedisAdministrasi = $jsonNonMedisAdministrasi['data'];
+        return view('layers.jumlah-non-medis-administrasi.index',["datas"=>$nonMedisAdministrasi['datas'], 'active'=>'non_medis_adm', 'savedData' => session('savedData')]);
     }
 
     /**
@@ -32,7 +31,7 @@ class JumlahTenagaPerawatController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-tenaga-perawat.form',['active'=>'perawat']);
+        return view('layers.jumlah-non-medis-administrasi.form',['active'=>'non_medis_adm']);
     }
 
     /**
@@ -46,23 +45,25 @@ class JumlahTenagaPerawatController extends Controller
             'pppk' => 'required|numeric',
             'anggota' => 'required|numeric',
             'non_pns_tetap' => 'required|numeric',
-            'kontrak' => 'required|numeric'
-        ]);
-       
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+            'kontrak' => 'required|numeric',
+            'keterangan' => 'required|string'
         ]);
 
+        
+        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
+            'satker' => '651650',
+            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        ]);
+        
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/perawat', $validatedData);
-
+        
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/non_medis_administrasi', $validatedData);
+        
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
 
-        if ($response->successful()) {
+        if ($response->successful()) { 
             if ($errorResponse) {
                 $errorLists = [];
 
@@ -75,7 +76,7 @@ class JumlahTenagaPerawatController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/perawat')->with('savedData', $savedData);  
+                return Redirect::to('/non-medis-administrasi')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];
@@ -95,7 +96,15 @@ class JumlahTenagaPerawatController extends Controller
      */
     public function show(string $id)
     {
-        
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
     }
 
     /**

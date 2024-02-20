@@ -11,7 +11,7 @@
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <strong>{{ session('message') }}!</strong>
+                <strong>{{ session('message') ? session('message') : 'Ada kolom yang belum diisi' }}!</strong>
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Perawat</h3>
+                <h3 class="box-title">Form Jumlah Tenaga Non-Medis Administrasi</h3>
             </div>
 
-            <form role="form" method="POST" action="/perawat/submit">
+            <form role="form" method="POST" action="/non-medis-administrasi/submit">
                 @csrf
 
                 <div class="box-body">
@@ -59,6 +59,20 @@
                         <label for="kontrak">Kontrak</label>
                         <input type="number" class="form-control" value="{{ old('kontrak') }}" id="kontrak"
                             name="kontrak" placeholder="Masukkan jumlah kontrak" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="keterangan">Keterangan</label>
+                        <select name="keterangan" id="keterangan" class="form-control" required>
+                            <option value="">--- Pilih ---</option>
+                            <option value="Umum" {{ old('keterangan') == 'Umum' ? 'selected' : '' }}>Umum</option>
+                            <option value="Keuangan" {{ old('keterangan') == 'Keuangan' ? 'selected' : '' }}>Keuangan
+                            </option>
+                            <option value="SDM" {{ old('keterangan') == 'SDM' ? 'selected' : '' }}>SDM</option>
+                            <option value="Humas" {{ old('keterangan') == 'Humas' ? 'selected' : '' }}>Humas</option>
+                            <option value="BMN" {{ old('keterangan') == 'BMN' ? 'selected' : '' }}>BMN</option>
+                        </select>
+                        {{-- <input type="text" class="form-control" value="{{ old('keterangan') }}" id="keterangan"
+                            name="keterangan" placeholder="Masukkan keterangan" required> --}}
                     </div>
                 </div>
 

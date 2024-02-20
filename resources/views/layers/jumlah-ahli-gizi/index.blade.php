@@ -17,11 +17,11 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Bidan</h3>
+                <h3 class="box-title">Jumlah Ahli Gizi</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/bidan/input" class="btn btn-success">Input</a>
+                            <a href="/ahli-gizi/input" class="btn btn-success">Input</a>
                         </div>
                     </div>
                 </div>

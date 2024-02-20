@@ -17,11 +17,11 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Bidan</h3>
+                <h3 class="box-title">Jumlah Tenaga Non-Medis Administrasi</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/bidan/input" class="btn btn-success">Input</a>
+                            <a href="/non-medis-administrasi/input" class="btn btn-success">Input</a>
                         </div>
                     </div>
                 </div>
@@ -37,6 +37,7 @@
                             <th>Anggota</th>
                             <th>Non PNS Tetap</th>
                             <th>Kontrak</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
 
@@ -49,6 +50,7 @@
                                 <td>{{ $data['anggota'] }}</td>
                                 <td>{{ $data['non_pns_tetap'] }}</td>
                                 <td>{{ $data['kontrak'] }}</td>
+                                <td>{{ $data['keterangan'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Perawat</h3>
+                <h3 class="box-title">Form Jumlah Tenaga Non-Medis</h3>
             </div>
 
-            <form role="form" method="POST" action="/perawat/submit">
+            <form role="form" method="POST" action="/non-medis/submit">
                 @csrf
 
                 <div class="box-body">

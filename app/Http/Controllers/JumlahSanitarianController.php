@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class JumlahTenagaPerawatController extends Controller
+class JumlahSanitarianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +20,10 @@ class JumlahTenagaPerawatController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPerawat = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/perawat');
-        $jsonPerawat = $dataPerawat->json();
-        $perawat = $jsonPerawat['data'];
-        return view('layers.jumlah-tenaga-perawat.index',["datas"=>$perawat['datas'], 'active'=>'perawat', 'savedData' => session('savedData')]);
+        $dataSanitarian = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/sanitarian');
+        $jsonSanitarian = $dataSanitarian->json();
+        $sanitarian = $jsonSanitarian['data'];
+        return view('layers.jumlah-sanitarian.index',["datas"=>$sanitarian['datas'], 'active'=>'sanitarian', 'savedData' => session('savedData')]);
     }
 
     /**
@@ -32,7 +31,7 @@ class JumlahTenagaPerawatController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-tenaga-perawat.form',['active'=>'perawat']);
+        return view('layers.jumlah-sanitarian.form',['active'=>'sanitarian']);
     }
 
     /**
@@ -57,7 +56,7 @@ class JumlahTenagaPerawatController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/perawat', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/sanitarian', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -75,7 +74,7 @@ class JumlahTenagaPerawatController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/perawat')->with('savedData', $savedData);  
+                return Redirect::to('/sanitarian')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];
@@ -95,7 +94,15 @@ class JumlahTenagaPerawatController extends Controller
      */
     public function show(string $id)
     {
-        
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
     }
 
     /**

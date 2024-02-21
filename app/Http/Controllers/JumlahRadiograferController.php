@@ -23,7 +23,7 @@ class JumlahRadiograferController extends Controller
         $dataRadiografer = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/radiographer');
         $jsonRadiografer = $dataRadiografer->json();
         $radiografer = $jsonRadiografer['data'];
-        return view('layers.jumlah-radiografer.index',["datas"=>$radiografer['datas'], 'active'=>'radiografer', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-radiografer.index',["datas"=>$radiografer['datas'], 'active'=>['sdm', 'radiografer'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahRadiograferController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-radiografer.form',['active'=>'radiografer']);
+        return view('layers.jumlah-radiografer.form',['active'=>['sdm', 'radiografer']]);
     }
 
     /**

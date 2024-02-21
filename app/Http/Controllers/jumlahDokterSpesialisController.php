@@ -23,7 +23,7 @@ class jumlahDokterSpesialisController extends Controller
         $dataDokterSpesialis = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/dokter_spesialis');
         $jsonDokterSpesialis = $dataDokterSpesialis->json();
         $dokterSpesialis = $jsonDokterSpesialis['data'];
-        return view('layers.jumlah-dokter-spesialis.index',["datas"=>$dokterSpesialis['datas'], 'active'=>'dokter_spesialis', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-dokter-spesialis.index',["datas"=>$dokterSpesialis['datas'], 'active'=>['sdm', 'dokter_spesialis'], 'savedData' => session('savedData')]);
     }
 
     /**

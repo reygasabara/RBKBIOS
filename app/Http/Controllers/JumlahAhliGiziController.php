@@ -23,7 +23,7 @@ class JumlahAhliGiziController extends Controller
         $dataAhliGizi = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/nutritionist');
         $jsonAhliGizi = $dataAhliGizi->json();
         $ahliGizi = $jsonAhliGizi['data'];
-        return view('layers.jumlah-ahli-gizi.index',["datas"=>$ahliGizi['datas'], 'active'=>'ahli_gizi', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-ahli-gizi.index',["datas"=>$ahliGizi['datas'], 'active'=>['sdm', 'ahli_gizi'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahAhliGiziController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-ahli-gizi.form',['active'=>'ahli_gizi']);
+        return view('layers.jumlah-ahli-gizi.form',['active'=>['sdm', 'ahli_gizi']]);
     }
 
     /**

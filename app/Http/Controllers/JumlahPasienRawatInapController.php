@@ -23,7 +23,7 @@ class JumlahPasienRawatInapController extends Controller
         $dataPasienRawatInap = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/pasien_ranap');
         $jsonPasienRawatInap = $dataPasienRawatInap->json();
         $pasienRawatInap = $jsonPasienRawatInap['data'];
-        return view('layers.jumlah-pasien-ranap.index',["datas"=>$pasienRawatInap['datas'], 'active'=>'pasien_ranap', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-pasien-ranap.index',["datas"=>$pasienRawatInap['datas'], 'active'=>['layanan', 'pasien_ranap'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahPasienRawatInapController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-pasien-ranap.form',['active'=>'pasien_ranap']);
+        return view('layers.jumlah-pasien-ranap.form',['active'=>['layanan', 'pasien_ranap']]);
     }
 
     /**

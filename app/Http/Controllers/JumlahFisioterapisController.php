@@ -23,7 +23,7 @@ class JumlahFisioterapisController extends Controller
         $dataFisioterapis = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/fisioterapis');
         $jsonFisioterapis = $dataFisioterapis->json();
         $fisioterapis = $jsonFisioterapis['data'];
-        return view('layers.jumlah-fisioterapis.index',["datas"=>$fisioterapis['datas'], 'active'=>'fisioterapis', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-fisioterapis.index',["datas"=>$fisioterapis['datas'], 'active'=>['sdm', 'fisioterapis'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahFisioterapisController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-fisioterapis.form',['active'=>'fisioterapis']);
+        return view('layers.jumlah-fisioterapis.form',['active'=>['sdm', 'fisioterapis']]);
     }
 
     /**

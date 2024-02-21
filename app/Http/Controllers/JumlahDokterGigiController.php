@@ -23,7 +23,7 @@ class JumlahDokterGigiController extends Controller
         $dataDokterGigi = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/dokter_gigi');
         $jsonDokterGigi = $dataDokterGigi->json();
         $dokterGigi = $jsonDokterGigi['data'];
-        return view('layers.jumlah-dokter-gigi.index',["datas"=>$dokterGigi['datas'], 'active'=>'dokter_gigi', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-dokter-gigi.index',["datas"=>$dokterGigi['datas'], 'active'=>['sdm', 'dokter_gigi'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahDokterGigiController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-dokter-gigi.form',['active'=>'dokter_gigi']);
+        return view('layers.jumlah-dokter-gigi.form',['active'=>['sdm', 'dokter_gigi']]);
     }
 
     /**

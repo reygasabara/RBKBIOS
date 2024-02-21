@@ -4,7 +4,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             {{-- <li class="header">KESEHATAN</li> --}}
-            <li class="active treeview">
+            <li class="treeview @if ($active[0] == 'sdm') active @endif">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>SDM</span>
                     <span class="pull-right-container">
@@ -12,38 +12,38 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li @if ($active == 'dokter_spesialis') class="active" @endif><a href="/dokter-spesialis"><i
+                    <li @if ($active[1] == 'dokter_spesialis') class="active" @endif><a href="/dokter-spesialis"><i
                                 class="fa fa-circle-o"></i> Jumlah Dokter Spesialis</a></li>
-                    <li @if ($active == 'dokter_gigi') class="active" @endif><a href="/dokter-gigi"><i
+                    <li @if ($active[1] == 'dokter_gigi') class="active" @endif><a href="/dokter-gigi"><i
                                 class="fa fa-circle-o"></i> Jumlah Dokter Gigi</a></li>
-                    <li @if ($active == 'dokter_umum') class="active" @endif><a href="/dokter-umum"><i
+                    <li @if ($active[1] == 'dokter_umum') class="active" @endif><a href="/dokter-umum"><i
                                 class="fa fa-circle-o"></i> Jumlah Dokter Umum</a></li>
-                    <li @if ($active == 'perawat') class="active" @endif><a href="/perawat"><i
+                    <li @if ($active[1] == 'perawat') class="active" @endif><a href="/perawat"><i
                                 class="fa fa-circle-o"></i> Jumlah Tenaga Perawat</a></li>
-                    <li @if ($active == 'bidan') class="active" @endif><a href="/bidan"><i
+                    <li @if ($active[1] == 'bidan') class="active" @endif><a href="/bidan"><i
                                 class="fa fa-circle-o"></i> Jumlah Tenaga Bidan</a></li>
-                    <li @if ($active == 'pranata_laboratorium') class="active" @endif><a href="/pranata-laboratorium"><i
+                    <li @if ($active[1] == 'pranata_laboratorium') class="active" @endif><a href="/pranata-laboratorium"><i
                                 class="fa fa-circle-o"></i> Jumlah Pranata Laboratorium</a></li>
-                    <li @if ($active == 'radiografer') class="active" @endif><a href="/radiografer"><i
+                    <li @if ($active[1] == 'radiografer') class="active" @endif><a href="/radiografer"><i
                                 class="fa fa-circle-o"></i> Jumlah Radiografer</a></li>
-                    <li @if ($active == 'ahli_gizi') class="active" @endif><a href="/ahli-gizi"><i
+                    <li @if ($active[1] == 'ahli_gizi') class="active" @endif><a href="/ahli-gizi"><i
                                 class="fa fa-circle-o"></i> Jumlah Ahli Gizi</a></li>
-                    <li @if ($active == 'fisioterapis') class="active" @endif><a href="/fisioterapis"><i
+                    <li @if ($active[1] == 'fisioterapis') class="active" @endif><a href="/fisioterapis"><i
                                 class="fa fa-circle-o"></i> Jumlah Fisioterapis</a></li>
-                    <li @if ($active == 'apoteker') class="active" @endif><a href="/apoteker"><i
+                    <li @if ($active[1] == 'apoteker') class="active" @endif><a href="/apoteker"><i
                                 class="fa fa-circle-o"></i> Jumlah Apoteker</a></li>
-                    <li @if ($active == 'profesional_lainnya') class="active" @endif><a href="/profesional-lainnya"><i
+                    <li @if ($active[1] == 'profesional_lainnya') class="active" @endif><a href="/profesional-lainnya"><i
                                 class="fa fa-circle-o"></i> Tenaga Profesional
                             Lainnya</a></li>
-                    <li @if ($active == 'non_medis') class="active" @endif><a href="/non-medis"><i
+                    <li @if ($active[1] == 'non_medis') class="active" @endif><a href="/non-medis"><i
                                 class="fa fa-circle-o"></i> Jumlah Non-Medis</a></li>
-                    <li @if ($active == 'non_medis_adm') class="active" @endif><a href="/non-medis-administrasi"><i
+                    <li @if ($active[1] == 'non_medis_adm') class="active" @endif><a href="/non-medis-administrasi"><i
                                 class="fa fa-circle-o"></i> Non-Medis Administrasi</a></li>
-                    <li @if ($active == 'sanitarian') class="active" @endif><a href="/sanitarian"><i
+                    <li @if ($active[1] == 'sanitarian') class="active" @endif><a href="/sanitarian"><i
                                 class="fa fa-circle-o"></i> Jumlah Sanitarian</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview @if ($active[0] == 'layanan') active @endif">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>LAYANAN</span>
                     <span class="pull-right-container">
@@ -51,9 +51,10 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li @if ($active == 'pasien_ranap') class="active" @endif><a href="/pasien-ranap"><i
+                    <li @if ($active[1] == 'pasien_ranap') class="active" @endif><a href="/pasien-ranap"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Inap</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Form 2</a></li>
+                    <li @if ($active[1] == 'pasien_igd') class="active" @endif><a href="/pasien-igd"><i
+                                class="fa fa-circle-o"></i> Jumlah Pasien Rawat Darurat</a></li>
                 </ul>
             </li>
             <li class="treeview">

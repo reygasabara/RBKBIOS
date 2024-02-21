@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class JumlahDokterUmumController extends Controller
+class JumlahPasienRawatDaruratController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class JumlahDokterUmumController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataDokterUmum = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/dokter_umum');
-        $jsonDokterUmum = $dataDokterUmum->json();
-        $dokterUmum = $jsonDokterUmum['data'];
-        return view('layers.jumlah-dokter-umum.index',["datas"=>$dokterUmum['datas'], 'active'=>['sdm', 'dokter_umum'], 'savedData' => session('savedData')]);
+        $dataPasienIGD = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/pasien_igd');
+        $jsonPasienIGD = $dataPasienIGD->json();
+        $pasienIGD = $jsonPasienIGD['data'];
+        return view('layers.jumlah-pasien-igd.index',["datas"=>$pasienIGD['datas'], 'active'=>['layanan', 'pasien_igd'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahDokterUmumController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-dokter-umum.form',['active'=>['sdm', 'dokter_umum']]);
+        return view('layers.jumlah-pasien-igd.form',['active'=>['layanan', 'pasien_igd']]);
     }
 
     /**
@@ -41,11 +41,7 @@ class JumlahDokterUmumController extends Controller
     {
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required|date_format:Y-m-d',
-            'pns' => 'required|numeric',
-            'pppk' => 'required|numeric',
-            'anggota' => 'required|numeric',
-            'non_pns_tetap' => 'required|numeric',
-            'kontrak' => 'required|numeric'
+            'jumlah' => 'required|numeric',
         ]);
        
        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
@@ -56,7 +52,7 @@ class JumlahDokterUmumController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/dokter_umum', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/pasien_igd', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -74,7 +70,7 @@ class JumlahDokterUmumController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/dokter-umum')->with('savedData', $savedData);  
+                return Redirect::to('/pasien-igd')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];

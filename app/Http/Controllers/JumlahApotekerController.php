@@ -23,7 +23,7 @@ class JumlahApotekerController extends Controller
         $dataApoteker = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/pharmacist');
         $jsonApoteker = $dataApoteker->json();
         $apoteker = $jsonApoteker['data'];
-        return view('layers.jumlah-apoteker.index',["datas"=>$apoteker['datas'], 'active'=>'apoteker', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-apoteker.index',["datas"=>$apoteker['datas'], 'active'=>['sdm', 'apoteker'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahApotekerController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-apoteker.form',['active'=>'apoteker']);
+        return view('layers.jumlah-apoteker.form',['active'=>['sdm', 'apoteker']]);
     }
 
     /**

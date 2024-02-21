@@ -23,7 +23,7 @@ class JumlahSanitarianController extends Controller
         $dataSanitarian = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/sanitarian');
         $jsonSanitarian = $dataSanitarian->json();
         $sanitarian = $jsonSanitarian['data'];
-        return view('layers.jumlah-sanitarian.index',["datas"=>$sanitarian['datas'], 'active'=>'sanitarian', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-sanitarian.index',["datas"=>$sanitarian['datas'], 'active'=>['sdm', 'sanitarian'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahSanitarianController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-sanitarian.form',['active'=>'sanitarian']);
+        return view('layers.jumlah-sanitarian.form',['active'=>['sdm', 'sanitarian']]);
     }
 
     /**

@@ -24,7 +24,7 @@ class JumlahTenagaPerawatController extends Controller
         $dataPerawat = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/perawat');
         $jsonPerawat = $dataPerawat->json();
         $perawat = $jsonPerawat['data'];
-        return view('layers.jumlah-tenaga-perawat.index',["datas"=>$perawat['datas'], 'active'=>'perawat', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-tenaga-perawat.index',["datas"=>$perawat['datas'], 'active'=>['sdm', 'perawat'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -32,7 +32,7 @@ class JumlahTenagaPerawatController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-tenaga-perawat.form',['active'=>'perawat']);
+        return view('layers.jumlah-tenaga-perawat.form',['active'=>['sdm', 'perawat']]);
     }
 
     /**

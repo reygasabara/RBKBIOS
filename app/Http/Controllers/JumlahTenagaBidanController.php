@@ -23,7 +23,7 @@ class JumlahTenagaBidanController extends Controller
         $dataBidan = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/bidan');
         $jsonBidan = $dataBidan->json();
         $bidan = $jsonBidan['data'];
-        return view('layers.jumlah-tenaga-bidan.index',["datas"=>$bidan['datas'], 'active'=>'bidan', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-tenaga-bidan.index',["datas"=>$bidan['datas'], 'active'=>['sdm', 'bidan'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahTenagaBidanController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-tenaga-bidan.form',['active'=>'bidan']);
+        return view('layers.jumlah-tenaga-bidan.form',['active'=>['sdm', 'bidan']]);
     }
 
     /**

@@ -23,7 +23,7 @@ class JumlahTenagaNonMedisAdministrasiController extends Controller
         $dataNonMedisAdministrasi = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/non_medis_administrasi');
         $jsonNonMedisAdministrasi = $dataNonMedisAdministrasi->json();
         $nonMedisAdministrasi = $jsonNonMedisAdministrasi['data'];
-        return view('layers.jumlah-non-medis-administrasi.index',["datas"=>$nonMedisAdministrasi['datas'], 'active'=>'non_medis_adm', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-non-medis-administrasi.index',["datas"=>$nonMedisAdministrasi['datas'], 'active'=>['sdm', 'non_medis_adm'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahTenagaNonMedisAdministrasiController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-non-medis-administrasi.form',['active'=>'non_medis_adm']);
+        return view('layers.jumlah-non-medis-administrasi.form',['active'=>['sdm', 'non_medis_adm']]);
     }
 
     /**

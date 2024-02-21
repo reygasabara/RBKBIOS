@@ -23,7 +23,7 @@ class JumlahTenagaProfesionalLainnyaController extends Controller
         $dataProfesionalLainnya = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/profesional_lain');
         $jsonProfesionalLainnya = $dataProfesionalLainnya->json();
         $profesionalLainnya = $jsonProfesionalLainnya['data'];
-        return view('layers.jumlah-profesional-lainnya.index',["datas"=>$profesionalLainnya['datas'], 'active'=>'profesional_lainnya', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-profesional-lainnya.index',["datas"=>$profesionalLainnya['datas'], 'active'=>['sdm', 'profesional_lainnya'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahTenagaProfesionalLainnyaController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-profesional-lainnya.form',['active'=>'profesional_lainnya']);
+        return view('layers.jumlah-profesional-lainnya.form',['active'=>['sdm', 'profesional_lainnya']]);
     }
 
     /**

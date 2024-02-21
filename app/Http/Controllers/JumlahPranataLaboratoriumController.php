@@ -23,7 +23,7 @@ class JumlahPranataLaboratoriumController extends Controller
         $dataPranataLaboratorium = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/pranata_laboratorium');
         $jsonPranataLaboratorium = $dataPranataLaboratorium->json();
         $pranataLaboratorium = $jsonPranataLaboratorium['data'];
-        return view('layers.jumlah-pranata-laboratorium.index',["datas"=>$pranataLaboratorium['datas'], 'active'=>'pranata_laboratorium', 'savedData' => session('savedData')]);
+        return view('layers.jumlah-pranata-laboratorium.index',["datas"=>$pranataLaboratorium['datas'], 'active'=>['sdm', 'pranata_laboratorium'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class JumlahPranataLaboratoriumController extends Controller
      */
     public function create()
     {
-        return view('layers.jumlah-pranata-laboratorium.form',['active'=>'pranata_laboratorium']);
+        return view('layers.jumlah-pranata-laboratorium.form',['active'=>['sdm', 'pranata_laboratorium']]);
     }
 
     /**

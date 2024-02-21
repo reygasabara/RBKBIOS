@@ -53,19 +53,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <table id="tabelPerawat" class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Tanggak Transaksi</th>
-                        <th>PNS</th>
-                        <th>PPPK</th>
-                        <th>Anggota</th>
-                        <th>Non PNS Tetap</th>
-                        <th>Kontrak</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table> --}}
             </div>
         </div>
 

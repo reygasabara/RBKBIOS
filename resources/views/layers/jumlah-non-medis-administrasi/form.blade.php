@@ -6,7 +6,6 @@
 
 @section('content')
     <section class="content">
-
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
@@ -71,8 +70,6 @@
                             <option value="Humas" {{ old('keterangan') == 'Humas' ? 'selected' : '' }}>Humas</option>
                             <option value="BMN" {{ old('keterangan') == 'BMN' ? 'selected' : '' }}>BMN</option>
                         </select>
-                        {{-- <input type="text" class="form-control" value="{{ old('keterangan') }}" id="keterangan"
-                            name="keterangan" placeholder="Masukkan keterangan" required> --}}
                     </div>
                 </div>
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\JumlahFisioterapisController;
 use App\Http\Controllers\JumlahTenagaPerawatController;
 use App\Http\Controllers\JumlahTenagaNonMedisController;
 use App\Http\Controllers\JumlahDokterSpesialisController;
+use App\Http\Controllers\JumlahPasienRawatInapController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
 use App\Http\Controllers\JumlahTenagaNonMedisAdministrasiController;
@@ -73,3 +74,6 @@ Route::post('/non-medis-administrasi/submit', [JumlahTenagaNonMedisAdministrasiC
 Route::get('/sanitarian', [JumlahSanitarianController::class, 'index']);
 Route::get('/sanitarian/input', [JumlahSanitarianController::class, 'create']);
 Route::post('/sanitarian/submit', [JumlahSanitarianController::class, 'store']);
+Route::get('/pasien-ranap', [JumlahPasienRawatInapController::class, 'index']);
+Route::get('/pasien-ranap/input', [JumlahPasienRawatInapController::class, 'create']);
+Route::post('/pasien-ranap/submit', [JumlahPasienRawatInapController::class, 'store']);

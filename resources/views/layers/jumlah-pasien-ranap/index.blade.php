@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    SDM
+    LAYANAN
 @endsection
 
 @section('content')
@@ -17,38 +17,30 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Bidan</h3>
+                <h3 class="box-title">Jumlah Pasien Rawat Inap</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/bidan/input" class="btn btn-success">Input</a>
+                            <a href="/pasien-ranap/input" class="btn btn-success">Input</a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="box-body">
                 <table class="table-dark table" id="table">
                     <thead>
                         <tr>
                             <th>Tanggak Transaksi</th>
-                            <th>PNS</th>
-                            <th>PPPK</th>
-                            <th>Anggota</th>
-                            <th>Non PNS Tetap</th>
-                            <th>Kontrak</th>
+                            <th>Kelas</th>
+                            <th>Jumlah</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
                                 <td>{{ $data['tgl_transaksi'] }}</td>
-                                <td>{{ $data['pns'] }}</td>
-                                <td>{{ $data['pppk'] }}</td>
-                                <td>{{ $data['anggota'] }}</td>
-                                <td>{{ $data['non_pns_tetap'] }}</td>
-                                <td>{{ $data['kontrak'] }}</td>
+                                <td>{{ $data['kode_kelas'] }}</td>
+                                <td>{{ $data['jumlah'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

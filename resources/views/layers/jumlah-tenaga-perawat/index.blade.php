@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <table class="table-dark table" id="table1">
+                <table class="table-dark table" id="table">
                     <thead>
                         <tr>
                             <th>Tanggak Transaksi</th>
@@ -51,19 +51,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <table id="tabelPerawat" class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Tanggak Transaksi</th>
-                        <th>PNS</th>
-                        <th>PPPK</th>
-                        <th>Anggota</th>
-                        <th>Non PNS Tetap</th>
-                        <th>Kontrak</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table> --}}
             </div>
         </div>
 
@@ -96,50 +83,8 @@
             let key = "O78gois12Lg94vqxxazS9N0uxtmwFQ8R";
 
             $(function() {
-
-                $('#table1').DataTable()
-
-                let jtoken;
-                let jperawat;
-                let token;
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://training-bios2.kemenkeu.go.id/api/token',
-                    data: {
-                        satker: satker,
-                        key: key
-                    },
-                    success: function(datatoken) {
-                        jtoken = JSON.parse(datatoken);
-                        token = jtoken['token'];
-
-                        $.ajax({
-                            type: 'POST',
-                            url: 'https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/perawat',
-                            headers: {
-                                token: token
-                            },
-                            success: function(dataperawat) {
-                                jperawat = JSON.parse(dataperawat);
-                                console.log(jperawat['data']['datas']['0']);
-
-                            }
-                        });
-                    }
-                });
+                $('#table').DataTable();
             });
-
-
-            // $(function token(token) {
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: 'https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/perawat',
-            //         headers: {"token": token},
-            //         success: function(data) {
-            //         }
-            //     });
-            // })
         </script>
     @endpush
 @endsection

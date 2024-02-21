@@ -45,13 +45,14 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>KEUANGAN</span>
+                    <i class="fa fa-dashboard"></i> <span>LAYANAN</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="index.html"><i class="fa fa-circle-o"></i> Form 1</a></li>
+                    <li @if ($active == 'pasien_ranap') class="active" @endif><a href="/pasien-ranap"><i
+                                class="fa fa-circle-o"></i> Jumlah Pasien Rawat Inap</a></li>
                     <li><a href="index2.html"><i class="fa fa-circle-o"></i> Form 2</a></li>
                 </ul>
             </li>

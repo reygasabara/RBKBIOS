@@ -28,7 +28,7 @@
             </div>
 
             <div class="box-body">
-                <table class="table-dark table" id="table2">
+                <table class="table-dark table" id="table">
                     <thead>
                         <tr>
                             <th>Tanggak Transaksi</th>
@@ -55,19 +55,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <table id="tabelPerawat" class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Tanggak Transaksi</th>
-                        <th>PNS</th>
-                        <th>PPPK</th>
-                        <th>Anggota</th>
-                        <th>Non PNS Tetap</th>
-                        <th>Kontrak</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table> --}}
             </div>
         </div>
 
@@ -94,7 +81,7 @@
     @push('scripts')
         <script>
             $(function() {
-                $('#table2').DataTable()
+                $('#table').DataTable()
             });
         </script>
     @endpush

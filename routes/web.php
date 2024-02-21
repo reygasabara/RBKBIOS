@@ -16,6 +16,7 @@ use App\Http\Controllers\JumlahPasienRawatInapController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
+use App\Http\Controllers\JumlahLayananLaboratoriumSampelController;
 use App\Http\Controllers\JumlahTenagaNonMedisAdministrasiController;
 
 /*
@@ -75,9 +76,13 @@ Route::post('/non-medis-administrasi/submit', [JumlahTenagaNonMedisAdministrasiC
 Route::get('/sanitarian', [JumlahSanitarianController::class, 'index']);
 Route::get('/sanitarian/input', [JumlahSanitarianController::class, 'create']);
 Route::post('/sanitarian/submit', [JumlahSanitarianController::class, 'store']);
+
 Route::get('/pasien-ranap', [JumlahPasienRawatInapController::class, 'index']);
 Route::get('/pasien-ranap/input', [JumlahPasienRawatInapController::class, 'create']);
 Route::post('/pasien-ranap/submit', [JumlahPasienRawatInapController::class, 'store']);
 Route::get('/pasien-igd', [JumlahPasienRawatDaruratController::class, 'index']);
 Route::get('/pasien-igd/input', [JumlahPasienRawatDaruratController::class, 'create']);
 Route::post('/pasien-igd/submit', [JumlahPasienRawatDaruratController::class, 'store']);
+Route::get('/lab-sampel', [JumlahLayananLaboratoriumSampelController::class, 'index']);
+Route::get('/lab-sampel/input', [JumlahLayananLaboratoriumSampelController::class, 'create']);
+Route::post('/lab-sampel/submit', [JumlahLayananLaboratoriumSampelController::class, 'store']);

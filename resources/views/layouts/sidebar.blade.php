@@ -55,6 +55,8 @@
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Inap</a></li>
                     <li @if ($active[1] == 'pasien_igd') class="active" @endif><a href="/pasien-igd"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Darurat</a></li>
+                    <li @if ($active[1] == 'lab_sampel') class="active" @endif><a href="/lab-sampel"><i
+                                class="fa fa-circle-o"></i> Jumlah Layanan Lab (Sampel)</a></li>
                 </ul>
             </li>
             <li class="treeview">

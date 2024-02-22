@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class BORController extends Controller
+class TOIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class BORController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataBOR = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/bor');
-        $jsonBOR = $dataBOR->json();
-        $bor = $jsonBOR['data'];
-        return view('layers.bor.index',["datas"=>$bor['datas'], 'active'=>['layanan', 'bor'], 'savedData' => session('savedData')]);
+        $dataTOI = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/toi');
+        $jsonTOI = $dataTOI->json();
+        $toi = $jsonTOI['data'];
+        return view('layers.toi.index',["datas"=>$toi['datas'], 'active'=>['layanan', 'toi'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class BORController extends Controller
      */
     public function create()
     {
-        return view('layers.bor.form',['active'=>['layanan', 'bor']]);
+        return view('layers.toi.form',['active'=>['layanan', 'toi']]);
     }
 
     /**
@@ -41,7 +41,7 @@ class BORController extends Controller
     {
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required|date_format:Y-m-d',
-            'bor' => 'required|numeric',
+            'toi' => 'required|numeric',
         ]);
        
        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
@@ -52,7 +52,7 @@ class BORController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/bor', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/toi', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -70,7 +70,7 @@ class BORController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/bor')->with('savedData', $savedData);  
+                return Redirect::to('/toi')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];

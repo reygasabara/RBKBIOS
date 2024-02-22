@@ -17,11 +17,11 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">BOR (Bed Occupancy Ratio)</h3>
+                <h3 class="box-title">TOI (Turn Over Interval)</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/bor/input" class="btn btn-success">Input</a>
+                            <a href="/toi/input" class="btn btn-success">Input</a>
                         </div>
                     </div>
                 </div>
@@ -38,14 +38,14 @@
                     <thead>
                         <tr>
                             <th>Tanggak Transaksi</th>
-                            <th>BOR</th>
+                            <th>TOI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($datas as $data)
                             <tr>
                                 <td>{{ $data['tgl_transaksi'] }}</td>
-                                <td>{{ $data['bor'] }}</td>
+                                <td>{{ $data['toi'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

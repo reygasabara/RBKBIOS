@@ -75,6 +75,10 @@
                                 class="fa fa-circle-o"></i> Jumlah Layanan Farmasi</a></li>
                     <li @if ($active[1] == 'bor') class="active" @endif><a href="/bor"><i
                                 class="fa fa-circle-o"></i> BOR (Bed Occupancy Ratio)</a></li>
+                    <li @if ($active[1] == 'toi') class="active" @endif><a href="/toi"><i
+                                class="fa fa-circle-o"></i> TOI (Turn Over Interval)</a></li>
+                    <li @if ($active[1] == 'alos') class="active" @endif><a href="/alos"><i
+                                class="fa fa-circle-o"></i> ALOS (Average Length of Stay)</a></li>
                 </ul>
             </li>
             <li class="treeview">

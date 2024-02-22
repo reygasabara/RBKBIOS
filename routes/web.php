@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BORController;
+use App\Http\Controllers\TOIController;
 use App\Http\Controllers\JumlahAhliGiziController;
 use App\Http\Controllers\JumlahApotekerController;
 use App\Http\Controllers\JumlahDokterGigiController;
@@ -122,3 +123,6 @@ Route::post('/layanan-farmasi/submit', [JumlahLayananFarmasiController::class, '
 Route::get('/bor', [BORController::class, 'index']);
 Route::get('/bor/input', [BORController::class, 'create']);
 Route::post('/bor/submit', [BORController::class, 'store']);
+Route::get('/toi', [TOIController::class, 'index']);
+Route::get('/toi/input', [TOIController::class, 'create']);
+Route::post('/toi/submit', [TOIController::class, 'store']);

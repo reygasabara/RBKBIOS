@@ -73,6 +73,8 @@
                                 class="fa fa-circle-o"></i> Jumlah Pasien BPJS/Non-BPJS</a></li>
                     <li @if ($active[1] == 'farmasi') class="active" @endif><a href="/layanan-farmasi"><i
                                 class="fa fa-circle-o"></i> Jumlah Layanan Farmasi</a></li>
+                    <li @if ($active[1] == 'bor') class="active" @endif><a href="/bor"><i
+                                class="fa fa-circle-o"></i> BOR (Bed Occupancy Ratio)</a></li>
                 </ul>
             </li>
             <li class="treeview">

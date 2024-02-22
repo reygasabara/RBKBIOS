@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BORController;
 use App\Http\Controllers\JumlahAhliGiziController;
 use App\Http\Controllers\JumlahApotekerController;
 use App\Http\Controllers\JumlahDokterGigiController;
@@ -118,3 +119,6 @@ Route::post('/pasien-bpjs-nonbpjs/submit', [JumlahPasienBPJSdanNonBPJSController
 Route::get('/layanan-farmasi', [JumlahLayananFarmasiController::class, 'index']);
 Route::get('/layanan-farmasi/input', [JumlahLayananFarmasiController::class, 'create']);
 Route::post('/layanan-farmasi/submit', [JumlahLayananFarmasiController::class, 'store']);
+Route::get('/bor', [BORController::class, 'index']);
+Route::get('/bor/input', [BORController::class, 'create']);
+Route::post('/bor/submit', [BORController::class, 'store']);

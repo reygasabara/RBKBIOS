@@ -19,6 +19,7 @@ use App\Http\Controllers\JumlahLayananRadiologiController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
 use App\Http\Controllers\JumlahKunjunganRawatJalanController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
+use App\Http\Controllers\JumlahPasienBPJSdanNonBPJSController;
 use App\Http\Controllers\JumlahPasienRawatJalanPoliController;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
 use App\Http\Controllers\JumlahLayananLaboratoriumSampelController;
@@ -110,3 +111,6 @@ Route::post('/kunjungan-ralan/submit', [JumlahKunjunganRawatJalanController::cla
 Route::get('/pasien-ralan-poli', [JumlahPasienRawatJalanPoliController::class, 'index']);
 Route::get('/pasien-ralan-poli/input', [JumlahPasienRawatJalanPoliController::class, 'create']);
 Route::post('/pasien-ralan-poli/submit', [JumlahPasienRawatJalanPoliController::class, 'store']);
+Route::get('/pasien-bpjs-nonbpjs', [JumlahPasienBPJSdanNonBPJSController::class, 'index']);
+Route::get('/pasien-bpjs-nonbpjs/input', [JumlahPasienBPJSdanNonBPJSController::class, 'create']);
+Route::post('/pasien-bpjs-nonbpjs/submit', [JumlahPasienBPJSdanNonBPJSController::class, 'store']);

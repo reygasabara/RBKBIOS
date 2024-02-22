@@ -69,11 +69,13 @@
                                 class="fa fa-circle-o"></i> Jumlah Kunjungan Rawat Jalan</a></li>
                     <li @if ($active[1] == 'pasien_ralan_poli') class="active" @endif><a href="/pasien-ralan-poli"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Jalan/Poli</a></li>
+                    <li @if ($active[1] == 'bpjs_nonbpjs') class="active" @endif><a href="/pasien-bpjs-nonbpjs"><i
+                                class="fa fa-circle-o"></i> Jumlah Pasien BPJS/Non-BPJS</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>...</span>
+                    <i class="fa fa-dashboard"></i> <span>Indikator Kinerja Terpilih</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

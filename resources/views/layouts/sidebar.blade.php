@@ -71,6 +71,8 @@
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Jalan/Poli</a></li>
                     <li @if ($active[1] == 'bpjs_nonbpjs') class="active" @endif><a href="/pasien-bpjs-nonbpjs"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien BPJS/Non-BPJS</a></li>
+                    <li @if ($active[1] == 'farmasi') class="active" @endif><a href="/layanan-farmasi"><i
+                                class="fa fa-circle-o"></i> Jumlah Layanan Farmasi</a></li>
                 </ul>
             </li>
             <li class="treeview">

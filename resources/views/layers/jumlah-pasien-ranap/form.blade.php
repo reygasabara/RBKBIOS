@@ -11,7 +11,7 @@
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <strong>{{ session('message') }}!</strong>
+                <strong>{{ session('message') ? session('message') : 'Ada kolom yang belum diisi' }}!</strong>
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -22,7 +22,7 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Pasien Rawat Inap</h3>
+                <h3 class="box-title">Form Jumlah Pasien Rawat Inap</h3>
             </div>
 
             <form role="form" method="POST" action="/pasien-ranap/submit">
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
-                            placeholder="Masukkan jumlah PNS" required>
+                            placeholder="Masukkan jumlah pasien" required>
                     </div>
                 </div>
 

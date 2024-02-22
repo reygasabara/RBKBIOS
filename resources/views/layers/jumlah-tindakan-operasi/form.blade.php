@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Pasien Rawat Darurat</h3>
+                <h3 class="box-title">Form Jumlah Tindakan Operasi</h3>
             </div>
 
-            <form role="form" method="POST" action="/pasien-igd/submit">
+            <form role="form" method="POST" action="/tindakan-operasi/submit">
                 @csrf
 
                 <div class="box-body">
@@ -36,9 +36,24 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="klasifikasiOperasi">Klasifikasi Operasi</label>
+                        <select name="klasifikasi_operasi" id="klasifikasiOperasi" class="form-control" required>
+                            <option value="">--- Pilih ---</option>
+                            <option value="Ringan" {{ old('klasifikasi_operasi') == 'Ringan' ? 'selected' : '' }}>Ringan
+                            </option>
+                            <option value="Sedang" {{ old('klasifikasi_operasi') == 'Sedang' ? 'selected' : '' }}>Sedang
+                            </option>
+                            <option value="Berat" {{ old('klasifikasi_operasi') == 'Berat' ? 'selected' : '' }}>Berat
+                            </option>
+                            <option value="Canggih" {{ old('klasifikasi_operasi') == 'Canggih' ? 'selected' : '' }}>Canggih
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
-                            placeholder="Masukkan jumlah pasien" required>
+                            placeholder="Masukkan jumlah tindakan" required>
                     </div>
                 </div>
 

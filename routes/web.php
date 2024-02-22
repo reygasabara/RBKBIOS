@@ -12,12 +12,18 @@ use App\Http\Controllers\JumlahFisioterapisController;
 use App\Http\Controllers\JumlahTenagaPerawatController;
 use App\Http\Controllers\JumlahTenagaNonMedisController;
 use App\Http\Controllers\JumlahDokterSpesialisController;
+use App\Http\Controllers\JumlahLayananForensikController;
 use App\Http\Controllers\JumlahPasienRawatInapController;
+use App\Http\Controllers\JumlahTindakanOperasiController;
+use App\Http\Controllers\JumlahLayananRadiologiController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
+use App\Http\Controllers\JumlahKunjunganRawatJalanController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
+use App\Http\Controllers\JumlahPasienRawatJalanPoliController;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
 use App\Http\Controllers\JumlahLayananLaboratoriumSampelController;
 use App\Http\Controllers\JumlahTenagaNonMedisAdministrasiController;
+use App\Http\Controllers\JumlahLayananLaboratoriumParameterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,3 +92,21 @@ Route::post('/pasien-igd/submit', [JumlahPasienRawatDaruratController::class, 's
 Route::get('/lab-sampel', [JumlahLayananLaboratoriumSampelController::class, 'index']);
 Route::get('/lab-sampel/input', [JumlahLayananLaboratoriumSampelController::class, 'create']);
 Route::post('/lab-sampel/submit', [JumlahLayananLaboratoriumSampelController::class, 'store']);
+Route::get('/lab-parameter', [JumlahLayananLaboratoriumParameterController::class, 'index']);
+Route::get('/lab-parameter/input', [JumlahLayananLaboratoriumParameterController::class, 'create']);
+Route::post('/lab-parameter/submit', [JumlahLayananLaboratoriumParameterController::class, 'store']);
+Route::get('/tindakan-operasi', [JumlahTindakanOperasiController::class, 'index']);
+Route::get('/tindakan-operasi/input', [JumlahTindakanOperasiController::class, 'create']);
+Route::post('/tindakan-operasi/submit', [JumlahTindakanOperasiController::class, 'store']);
+Route::get('/layanan-radiologi', [JumlahLayananRadiologiController::class, 'index']);
+Route::get('/layanan-radiologi/input', [JumlahLayananRadiologiController::class, 'create']);
+Route::post('/layanan-radiologi/submit', [JumlahLayananRadiologiController::class, 'store']);
+Route::get('/layanan-forensik', [JumlahLayananForensikController::class, 'index']);
+Route::get('/layanan-forensik/input', [JumlahLayananForensikController::class, 'create']);
+Route::post('/layanan-forensik/submit', [JumlahLayananForensikController::class, 'store']);
+Route::get('/kunjungan-ralan', [JumlahKunjunganRawatJalanController::class, 'index']);
+Route::get('/kunjungan-ralan/input', [JumlahKunjunganRawatJalanController::class, 'create']);
+Route::post('/kunjungan-ralan/submit', [JumlahKunjunganRawatJalanController::class, 'store']);
+Route::get('/pasien-ralan-poli', [JumlahPasienRawatJalanPoliController::class, 'index']);
+Route::get('/pasien-ralan-poli/input', [JumlahPasienRawatJalanPoliController::class, 'create']);
+Route::post('/pasien-ralan-poli/submit', [JumlahPasienRawatJalanPoliController::class, 'store']);

@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Pasien Rawat Darurat</h3>
+                <h3 class="box-title">Form Jumlah Layanan Laboratorium (Parameter)</h3>
             </div>
 
-            <form role="form" method="POST" action="/pasien-igd/submit">
+            <form role="form" method="POST" action="/lab-parameter/submit">
                 @csrf
 
                 <div class="box-body">
@@ -36,9 +36,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="namaLayanan">Nama Layanan</label>
+                        <input type="text" class="form-control" value="{{ old('nama_layanan') }}" id="namaLayanan"
+                            name="nama_layanan" placeholder="Masukkan Nama Layanan" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
-                            placeholder="Masukkan jumlah pasien" required>
+                            placeholder="Masukkan jumlah layanan" required>
                     </div>
                 </div>
 

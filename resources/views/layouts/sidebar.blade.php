@@ -57,11 +57,23 @@
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Darurat</a></li>
                     <li @if ($active[1] == 'lab_sampel') class="active" @endif><a href="/lab-sampel"><i
                                 class="fa fa-circle-o"></i> Jumlah Layanan Lab (Sampel)</a></li>
+                    <li @if ($active[1] == 'lab_parameter') class="active" @endif><a href="/lab-parameter"><i
+                                class="fa fa-circle-o"></i> Jumlah Layanan Lab (Parameter)</a></li>
+                    <li @if ($active[1] == 'operasi') class="active" @endif><a href="/tindakan-operasi"><i
+                                class="fa fa-circle-o"></i> Jumlah Tindakan operasi</a></li>
+                    <li @if ($active[1] == 'radiologi') class="active" @endif><a href="/layanan-radiologi"><i
+                                class="fa fa-circle-o"></i> Jumlah Layanan Radiologi</a></li>
+                    <li @if ($active[1] == 'forensik') class="active" @endif><a href="/layanan-forensik"><i
+                                class="fa fa-circle-o"></i> Jumlah Layanan Forensik</a></li>
+                    <li @if ($active[1] == 'pasien_ralan') class="active" @endif><a href="/kunjungan-ralan"><i
+                                class="fa fa-circle-o"></i> Jumlah Kunjungan Rawat Jalan</a></li>
+                    <li @if ($active[1] == 'pasien_ralan_poli') class="active" @endif><a href="/pasien-ralan-poli"><i
+                                class="fa fa-circle-o"></i> Jumlah Pasien Rawat Jalan/Poli</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>LAYANAN</span>
+                    <i class="fa fa-dashboard"></i> <span>...</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

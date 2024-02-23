@@ -79,6 +79,8 @@
                                 class="fa fa-circle-o"></i> TOI (Turn Over Interval)</a></li>
                     <li @if ($active[1] == 'alos') class="active" @endif><a href="/alos"><i
                                 class="fa fa-circle-o"></i> ALOS (Average Length of Stay)</a></li>
+                    <li @if ($active[1] == 'bto') class="active" @endif><a href="/bto"><i
+                                class="fa fa-circle-o"></i> BTO (Bed Turn Over)</a></li>
                 </ul>
             </li>
             <li class="treeview">

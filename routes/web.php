@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BORController;
+use App\Http\Controllers\BTOController;
 use App\Http\Controllers\TOIController;
 use App\Http\Controllers\ALOSController;
 use App\Http\Controllers\JumlahAhliGiziController;
@@ -130,3 +131,6 @@ Route::post('/toi/submit', [TOIController::class, 'store']);
 Route::get('/alos', [ALOSController::class, 'index']);
 Route::get('/alos/input', [ALOSController::class, 'create']);
 Route::post('/alos/submit', [ALOSController::class, 'store']);
+Route::get('/bto', [BTOController::class, 'index']);
+Route::get('/bto/input', [BTOController::class, 'create']);
+Route::post('/bto/submit', [BTOController::class, 'store']);

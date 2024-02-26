@@ -5,6 +5,8 @@ use App\Http\Controllers\BORController;
 use App\Http\Controllers\BTOController;
 use App\Http\Controllers\TOIController;
 use App\Http\Controllers\ALOSController;
+use App\Http\Controllers\PenerimaanController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\JumlahAhliGiziController;
 use App\Http\Controllers\JumlahApotekerController;
 use App\Http\Controllers\JumlahDokterGigiController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\JumlahPasienRawatInapController;
 use App\Http\Controllers\JumlahPelayananDokpolController;
 use App\Http\Controllers\JumlahTindakanOperasiController;
 use App\Http\Controllers\JumlahLayananRadiologiController;
+use App\Http\Controllers\IndeksKepuasanMasyarakatController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
 use App\Http\Controllers\JumlahKunjunganRawatJalanController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
@@ -43,19 +46,27 @@ use App\Http\Controllers\JumlahLayananLaboratoriumParameterController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
-Route::get('/perawat', [JumlahTenagaPerawatController::class, 'index']);
-Route::get('/perawat/input', [JumlahTenagaPerawatController::class, 'create']);
-Route::post('/perawat/submit', [JumlahTenagaPerawatController::class, 'store']);
-Route::get('/bidan', [JumlahTenagaBidanController::class, 'index']);
-Route::get('/bidan/input', [JumlahTenagaBidanController::class, 'create']);
-Route::post('/bidan/submit', [JumlahTenagaBidanController::class, 'store']);
+Route::get('/', [PenerimaanController::class, 'index']);
+Route::get('/penerimaan', [PenerimaanController::class, 'index']);
+Route::get('/penerimaan/input', [PenerimaanController::class, 'create']);
+Route::post('/penerimaan/submit', [PenerimaanController::class, 'store']);
+Route::get('/pengeluaran', [PengeluaranController::class, 'index']);
+Route::get('/pengeluaran/input', [PengeluaranController::class, 'create']);
+Route::post('/pengeluaran/submit', [PengeluaranController::class, 'store']);
+
 Route::get('/dokter-spesialis', [JumlahDokterSpesialisController::class, 'index']);
 Route::get('/dokter-spesialis/input', [JumlahDokterSpesialisController::class, 'create']);
 Route::post('/dokter-spesialis/submit', [JumlahDokterSpesialisController::class, 'store']);
+Route::get('/bidan', [JumlahTenagaBidanController::class, 'index']);
+Route::get('/bidan/input', [JumlahTenagaBidanController::class, 'create']);
+Route::post('/bidan/submit', [JumlahTenagaBidanController::class, 'store']);
+Route::get('/perawat', [JumlahTenagaPerawatController::class, 'index']);
+Route::get('/perawat/input', [JumlahTenagaPerawatController::class, 'create']);
+Route::post('/perawat/submit', [JumlahTenagaPerawatController::class, 'store']);
 Route::get('/dokter-gigi', [JumlahDokterGigiController::class, 'index']);
 Route::get('/dokter-gigi/input', [JumlahDokterGigiController::class, 'create']);
 Route::post('/dokter-gigi/submit', [JumlahDokterGigiController::class, 'store']);
@@ -138,3 +149,6 @@ Route::post('/bto/submit', [BTOController::class, 'store']);
 Route::get('/dokpol', [JumlahPelayananDokpolController::class, 'index']);
 Route::get('/dokpol/input', [JumlahPelayananDokpolController::class, 'create']);
 Route::post('/dokpol/submit', [JumlahPelayananDokpolController::class, 'store']);
+Route::get('/ikm', [IndeksKepuasanMasyarakatController::class, 'index']);
+Route::get('/ikm/input', [IndeksKepuasanMasyarakatController::class, 'create']);
+Route::post('/ikm/submit', [IndeksKepuasanMasyarakatController::class, 'store']);

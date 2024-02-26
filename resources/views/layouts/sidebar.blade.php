@@ -4,6 +4,25 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             {{-- <li class="header">KESEHATAN</li> --}}
+            <li class="treeview @if ($active[0] == 'keuangan') active @endif">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>KEUANGAN</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li @if ($active[1] == 'penerimaan') class="active" @endif><a href="/penerimaan"><i
+                                class="fa fa-circle-o"></i> Penerimaan</a></li>
+                    <li @if ($active[1] == 'pengeluaran') class="active" @endif><a href="/pengeluaran"><i
+                                class="fa fa-circle-o"></i> Pengeluaran</a></li>
+                    <li @if ($active[1] == 'dokter_umum') class="active" @endif><a href="/dokter-umum"><i
+                                class="fa fa-circle-o"></i> Jumlah Dokter Umum</a></li>
+                    <li @if ($active[1] == 'perawat') class="active" @endif><a href="/perawat"><i
+                                class="fa fa-circle-o"></i> Jumlah Tenaga Perawat</a></li>
+                </ul>
+            </li>
+
             <li class="treeview @if ($active[0] == 'sdm') active @endif">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>SDM</span>
@@ -83,6 +102,8 @@
                                 class="fa fa-circle-o"></i> BTO (Bed Turn Over)</a></li>
                     <li @if ($active[1] == 'dokpol') class="active" @endif><a href="/dokpol"><i
                                 class="fa fa-circle-o"></i> Jumlah Pelayanan Dokpol</a></li>
+                    <li @if ($active[1] == 'ikim') class="active" @endif><a href="/ikm"><i
+                                class="fa fa-circle-o"></i> Indeks Kepuasan Masyarakat</a></li>
                 </ul>
             </li>
             <li class="treeview">

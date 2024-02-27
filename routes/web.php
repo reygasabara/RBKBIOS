@@ -34,6 +34,7 @@ use App\Http\Controllers\SaldoRekeningDanaKelolaanController;
 use App\Http\Controllers\JumlahPasienBPJSdanNonBPJSController;
 use App\Http\Controllers\JumlahPasienRawatJalanPoliController;
 use App\Http\Controllers\SaldoRekeningPengelolaanKasController;
+use App\Http\Controllers\JumlahVisitePasienDiatasJam12Controller;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
 use App\Http\Controllers\JumlahVisitePasienDibawahJam10Controller;
 use App\Http\Controllers\JumlahLayananLaboratoriumSampelController;
@@ -173,3 +174,6 @@ Route::post('/visite-dibawah-sepuluh/submit', [JumlahVisitePasienDibawahJam10Con
 Route::get('/visite-sepuluh-duabelas', [JumlahVisitePasien10Sd12Controller::class, 'index']);
 Route::get('/visite-sepuluh-duabelas/input', [JumlahVisitePasien10Sd12Controller::class, 'create']);
 Route::post('/visite-sepuluh-duabelas/submit', [JumlahVisitePasien10Sd12Controller::class, 'store']);
+Route::get('/visite-diatas-duabelas', [JumlahVisitePasienDiatasJam12Controller::class, 'index']);
+Route::get('/visite-diatas-duabelas/input', [JumlahVisitePasienDiatasJam12Controller::class, 'create']);
+Route::post('/visite-diatas-duabelas/submit', [JumlahVisitePasienDiatasJam12Controller::class, 'store']);

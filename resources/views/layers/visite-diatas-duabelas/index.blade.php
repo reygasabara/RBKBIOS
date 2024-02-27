@@ -17,14 +17,14 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Visite Pasien < Jam 10.00</h3>
-                        <div class="box-tools">
-                            <div class="input-group input-group-sm" style="width: 50px;">
-                                <div class="input-group-btn">
-                                    <a href="/visite-dibawah-sepuluh/input" class="btn btn-success">Input</a>
-                                </div>
-                            </div>
+                <h3 class="box-title">Jumlah Visite Pasien > Jam 12.00</h3>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 50px;">
+                        <div class="input-group-btn">
+                            <a href="/visite-diatas-duabelas/input" class="btn btn-success">Input</a>
                         </div>
+                    </div>
+                </div>
             </div>
             <div class="box-body">
                 <table class="table-dark table" id="table">

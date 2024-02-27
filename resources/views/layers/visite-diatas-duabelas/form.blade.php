@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Visite Pasien Jam 10.00 s.d. 12.00</h3>
+                <h3 class="box-title">Form Jumlah Visite Pasien > Jam 12.00</h3>
             </div>
 
-            <form role="form" method="POST" action="/visite-sepuluh-duabelas/submit">
+            <form role="form" method="POST" action="/visite-diatas-duabelas/submit">
                 @csrf
 
                 <div class="box-body">

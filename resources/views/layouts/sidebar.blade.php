@@ -117,9 +117,11 @@
                 </a>
                 <ul class="treeview-menu">
                     <li @if ($active[1] == 'visite_dibawah_sepuluh') class="active" @endif><a href="/visite-dibawah-sepuluh"><i
-                                class="fa fa-circle-o"></i> Jumlah Visite Pasien <= Jam 10.00</a>
+                                class="fa fa-circle-o"></i> Visite Pasien < Jam 10.00</a>
                     <li @if ($active[1] == 'visite_sepuluh_duabelas') class="active" @endif><a href="/visite-sepuluh-duabelas"><i
-                                class="fa fa-circle-o"></i> Jumlah Visite Pasien Jam 10.00 s.d. 12.00</a>
+                                class="fa fa-circle-o"></i> Visite Pasien Jam 10.00 s.d. 12.00</a>
+                    <li @if ($active[1] == 'visite_diatas_duabelas') class="active" @endif><a href="/visite-diatas-duabelas"><i
+                                class="fa fa-circle-o"></i> Visite Pasien > Jam 12.00</a>
                     </li>
                 </ul>
             </li>

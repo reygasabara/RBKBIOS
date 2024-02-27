@@ -26,6 +26,7 @@ use App\Http\Controllers\JumlahTindakanOperasiController;
 use App\Http\Controllers\JumlahLayananRadiologiController;
 use App\Http\Controllers\IndeksKepuasanMasyarakatController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
+use App\Http\Controllers\JumlahVisitePasien10Sd12Controller;
 use App\Http\Controllers\SaldoRekeningOperasionalController;
 use App\Http\Controllers\JumlahKunjunganRawatJalanController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
@@ -169,3 +170,6 @@ Route::post('/ikm/submit', [IndeksKepuasanMasyarakatController::class, 'store'])
 Route::get('/visite-dibawah-sepuluh', [JumlahVisitePasienDibawahJam10Controller::class, 'index']);
 Route::get('/visite-dibawah-sepuluh/input', [JumlahVisitePasienDibawahJam10Controller::class, 'create']);
 Route::post('/visite-dibawah-sepuluh/submit', [JumlahVisitePasienDibawahJam10Controller::class, 'store']);
+Route::get('/visite-sepuluh-duabelas', [JumlahVisitePasien10Sd12Controller::class, 'index']);
+Route::get('/visite-sepuluh-duabelas/input', [JumlahVisitePasien10Sd12Controller::class, 'create']);
+Route::post('/visite-sepuluh-duabelas/submit', [JumlahVisitePasien10Sd12Controller::class, 'store']);

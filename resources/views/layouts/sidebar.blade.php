@@ -18,8 +18,10 @@
                                 class="fa fa-circle-o"></i> Pengeluaran</a></li>
                     <li @if ($active[1] == 'operasional') class="active" @endif><a href="/saldo-operasional"><i
                                 class="fa fa-circle-o"></i> Saldo Rekening - Operasional</a></li>
-                    <li @if ($active[1] == 'perawat') class="active" @endif><a href="/perawat"><i
-                                class="fa fa-circle-o"></i> Jumlah Tenaga Perawat</a></li>
+                    <li @if ($active[1] == 'pengelolaan_kas') class="active" @endif><a href="/saldo-pengelolaan-kas"><i
+                                class="fa fa-circle-o"></i> Saldo Rekening - Pengelolaan Kas</a></li>
+                    <li @if ($active[1] == 'dana_kelolaan') class="active" @endif><a href="/saldo-dana-kelolaan"><i
+                                class="fa fa-circle-o"></i> Saldo Rekening - Dana Kelolaan</a></li>
                 </ul>
             </li>
 

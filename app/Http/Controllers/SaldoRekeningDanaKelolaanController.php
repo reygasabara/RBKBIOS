@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class SaldoRekeningPengelolaanKasController extends Controller
+class SaldoRekeningDanaKelolaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class SaldoRekeningPengelolaanKasController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPengelolaanKas = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_pengelolaan_kas');
-        $jsonPengelolaanKas = $dataPengelolaanKas->json();
-        $pengelolaanKas = $jsonPengelolaanKas['data'];
-        return view('layers.saldo-pengelolaan-kas.index',["datas"=>$pengelolaanKas['datas'], 'active'=>['keuangan', 'pengelolaan_kas'], 'savedData' => session('savedData')]);
+        $dataDanaKelolaan = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_dana_kelolaan');
+        $jsonDanaKelolaan = $dataDanaKelolaan->json();
+        $danaKelolaan = $jsonDanaKelolaan['data'];
+        return view('layers.saldo-dana-kelolaan.index',["datas"=>$danaKelolaan['datas'], 'active'=>['keuangan', 'dana_kelolaan'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class SaldoRekeningPengelolaanKasController extends Controller
      */
     public function create()
     {
-        return view('layers.saldo-pengelolaan-kas.form',['active'=>['keuangan', 'pengelolaan_kas']]);
+        return view('layers.saldo-dana-kelolaan.form',['active'=>['keuangan', 'dana_kelolaan']]);
     }
 
     /**
@@ -41,9 +41,9 @@ class SaldoRekeningPengelolaanKasController extends Controller
     {
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required|date_format:Y-m-d',
-            'no_bilyet' => 'required|string',
-            'nilai_deposito' => 'required|numeric',
-            'nilai_bunga' => 'required|numeric',
+            'kdbank' => 'required|numeric',
+            'no_rekening' => 'required|numeric',
+            'saldo_akhir' => 'required|numeric',
         ]);
 
        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
@@ -54,7 +54,7 @@ class SaldoRekeningPengelolaanKasController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('Https://training-bios2.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_pengelolaan_kas', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('Https://training-bios2.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_dana_kelolaan', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -72,7 +72,7 @@ class SaldoRekeningPengelolaanKasController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/saldo-pengelolaan-kas')->with('savedData', $savedData);  
+                return Redirect::to('/saldo-dana-kelolaan')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];

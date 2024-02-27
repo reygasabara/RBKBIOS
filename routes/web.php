@@ -34,6 +34,7 @@ use App\Http\Controllers\JumlahPasienBPJSdanNonBPJSController;
 use App\Http\Controllers\JumlahPasienRawatJalanPoliController;
 use App\Http\Controllers\SaldoRekeningPengelolaanKasController;
 use App\Http\Controllers\JumlahTenagaProfesionalLainnyaController;
+use App\Http\Controllers\JumlahVisitePasienDibawahJam10Controller;
 use App\Http\Controllers\JumlahLayananLaboratoriumSampelController;
 use App\Http\Controllers\JumlahTenagaNonMedisAdministrasiController;
 use App\Http\Controllers\JumlahLayananLaboratoriumParameterController;
@@ -164,3 +165,7 @@ Route::post('/dokpol/submit', [JumlahPelayananDokpolController::class, 'store'])
 Route::get('/ikm', [IndeksKepuasanMasyarakatController::class, 'index']);
 Route::get('/ikm/input', [IndeksKepuasanMasyarakatController::class, 'create']);
 Route::post('/ikm/submit', [IndeksKepuasanMasyarakatController::class, 'store']);
+
+Route::get('/visite-dibawah-sepuluh', [JumlahVisitePasienDibawahJam10Controller::class, 'index']);
+Route::get('/visite-dibawah-sepuluh/input', [JumlahVisitePasienDibawahJam10Controller::class, 'create']);
+Route::post('/visite-dibawah-sepuluh/submit', [JumlahVisitePasienDibawahJam10Controller::class, 'store']);

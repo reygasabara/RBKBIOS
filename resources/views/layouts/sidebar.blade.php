@@ -116,8 +116,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="index.html"><i class="fa fa-circle-o"></i> Form 1</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Form 2</a></li>
+                    <li @if ($active[1] == 'visite_dibawah_sepuluh') class="active" @endif><a href="/visite-dibawah-sepuluh"><i
+                                class="fa fa-circle-o"></i> Jumlah Visite Pasien <= Jam 10.00</a>
+                    </li>
                 </ul>
             </li>
         </ul>

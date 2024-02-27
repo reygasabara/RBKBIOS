@@ -16,8 +16,8 @@
                                 class="fa fa-circle-o"></i> Penerimaan</a></li>
                     <li @if ($active[1] == 'pengeluaran') class="active" @endif><a href="/pengeluaran"><i
                                 class="fa fa-circle-o"></i> Pengeluaran</a></li>
-                    <li @if ($active[1] == 'dokter_umum') class="active" @endif><a href="/dokter-umum"><i
-                                class="fa fa-circle-o"></i> Jumlah Dokter Umum</a></li>
+                    <li @if ($active[1] == 'operasional') class="active" @endif><a href="/saldo-operasional"><i
+                                class="fa fa-circle-o"></i> Saldo Rekening - Operasional</a></li>
                     <li @if ($active[1] == 'perawat') class="active" @endif><a href="/perawat"><i
                                 class="fa fa-circle-o"></i> Jumlah Tenaga Perawat</a></li>
                 </ul>

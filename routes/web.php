@@ -26,6 +26,7 @@ use App\Http\Controllers\JumlahTindakanOperasiController;
 use App\Http\Controllers\JumlahLayananRadiologiController;
 use App\Http\Controllers\IndeksKepuasanMasyarakatController;
 use App\Http\Controllers\JumlahPasienRawatDaruratController;
+use App\Http\Controllers\SaldoRekeningOperasionalController;
 use App\Http\Controllers\JumlahKunjunganRawatJalanController;
 use App\Http\Controllers\JumlahPranataLaboratoriumController;
 use App\Http\Controllers\JumlahPasienBPJSdanNonBPJSController;
@@ -57,6 +58,9 @@ Route::post('/penerimaan/submit', [PenerimaanController::class, 'store']);
 Route::get('/pengeluaran', [PengeluaranController::class, 'index']);
 Route::get('/pengeluaran/input', [PengeluaranController::class, 'create']);
 Route::post('/pengeluaran/submit', [PengeluaranController::class, 'store']);
+Route::get('/saldo-operasional', [SaldoRekeningOperasionalController::class, 'index']);
+Route::get('/saldo-operasional/input', [SaldoRekeningOperasionalController::class, 'create']);
+Route::post('/saldo-operasional/submit', [SaldoRekeningOperasionalController::class, 'store']);
 
 Route::get('/dokter-spesialis', [JumlahDokterSpesialisController::class, 'index']);
 Route::get('/dokter-spesialis/input', [JumlahDokterSpesialisController::class, 'create']);

@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Jumlah Visite Pasien Jam 10.00 s.d. 12.00</h3>
+                <h3 class="box-title">Form Rasio POBO</h3>
             </div>
 
-            <form role="form" method="POST" action="/visite-sepuluh-duabelas/submit">
+            <form role="form" method="POST" action="/rasio-pobo/submit">
                 @csrf
 
                 <div class="box-body">
@@ -36,9 +36,9 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="jumlah">Jumlah</label>
-                        <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
-                            placeholder="Masukkan jumlah pengunjung" required>
+                        <label for="pobo">POBO</label>
+                        <input type="number" class="form-control" value="{{ old('pobo') }}" id="pobo" name="pobo"
+                            placeholder="Masukkan rasio POBO" required>
                     </div>
                 </div>
 

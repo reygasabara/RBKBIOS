@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    SDM
+    IKT
 @endsection
 
 @section('content')

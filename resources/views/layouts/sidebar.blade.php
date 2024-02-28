@@ -108,7 +108,7 @@
                                 class="fa fa-circle-o"></i> Indeks Kepuasan Masyarakat</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview @if ($active[0] == 'ikt') active @endif">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Indikator Kinerja Terpilih</span>
                     <span class="pull-right-container">
@@ -124,6 +124,21 @@
                                 class="fa fa-circle-o"></i> Visite Pasien > Jam 12.00</a>
                     <li @if ($active[1] == 'dpjp_non_visite') class="active" @endif><a href="/dpjp-non-visite"><i
                                 class="fa fa-circle-o"></i> Jumlah DPJP Tidak Visite</a>
+                    <li @if ($active[1] == 'visite_pertama') class="active" @endif><a href="/visite-pertama"><i
+                                class="fa fa-circle-o"></i> Jumlah Visite Pertama</a>
+                    <li @if ($active[1] == 'rasio_pobo') class="active" @endif><a href="/rasio-pobo"><i
+                                class="fa fa-circle-o"></i> Rasio POBO</a>
+                    <li @if ($active[1] == 'pendapatan_aset_blu') class="active" @endif><a
+                            href="/pertumbuhan-pendapatan-pengelolaan-aset-blu"><i class="fa fa-circle-o"></i>
+                            Pertumbuhan Pendapatan Aset BLU</a>
+                    </li>
+                    <li @if ($active[1] == 'penyelenggaraan_rme') class="active" @endif><a href="/penyelenggaraan-rme"><i
+                                class="fa fa-circle-o"></i>
+                            Penyelenggaraan RME</a>
+                    </li>
+                    <li @if ($active[1] == 'pelaksanaan_prokes') class="active" @endif><a
+                            href="/kepatuhan-pelaksanaan-prokes"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Pelaksanaan Prokes</a>
                     </li>
                 </ul>
             </li>

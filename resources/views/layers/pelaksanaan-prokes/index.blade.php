@@ -17,13 +17,19 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Visite Pasien > Jam 12.00</h3>
+                <h3 class="box-title">Kepatuhan Pelaksanaan Protokol Kesehatan</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/visite-diatas-duabelas/input" class="btn btn-success">Input</a>
+                            <a href="/kepatuhan-pelaksanaan-prokes/input" class="btn btn-success">Input</a>
                         </div>
                     </div>
+                </div>
+
+                <div>
+                    <h6 class="text-right">
+                        <strong><em>*Data dikirimkan per periode triwulanan</em></strong>
+                    </h6>
                 </div>
             </div>
             <div class="box-body">

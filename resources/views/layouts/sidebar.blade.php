@@ -122,6 +122,8 @@
                                 class="fa fa-circle-o"></i> Visite Pasien Jam 10.00 s.d. 12.00</a>
                     <li @if ($active[1] == 'visite_diatas_duabelas') class="active" @endif><a href="/visite-diatas-duabelas"><i
                                 class="fa fa-circle-o"></i> Visite Pasien > Jam 12.00</a>
+                    <li @if ($active[1] == 'dpjp_non_visite') class="active" @endif><a href="/dpjp-non-visite"><i
+                                class="fa fa-circle-o"></i> Jumlah DPJP Tidak Visite</a>
                     </li>
                 </ul>
             </li>

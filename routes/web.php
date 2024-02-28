@@ -19,6 +19,7 @@ use App\Http\Controllers\JumlahTenagaPerawatController;
 use App\Http\Controllers\JumlahLayananFarmasiController;
 use App\Http\Controllers\JumlahTenagaNonMedisController;
 use App\Http\Controllers\JumlahDokterSpesialisController;
+use App\Http\Controllers\JumlahDPJPTidakVisiteController;
 use App\Http\Controllers\JumlahLayananForensikController;
 use App\Http\Controllers\JumlahPasienRawatInapController;
 use App\Http\Controllers\JumlahPelayananDokpolController;
@@ -177,3 +178,6 @@ Route::post('/visite-sepuluh-duabelas/submit', [JumlahVisitePasien10Sd12Controll
 Route::get('/visite-diatas-duabelas', [JumlahVisitePasienDiatasJam12Controller::class, 'index']);
 Route::get('/visite-diatas-duabelas/input', [JumlahVisitePasienDiatasJam12Controller::class, 'create']);
 Route::post('/visite-diatas-duabelas/submit', [JumlahVisitePasienDiatasJam12Controller::class, 'store']);
+Route::get('/dpjp-non-visite', [JumlahDPJPTidakVisiteController::class, 'index']);
+Route::get('/dpjp-non-visite/input', [JumlahDPJPTidakVisiteController::class, 'create']);
+Route::post('/dpjp-non-visite/submit', [JumlahDPJPTidakVisiteController::class, 'store']);

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class PembelianAlkesDalamNegeriController extends Controller
+class KepatuhanAlurKlinisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,11 @@ class PembelianAlkesDalamNegeriController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataAlkes = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/pembelian_alkes_dalam_negeri');
-        $jsonAlkes = $dataAlkes->json();
-        $alkes = $jsonAlkes['data'];
-        return view('layers.alkes.index',["datas"=>$alkes['datas'], 'active'=>['ikt', 'alkes'], 'savedData' => session('savedData')]);
+        $dataKepatuhanAlurKlinis = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_alur_klinis');
+        $jsonKepatuhanAlurKlinis = $dataKepatuhanAlurKlinis->json();
+        dd($jsonKepatuhanAlurKlinis);
+        $kepatuhanAlurKlinis = $jsonKepatuhanAlurKlinis['data'];
+        return view('layers.kepatuhan-alur-klinis.index',["datas"=>$kepatuhanAlurKlinis['datas'], 'active'=>['ikt', 'kepatuhan_alur_klinis'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +32,7 @@ class PembelianAlkesDalamNegeriController extends Controller
      */
     public function create()
     {
-        return view('layers.alkes.form',['active'=>['ikt', 'alkes']]);
+        return view('layers.kepatuhan-alur-klinis.form',['active'=>['ikt', 'kepatuhan_alur_klinis']]);
     }
 
     /**
@@ -44,7 +45,7 @@ class PembelianAlkesDalamNegeriController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
+        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
         'satker' => '651650',
         'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
         ]);
@@ -52,7 +53,7 @@ class PembelianAlkesDalamNegeriController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/pembelian_alkes_dalam_negeri', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_alur_klinis', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -70,7 +71,7 @@ class PembelianAlkesDalamNegeriController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/alkes')->with('savedData', $savedData);  
+                return Redirect::to('/kepatuhan-alur-klinis')->with('savedData', $savedData);
             }
         } else {
             $errorLists = [];

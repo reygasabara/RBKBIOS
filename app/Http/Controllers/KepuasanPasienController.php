@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
-class PembelianAlkesDalamNegeriController extends Controller
+class KepuasanPasienController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class PembelianAlkesDalamNegeriController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataAlkes = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/pembelian_alkes_dalam_negeri');
-        $jsonAlkes = $dataAlkes->json();
-        $alkes = $jsonAlkes['data'];
-        return view('layers.alkes.index',["datas"=>$alkes['datas'], 'active'=>['ikt', 'alkes'], 'savedData' => session('savedData')]);
+        $dataKepuasanPasien = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepuasan_pasien');
+        $jsonKepuasanPasien = $dataKepuasanPasien->json();
+        $kepuasanPasien = $jsonKepuasanPasien['data'];
+        return view('layers.kepuasan-pasien.index',["datas"=>$kepuasanPasien['datas'], 'active'=>['ikt', 'kepuasan_pasien'], 'savedData' => session('savedData')]);
     }
 
     /**
@@ -31,7 +31,7 @@ class PembelianAlkesDalamNegeriController extends Controller
      */
     public function create()
     {
-        return view('layers.alkes.form',['active'=>['ikt', 'alkes']]);
+        return view('layers.kepuasan-pasien.form',['active'=>['ikt', 'kepuasan_pasien']]);
     }
 
     /**
@@ -52,7 +52,7 @@ class PembelianAlkesDalamNegeriController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/pembelian_alkes_dalam_negeri', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepuasan_pasien', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];
@@ -70,7 +70,7 @@ class PembelianAlkesDalamNegeriController extends Controller
                 return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
             } else {
                 $savedData = true;
-                return Redirect::to('/alkes')->with('savedData', $savedData);  
+                return Redirect::to('/kepuasan-pasien')->with('savedData', $savedData);  
             }
         } else {
             $errorLists = [];

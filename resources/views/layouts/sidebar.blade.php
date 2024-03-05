@@ -140,6 +140,61 @@
                             href="/kepatuhan-pelaksanaan-prokes"><i class="fa fa-circle-o"></i>
                             Kepatuhan Pelaksanaan Prokes</a>
                     </li>
+                    <li @if ($active[1] == 'alkes') class="active" @endif><a href="/alkes"><i
+                                class="fa fa-circle-o"></i>
+                            Pembelian Alat Kesehatan</a>
+                    </li>
+                    <li @if ($active[1] == 'kepuasan_pasien') class="active" @endif><a href="/kepuasan-pasien"><i
+                                class="fa fa-circle-o"></i>
+                            Kepuasan Pasien</a>
+                    <li @if ($active[1] == 'kepatuhan_waktu_visite_dpjp') class="active" @endif><a
+                            href="/kepatuhan-waktu-visite-dpjp"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Waktu Visite DPJP</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_kebersihan_tangan') class="active" @endif><a
+                            href="/kepatuhan-kebersihan-tangan"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Kebersihan Tangan</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_apd') class="active" @endif><a
+                            href="/kepatuhan-penggunaan-apd"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Penggunaan APD</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_identifikasi_pasien') class="active" @endif><a
+                            href="/kepatuhan-identifikasi-pasien"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Identifikasi Pasien</a>
+                    </li>
+                    <li @if ($active[1] == 'waktu_tanggap_operasi') class="active" @endif><a
+                            href="/waktu-tanggap-operasi-seksio-sesarea"><i class="fa fa-circle-o"></i>
+                            Waktu Tanggap Operasi</a>
+                    </li>
+                    <li @if ($active[1] == 'waktu_tunggu_ralan') class="active" @endif><a href="/waktu-tunggu-ralan"><i
+                                class="fa fa-circle-o"></i>
+                            Waktu Tunggu Rawat Jalan</a>
+                    </li>
+                    <li @if ($active[1] == 'penundaan_operasi_elektif') class="active" @endif><a
+                            href="/penundaan-operasi-elektif"><i class="fa fa-circle-o"></i>
+                            Penundaan Operasi Elektif</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_waktu_visite_dokter') class="active" @endif><a
+                            href="/kepatuhan-waktu-visite-dokter"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Waktu Visite Dokter</a>
+                    </li>
+                    <li @if ($active[1] == 'pelaporan_hasil_kritis_laboratorium') class="active" @endif><a
+                            href="/pelaporan-hasil-kritis-laboratorium"><i class="fa fa-circle-o"></i>
+                            pelaporan Hasil Kritis Lab</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_penggunaan_fornas') class="active" @endif><a
+                            href="/kepatuhan-penggunaan-fornas"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Penggunaan Fornas</a>
+                    </li>
+                    <li @if ($active[1] == 'kepatuhan_alur_klinis') class="active" @endif><a href="/kepatuhan-alur-klinis"><i
+                                class="fa fa-circle-o"></i>
+                            Kepatuhan Alur Klinis</a>
+                    </li>
+                    <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
+                            href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
+                            Kecepatan Waktu Tanggap Komplain</a>
+                    </li>
                 </ul>
             </li>
         </ul>

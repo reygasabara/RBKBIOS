@@ -18,19 +18,24 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs">User</span>
+                        <span class="hidden-xs">Administrator</span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="margin-top:10px;margin-right:10px;box-shadow:-1px 1px 5px;">
                         <!-- User image -->
                         <li class="user-header">
-                            <p>
-                                User - Administrator
+                            <p class="text-primary text-center">
+                                <span class="material-symbols-outlined" style="font-size:120px;">
+                                    account_circle
+                                </span>
+                                <br>
+                                <span class="text-center">Administrator</span>
                             </p>
+
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                            <div class="text-center">
+                                <a href="/logout" class="btn btn-default btn-flat">Log out</a>
                             </div>
                         </li>
                     </ul>

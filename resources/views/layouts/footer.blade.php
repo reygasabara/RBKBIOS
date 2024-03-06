@@ -1,7 +1,7 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2023.12.27.0001
+        <b>Version</b> 2024.03.15.0001
     </div>
-    <strong>Copyright &copy; 2023 <a href="https://tec.co.id">TEC</a>.</strong> All rights
+    <strong>Copyright &copy; 2024 <a href="https://tec.co.id">RS Bhayangkara Kendari</a>.</strong> All rights
     reserved.
 </footer>

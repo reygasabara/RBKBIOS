@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('layers.login.index', ['active'=>'login']);
+        return view('layers.login.index');
     }
 
     public function authenticate(Request $request)

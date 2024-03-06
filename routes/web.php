@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RasioPOBOController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\GantiPasswordController;
 use App\Http\Controllers\JumlahAhliGiziController;
 use App\Http\Controllers\JumlahApotekerController;
 use App\Http\Controllers\KepuasanPasienController;
@@ -81,6 +82,8 @@ Route::middleware(['guest'])->group(function() {
 });
 
 Route::middleware(['auth'])->group(function () { 
+   Route::get('/ganti-password', [GantiPasswordController::class, 'index']);
+   Route::post('/ganti-password', [GantiPasswordController::class, 'authenticate']);
    Route::get('/logout', [AuthController::class, 'logout']);
 
    Route::get('/', [PenerimaanController::class, 'index']);

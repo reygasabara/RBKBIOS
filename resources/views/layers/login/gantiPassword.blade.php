@@ -21,7 +21,7 @@
 
     <style>
         .form-signin {
-            max-width: 330px;
+            max-width: 80%;
             padding: 15px;
             margin: 0 auto;
         }
@@ -29,6 +29,10 @@
         .form-signin .form-signin-heading,
         .form-signin .checkbox {
             margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
         }
 
         .form-signin .form-control {
@@ -82,39 +86,48 @@
 <body class="">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="col-sm-6 col-md-8 col-md-offset-2">
                 <h1 class="login-title bold text-blue text-center" style="font-size: 40px;"><b>RBK</b>BIOS</h1>
                 <div class="account-wall">
                     <p class="text-primary text-center"><span class="material-symbols-outlined"
                             style="font-size:120px;">
-                            account_circle
+                            passkey
                         </span></p>
 
-                    <form class="form-signin" action="/login" method="POST">
+                    <form class="form-signin" action="/ganti-password" method="POST">
                         @if (session()->has('loginError'))
                             <h6><strong class="text-danger">{{ session('loginError') }}</strong></h6>
                         @endif
 
-                        @if (session()->has('success'))
-                            <h6><strong class="text-success">{{ session('success') }}</strong></h6>
+                        @if ($errors->any())
+                            <h6><strong class="text-danger">Password baru harus terdiri dari kombinasi huruf dan
+                                    angka</strong></h6>
                         @endif
 
                         @csrf
 
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" value="{{ old('email') }}" id="email"
-                                name="email" placeholder="Masukkan email Anda" autofocus required>
+                            <label for="lama">Password Lama</label>
+                            <input type="password" class="form-control" value="{{ old('lama') }}" id="lama"
+                                name="lama" placeholder="Masukkan password Anda" autofocus required>
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" value="{{ old('password') }}" id="password"
-                                name="password" placeholder="Masukkan password Anda" required>
+                            <label for="baru">Password Baru</label>
+                            <input type="password" class="form-control" value="{{ old('baru') }}" id="baru"
+                                name="baru" minlength="6" placeholder="Masukkan password Anda" required>
                         </div>
 
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">
-                            Log in</button>
+                        <div class="form-group">
+                            <label for="konfirmasi">Konfirmasi Password Baru</label>
+                            <input type="password" class="form-control" value="{{ old('konfirmasi') }}" id="konfirmasi"
+                                name="konfirmasi" minlength="6" placeholder="Masukkan password Anda" required>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-md btn-primary" type="submit">
+                                Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>

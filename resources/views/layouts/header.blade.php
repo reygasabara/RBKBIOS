@@ -35,7 +35,9 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="text-center">
-                                <a href="/logout" class="btn btn-default btn-flat">Log out</a>
+                                <a href="/ganti-password" class="btn btn-warning" style="margin-right:2px;">Ganti
+                                    Password</a>
+                                <a href="/logout" class="btn btn-danger" style="margin-left:2px;">Log out</a>
                             </div>
                         </li>
                     </ul>

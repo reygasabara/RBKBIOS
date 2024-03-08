@@ -17,7 +17,7 @@
 
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Jumlah Visite Pasien > Jam 12.00</h3>
+                <h3 class="box-title">Jumlah Visite Pasien di Atas Jam 12.00</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">

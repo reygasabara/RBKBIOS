@@ -17,11 +17,11 @@
                     <li @if ($active[1] == 'pengeluaran') class="active" @endif><a href="/pengeluaran"><i
                                 class="fa fa-circle-o"></i> Pengeluaran</a></li>
                     <li @if ($active[1] == 'operasional') class="active" @endif><a href="/saldo-operasional"><i
-                                class="fa fa-circle-o"></i> Saldo Rekening - Operasional</a></li>
+                                class="fa fa-circle-o"></i> Saldo - Operasional</a></li>
                     <li @if ($active[1] == 'pengelolaan_kas') class="active" @endif><a href="/saldo-pengelolaan-kas"><i
-                                class="fa fa-circle-o"></i> Saldo Rekening - Pengelolaan Kas</a></li>
+                                class="fa fa-circle-o"></i> Saldo - Pengelolaan Kas</a></li>
                     <li @if ($active[1] == 'dana_kelolaan') class="active" @endif><a href="/saldo-dana-kelolaan"><i
-                                class="fa fa-circle-o"></i> Saldo Rekening - Dana Kelolaan</a></li>
+                                class="fa fa-circle-o"></i> Saldo - Dana Kelolaan</a></li>
                 </ul>
             </li>
 
@@ -77,9 +77,9 @@
                     <li @if ($active[1] == 'pasien_igd') class="active" @endif><a href="/pasien-igd"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien Rawat Darurat</a></li>
                     <li @if ($active[1] == 'lab_sampel') class="active" @endif><a href="/lab-sampel"><i
-                                class="fa fa-circle-o"></i> Jumlah Layanan Lab (Sampel)</a></li>
+                                class="fa fa-circle-o"></i> Layanan Lab (Sampel)</a></li>
                     <li @if ($active[1] == 'lab_parameter') class="active" @endif><a href="/lab-parameter"><i
-                                class="fa fa-circle-o"></i> Jumlah Layanan Lab (Parameter)</a></li>
+                                class="fa fa-circle-o"></i> Layanan Lab (Parameter)</a></li>
                     <li @if ($active[1] == 'operasi') class="active" @endif><a href="/tindakan-operasi"><i
                                 class="fa fa-circle-o"></i> Jumlah Tindakan operasi</a></li>
                     <li @if ($active[1] == 'radiologi') class="active" @endif><a href="/layanan-radiologi"><i
@@ -89,7 +89,7 @@
                     <li @if ($active[1] == 'pasien_ralan') class="active" @endif><a href="/kunjungan-ralan"><i
                                 class="fa fa-circle-o"></i> Jumlah Kunjungan Rawat Jalan</a></li>
                     <li @if ($active[1] == 'pasien_ralan_poli') class="active" @endif><a href="/pasien-ralan-poli"><i
-                                class="fa fa-circle-o"></i> Jumlah Pasien Rawat Jalan/Poli</a></li>
+                                class="fa fa-circle-o"></i> Jumlah Pasien Rawat Jalan</a></li>
                     <li @if ($active[1] == 'bpjs_nonbpjs') class="active" @endif><a href="/pasien-bpjs-nonbpjs"><i
                                 class="fa fa-circle-o"></i> Jumlah Pasien BPJS/Non-BPJS</a></li>
                     <li @if ($active[1] == 'farmasi') class="active" @endif><a href="/layanan-farmasi"><i
@@ -117,11 +117,11 @@
                 </a>
                 <ul class="treeview-menu">
                     <li @if ($active[1] == 'visite_dibawah_sepuluh') class="active" @endif><a href="/visite-dibawah-sepuluh"><i
-                                class="fa fa-circle-o"></i> Visite Pasien < Jam 10.00</a>
+                                class="fa fa-circle-o"></i> Visite di Bawah Jam 10.00</a>
                     <li @if ($active[1] == 'visite_sepuluh_duabelas') class="active" @endif><a href="/visite-sepuluh-duabelas"><i
-                                class="fa fa-circle-o"></i> Visite Pasien Jam 10.00 s.d. 12.00</a>
+                                class="fa fa-circle-o"></i> Visite Jam 10.00 s.d. 12.00</a>
                     <li @if ($active[1] == 'visite_diatas_duabelas') class="active" @endif><a href="/visite-diatas-duabelas"><i
-                                class="fa fa-circle-o"></i> Visite Pasien > Jam 12.00</a>
+                                class="fa fa-circle-o"></i> Visite di Atas Jam 12.00</a>
                     <li @if ($active[1] == 'dpjp_non_visite') class="active" @endif><a href="/dpjp-non-visite"><i
                                 class="fa fa-circle-o"></i> Jumlah DPJP Tidak Visite</a>
                     <li @if ($active[1] == 'visite_pertama') class="active" @endif><a href="/visite-pertama"><i
@@ -130,7 +130,7 @@
                                 class="fa fa-circle-o"></i> Rasio POBO</a>
                     <li @if ($active[1] == 'pendapatan_aset_blu') class="active" @endif><a
                             href="/pertumbuhan-pendapatan-pengelolaan-aset-blu"><i class="fa fa-circle-o"></i>
-                            Pertumbuhan Pendapatan Aset BLU</a>
+                            Pendapatan Aset BLU</a>
                     </li>
                     <li @if ($active[1] == 'penyelenggaraan_rme') class="active" @endif><a href="/penyelenggaraan-rme"><i
                                 class="fa fa-circle-o"></i>
@@ -193,12 +193,12 @@
                     </li>
                     <li @if ($active[1] == 'kepatuhan_upaya_pencegahan_resiko_pasien_jatuh') class="active" @endif><a
                             href="/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh"><i class="fa fa-circle-o"></i>
-                            Kepatuhan Pencegahan Resiko Pasien Jatuh</a>
+                            Pencegahan Resiko Pasien Jatuh</a>
                     </li>
             </li>
             <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
                     href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
-                    Kecepatan Waktu Tanggap Komplain</a>
+                    Waktu Tanggap Komplain</a>
             </li>
         </ul>
         </li>

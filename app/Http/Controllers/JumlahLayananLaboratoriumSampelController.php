@@ -13,14 +13,14 @@ class JumlahLayananLaboratoriumSampelController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataLabSampel = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/laboratorium');
+        $dataLabSampel = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/laboratorium');
         $jsonLabSampel = $dataLabSampel->json();
         $labSampel = $jsonLabSampel['data'];
         return view('layers.jumlah-lab-sampel.index',["datas"=>$labSampel['datas'], 'active'=>['layanan', 'lab_sampel'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class JumlahLayananLaboratoriumSampelController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/laboratorium', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/laboratorium', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -28,6 +28,8 @@
 
                 <div>
                     <h6 class="text-right">
+                        <strong><em>*Data dikirimkan per periode harian</em></strong>
+                        <br>
                         <strong><em>*Data yang dikirimkan termasuk yang belum di-SP3B/disahkan</em></strong>
                     </h6>
                 </div>

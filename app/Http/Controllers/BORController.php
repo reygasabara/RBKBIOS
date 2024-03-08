@@ -13,14 +13,14 @@ class BORController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataBOR = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/bor');
+        $dataBOR = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/bor');
         $jsonBOR = $dataBOR->json();
         $bor = $jsonBOR['data'];
         return view('layers.bor.index',["datas"=>$bor['datas'], 'active'=>['layanan', 'bor'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class BORController extends Controller
             'bor' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/bor', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bor', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

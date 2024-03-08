@@ -13,14 +13,14 @@ class SaldoRekeningDanaKelolaanController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataDanaKelolaan = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_dana_kelolaan');
+        $dataDanaKelolaan = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_dana_kelolaan');
         $jsonDanaKelolaan = $dataDanaKelolaan->json();
         $danaKelolaan = $jsonDanaKelolaan['data'];
         return view('layers.saldo-dana-kelolaan.index',["datas"=>$danaKelolaan['datas'], 'active'=>['keuangan', 'dana_kelolaan'], 'savedData' => session('savedData')]);
@@ -46,15 +46,15 @@ class SaldoRekeningDanaKelolaanController extends Controller
             'saldo_akhir' => 'required|numeric',
         ]);
 
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('Https://training-bios2.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_dana_kelolaan', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_dana_kelolaan', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

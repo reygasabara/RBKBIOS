@@ -13,14 +13,14 @@ class PengeluaranController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPengeluaran = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/keuangan/akuntansi/pengeluaran');
+        $dataPengeluaran = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/akuntansi/pengeluaran');
         $jsonPengeluaran = $dataPengeluaran->json();
         $pengeluaran = $jsonPengeluaran['data'];
         return view('layers.pengeluaran.index',["datas"=>$pengeluaran['datas'], 'active'=>['keuangan', 'pengeluaran'], 'savedData' => session('savedData')]);
@@ -45,15 +45,15 @@ class PengeluaranController extends Controller
             'jumlah' => 'required|numeric',
         ]);
 
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('Https://training-bios2.kemenkeu.go.id/api/ws/keuangan/akuntansi/pengeluaran', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/pengeluaran', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

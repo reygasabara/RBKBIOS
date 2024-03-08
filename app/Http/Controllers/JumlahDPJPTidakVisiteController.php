@@ -13,14 +13,14 @@ class JumlahDPJPTidakVisiteController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataDPJPNonVisite = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/dpjp_non_visite');
+        $dataDPJPNonVisite = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/dpjp_non_visite');
         $jsonDPJPNonVisite = $dataDPJPNonVisite->json();
         $dpjpNonVisite = $jsonDPJPNonVisite['data'];
         return view('layers.dpjp-non-visite.index',["datas"=>$dpjpNonVisite['datas'], 'active'=>['ikt', 'dpjp_non_visite'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class JumlahDPJPTidakVisiteController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/dpjp_non_visite', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/dpjp_non_visite', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -13,14 +13,14 @@ class KepatuhanWaktuVisiteDokterController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKepatuhanWaktuVisiteDokter = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_waktu_visite_dokter');
+        $dataKepatuhanWaktuVisiteDokter = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_waktu_visite_dokter');
         $jsonKepatuhanWaktuVisiteDokter = $dataKepatuhanWaktuVisiteDokter->json();
         $kepatuhanWaktuVisiteDokter = $jsonKepatuhanWaktuVisiteDokter['data'];
         return view('layers.kepatuhan-waktu-visite-dokter.index',["datas"=>$kepatuhanWaktuVisiteDokter['datas'], 'active'=>['ikt', 'kepatuhan_waktu_visite_dokter'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class KepatuhanWaktuVisiteDokterController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_waktu_visite_dokter', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_waktu_visite_dokter', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

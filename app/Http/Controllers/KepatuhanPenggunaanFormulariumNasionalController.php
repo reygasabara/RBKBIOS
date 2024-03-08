@@ -13,14 +13,14 @@ class KepatuhanPenggunaanFormulariumNasionalController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKepatuhanFornas = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_penggunaan_fornas');
+        $dataKepatuhanFornas = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_penggunaan_fornas');
         $jsonKepatuhanFornas = $dataKepatuhanFornas->json();
         $kepatuhanFornas = $jsonKepatuhanFornas['data'];
         return view('layers.kepatuhan-penggunaan-fornas.index',["datas"=>$kepatuhanFornas['datas'], 'active'=>['ikt', 'kepatuhan_penggunaan_fornas'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class KepatuhanPenggunaanFormulariumNasionalController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_penggunaan_fornas', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_penggunaan_fornas', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -13,14 +13,14 @@ class WaktuTungguRawatJalanController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataWaktuTungguRalan = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/waktu_tunggu_ralan');
+        $dataWaktuTungguRalan = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/waktu_tunggu_ralan');
         $jsonWaktuTungguRalan = $dataWaktuTungguRalan->json();
         $waktuTungguRalan = $jsonWaktuTungguRalan['data'];
         return view('layers.waktu-tunggu-ralan.index',["datas"=>$waktuTungguRalan['datas'], 'active'=>['ikt', 'waktu_tunggu_ralan'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class WaktuTungguRawatJalanController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/waktu_tunggu_ralan', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/waktu_tunggu_ralan', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

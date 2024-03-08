@@ -13,14 +13,14 @@ class KecepatanWaktuTanggapKomplainController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKecepatanWaktuTanggapKomplain = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kecepatan_waktu_tunggu_komplain');
+        $dataKecepatanWaktuTanggapKomplain = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kecepatan_waktu_tunggu_komplain');
         $jsonKecepatanWaktuTanggapKomplain = $dataKecepatanWaktuTanggapKomplain->json();
         $kecepatanWaktuTanggapKomplain = $jsonKecepatanWaktuTanggapKomplain['data'];
         return view('layers.kecepatan-waktu-tanggap-komplain.index',["datas"=>$kecepatanWaktuTanggapKomplain['datas'], 'active'=>['ikt', 'kecepatan_waktu_tanggap_komplain'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class KecepatanWaktuTanggapKomplainController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kecepatan_waktu_tunggu_komplain', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kecepatan_waktu_tunggu_komplain', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

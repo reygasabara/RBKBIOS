@@ -13,14 +13,14 @@ class PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController extends Con
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPendapatanAsetBLU = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/pertumbuhan_realisasi_pendapatan_pengelolaan_aset_blu');
+        $dataPendapatanAsetBLU = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/pertumbuhan_realisasi_pendapatan_pengelolaan_aset_blu');
         $jsonPendapatanAsetBLU = $dataPendapatanAsetBLU->json();
         $pendapatanAsetBlu = $jsonPendapatanAsetBLU['data'];
         return view('layers.pendapatan-aset-blu.index',["datas"=>$pendapatanAsetBlu['datas'], 'active'=>['ikt', 'pendapatan_aset_blu'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController extends Con
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/pertumbuhan_realisasi_pendapatan_pengelolaan_aset_blu', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/pertumbuhan_realisasi_pendapatan_pengelolaan_aset_blu', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -13,14 +13,14 @@ class KepatuhanKebersihanTanganController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKepatuhanKebersihanTangan = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_kebersihan_tangan');
+        $dataKepatuhanKebersihanTangan = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_kebersihan_tangan');
         $jsonKepatuhanKebersihanTangan = $dataKepatuhanKebersihanTangan->json();
         $kepatuhanKebersihanTangan = $jsonKepatuhanKebersihanTangan['data'];
         return view('layers.kepatuhan-kebersihan-tangan.index',["datas"=>$kepatuhanKebersihanTangan['datas'], 'active'=>['ikt', 'kepatuhan_kebersihan_tangan'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class KepatuhanKebersihanTanganController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_kebersihan_tangan', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_kebersihan_tangan', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -13,14 +13,14 @@ class JumlahPasienBPJSdanNonBPJSController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPasienBPJSdanNon = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/layanan/bpjs_nonbpbjs');
+        $dataPasienBPJSdanNon = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/bpjs_nonbpbjs');
         $jsonPasienBPJSdanNon = $dataPasienBPJSdanNon->json();
         $pasienBPJSdanNon = $jsonPasienBPJSdanNon['data'];
         return view('layers.jumlah-pasien-bpjs-nonbpjs.index',["datas"=>$pasienBPJSdanNon['datas'], 'active'=>['layanan', 'bpjs_nonbpjs'], 'savedData' => session('savedData')]);
@@ -45,15 +45,15 @@ class JumlahPasienBPJSdanNonBPJSController extends Controller
             'jumlah_non_bpjs' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/layanan/bpjs_nonbpbjs', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bpjs_nonbpbjs', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

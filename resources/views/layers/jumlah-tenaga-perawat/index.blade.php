@@ -25,7 +25,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <h6 class="text-right">
+                        <strong><em>*Data awal dikirimkan pada awal tahun berkenaan. Sedangkan, updating data dikirimkan per
+                                periode
+                                semesteran/tahunan.</em></strong>
+                        <br>
+                        <strong><em>*Data yang dikirimkan merupakan jumlah pegawai sesuai kriteria.</em></strong>
+                    </h6>
+                </div>
             </div>
+
             <div class="box-body">
                 <table class="table-dark table" id="table">
                     <thead>
@@ -80,7 +91,7 @@
     @push('scripts')
         <script>
             let satker = "651650";
-            let key = "O78gois12Lg94vqxxazS9N0uxtmwFQ8R";
+            let key = "env('TOKEN_KEY')";
 
             $(function() {
                 $('#table').DataTable();

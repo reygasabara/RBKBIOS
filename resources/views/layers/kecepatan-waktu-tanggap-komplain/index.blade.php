@@ -79,7 +79,7 @@
     @push('scripts')
         <script>
             let satker = "651650";
-            let key = "O78gois12Lg94vqxxazS9N0uxtmwFQ8R";
+            let key = "env('TOKEN_KEY')";
 
             $(function() {
                 $('#table').DataTable();

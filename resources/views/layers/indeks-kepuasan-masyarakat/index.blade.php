@@ -28,7 +28,7 @@
 
                 <div>
                     <h6 class="text-right">
-                        <strong><em>*Data dikirimkan per periode bulanan</em></strong>
+                        <strong><em>*Data dikirimkan per periode pelaksanaan survei kepuasan.</em></strong>
                     </h6>
                 </div>
             </div>

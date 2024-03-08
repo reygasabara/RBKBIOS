@@ -13,14 +13,14 @@ class WaktuTanggapOperasiSeksioSesareaEmergensiController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataWaktuTanggap = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/waktu_tanggap_operasi_seksio_sesarea');
+        $dataWaktuTanggap = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/waktu_tanggap_operasi_seksio_sesarea');
         $jsonWaktuTanggap = $dataWaktuTanggap->json();
         $waktuTanggap = $jsonWaktuTanggap['data'];
         return view('layers.waktu-tanggap-operasi.index',["datas"=>$waktuTanggap['datas'], 'active'=>['ikt', 'waktu_tanggap_operasi'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class WaktuTanggapOperasiSeksioSesareaEmergensiController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/waktu_tanggap_operasi_seksio_sesarea', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/waktu_tanggap_operasi_seksio_sesarea', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

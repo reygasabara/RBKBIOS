@@ -95,8 +95,8 @@
                         </span></p>
 
                     <form class="form-signin" action="/ganti-password" method="POST">
-                        @if (session()->has('loginError'))
-                            <h6><strong class="text-danger">{{ session('loginError') }}</strong></h6>
+                        @if (session()->has('changePasswordError'))
+                            <h6><strong class="text-danger">{{ session('changePasswordError') }}</strong></h6>
                         @endif
 
                         @if ($errors->any())

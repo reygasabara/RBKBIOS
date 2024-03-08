@@ -25,6 +25,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <h6 class="text-right">
+                        <strong><em>*Data dikirimkan per periode harian</em></strong>
+                        <br>
+                        <strong><em>*Data yang dikirimkan dari seluruh poli.
+                            </em></strong>
+                    </h6>
+                </div>
             </div>
             <div class="box-body">
                 <table class="table-dark table" id="table">

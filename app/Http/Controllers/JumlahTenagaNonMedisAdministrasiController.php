@@ -13,14 +13,14 @@ class JumlahTenagaNonMedisAdministrasiController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataNonMedisAdministrasi = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/sdm/non_medis_administrasi');
+        $dataNonMedisAdministrasi = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/sdm/non_medis_administrasi');
         $jsonNonMedisAdministrasi = $dataNonMedisAdministrasi->json();
         $nonMedisAdministrasi = $jsonNonMedisAdministrasi['data'];
         return view('layers.jumlah-non-medis-administrasi.index',["datas"=>$nonMedisAdministrasi['datas'], 'active'=>['sdm', 'non_medis_adm'], 'savedData' => session('savedData')]);
@@ -50,15 +50,15 @@ class JumlahTenagaNonMedisAdministrasiController extends Controller
         ]);
 
         
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
         
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/sdm/non_medis_administrasi', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/sdm/non_medis_administrasi', $validatedData);
         
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -25,6 +25,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <h6 class="text-right">
+                        <strong><em>*Data awal dikirimkan pada awal tahun berkenaan. Sedangkan, updating data dikirimkan per
+                                periode
+                                semesteran/tahunan.</em></strong>
+                        <br>
+                        <strong><em>*Data yang dikirimkan merupakan jumlah pegawai sesuai kriteria.</em></strong>
+                    </h6>
+                </div>
             </div>
 
             <div class="box-body">

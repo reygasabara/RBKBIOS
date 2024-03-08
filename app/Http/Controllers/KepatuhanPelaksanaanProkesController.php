@@ -13,14 +13,14 @@ class KepatuhanPelaksanaanProkesController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPelaksanaanProkes = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_pelaksanaan_prokes');
+        $dataPelaksanaanProkes = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_pelaksanaan_prokes');
         $jsonPelaksanaanProkes = $dataPelaksanaanProkes->json();
         $pelaksanaanProkes = $jsonPelaksanaanProkes['data'];
         return view('layers.pelaksanaan-prokes.index',["datas"=>$pelaksanaanProkes['datas'], 'active'=>['ikt', 'pelaksanaan_prokes'], 'savedData' => session('savedData')]);
@@ -44,15 +44,15 @@ class KepatuhanPelaksanaanProkesController extends Controller
             'jumlah' => 'required|numeric',
         ]);
        
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_pelaksanaan_prokes', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_pelaksanaan_prokes', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

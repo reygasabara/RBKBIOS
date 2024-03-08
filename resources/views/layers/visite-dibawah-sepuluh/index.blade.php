@@ -25,7 +25,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div>
+                            <h6 class="text-right">
+                                <strong><em>*Data dikirimkan per periode harian.</em></strong>
+                            </h6>
+                        </div>
             </div>
+
             <div class="box-body">
                 <table class="table-dark table" id="table">
                     <thead>
@@ -72,7 +79,7 @@
     @push('scripts')
         <script>
             let satker = "651650";
-            let key = "O78gois12Lg94vqxxazS9N0uxtmwFQ8R";
+            let key = "env('TOKEN_KEY')";
 
             $(function() {
                 $('#table').DataTable();

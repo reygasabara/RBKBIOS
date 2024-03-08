@@ -102,9 +102,9 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" value="{{ old('email') }}" id="email"
-                                name="email" placeholder="Masukkan email Anda" autofocus required>
+                            <label for="username">Username</label>
+                            <input type="username" class="form-control" value="{{ old('username') }}" id="username"
+                                name="username" placeholder="Masukkan username Anda" autofocus required>
                         </div>
 
                         <div class="form-group">

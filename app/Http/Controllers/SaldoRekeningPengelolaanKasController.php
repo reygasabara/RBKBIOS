@@ -13,14 +13,14 @@ class SaldoRekeningPengelolaanKasController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-            'satker' => '651650',
-            'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+            'satker' => env('TOKEN_SATKER'),
+            'key' => env('TOKEN_KEY')
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataPengelolaanKas = Http::withHeaders(['token' => $token])->post('https://training-bios2.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_pengelolaan_kas');
+        $dataPengelolaanKas = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_pengelolaan_kas');
         $jsonPengelolaanKas = $dataPengelolaanKas->json();
         $pengelolaanKas = $jsonPengelolaanKas['data'];
         return view('layers.saldo-pengelolaan-kas.index',["datas"=>$pengelolaanKas['datas'], 'active'=>['keuangan', 'pengelolaan_kas'], 'savedData' => session('savedData')]);
@@ -46,15 +46,15 @@ class SaldoRekeningPengelolaanKasController extends Controller
             'nilai_bunga' => 'required|numeric',
         ]);
 
-       $getToken = Http::post('https://training-bios2.kemenkeu.go.id/api/token',[
-        'satker' => '651650',
-        'key' => 'O78gois12Lg94vqxxazS9N0uxtmwFQ8R'
+       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
+        'satker' => env('TOKEN_SATKER'),
+        'key' => env('TOKEN_KEY')
         ]);
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('Https://training-bios2.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_pengelolaan_kas', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_pengelolaan_kas', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

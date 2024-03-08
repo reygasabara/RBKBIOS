@@ -191,12 +191,17 @@
                                 class="fa fa-circle-o"></i>
                             Kepatuhan Alur Klinis</a>
                     </li>
-                    <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
-                            href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
-                            Kecepatan Waktu Tanggap Komplain</a>
+                    <li @if ($active[1] == 'kepatuhan_upaya_pencegahan_resiko_pasien_jatuh') class="active" @endif><a
+                            href="/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh"><i class="fa fa-circle-o"></i>
+                            Kepatuhan Pencegahan Resiko Pasien Jatuh</a>
                     </li>
-                </ul>
             </li>
+            <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
+                    href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
+                    Kecepatan Waktu Tanggap Komplain</a>
+            </li>
+        </ul>
+        </li>
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -28,7 +28,7 @@
 
                 <div>
                     <h6 class="text-right">
-                        <strong><em>*Data dikirimkan per periode semesteran</em></strong>
+                        <strong><em>*Data dikirimkan per periode semesterana</em></strong>
                     </h6>
                 </div>
             </div>
@@ -79,7 +79,7 @@
     @push('scripts')
         <script>
             let satker = "651650";
-            let key = "O78gois12Lg94vqxxazS9N0uxtmwFQ8R";
+            let key = "env('TOKEN_KEY')";
 
             $(function() {
                 $('#table').DataTable();

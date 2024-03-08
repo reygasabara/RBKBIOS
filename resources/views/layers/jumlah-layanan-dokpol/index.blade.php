@@ -25,6 +25,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <h6 class="text-right">
+                        <strong><em>*Data dikirimkan per periode bulanan</em></strong>
+                        <br>
+                        <strong><em>*Data yang dikirimkan merupakan jumlah layanan yang diberikan sesuai kategori layanan
+                                dokpol.</em></strong>
+                    </h6>
+                </div>
             </div>
             <div class="box-body table-responsive">
                 <table class="table-dark table-hover table" id="table">

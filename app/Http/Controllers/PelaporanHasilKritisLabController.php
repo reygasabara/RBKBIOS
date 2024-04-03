@@ -19,12 +19,10 @@ class PelaporanHasilKritisLabController extends Controller
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
-
-        $dataPelaporanHasilKritisLaboratorium = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/pelaporan_hasuk_kritis_laboratorium');
+        $dataPelaporanHasilKritisLaboratorium = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/pelaporan_hasil_kritis_laboratorium');
         $jsonPelaporanHasilKritisLaboratorium = $dataPelaporanHasilKritisLaboratorium->json();
-        dd($jsonPelaporanHasilKritisLaboratorium);
         $pelaporanHasilKritisLaboratorium = $jsonPelaporanHasilKritisLaboratorium['data'];
-        return view('layers.pelaporan-hasil-kritis-laboratorium.index',["datas"=>$pelaporanHasilKritisLaboratorium['datas'], 'active'=>['ikt', 'pelaporan_hasuk_kritis_laboratorium'], 'savedData' => session('savedData')]);
+        return view('layers.pelaporan-hasil-kritis-laboratorium.index',["datas"=>$pelaporanHasilKritisLaboratorium['datas'], 'active'=>['ikt', 'pelaporan_hasil_kritis_laboratorium'], 'savedData' => session('savedData')]);
     }
 
     /**

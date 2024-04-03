@@ -193,7 +193,7 @@
                     </li>
                     <li @if ($active[1] == 'kepatuhan_upaya_pencegahan_resiko_pasien_jatuh') class="active" @endif><a
                             href="/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh"><i class="fa fa-circle-o"></i>
-                            Pencegahan Resiko Pasien Jatuh</a>
+                            Pencegahan Risiko Pasien Jatuh</a>
                     </li>
             </li>
             <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a

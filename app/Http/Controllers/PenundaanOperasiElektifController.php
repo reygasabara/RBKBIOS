@@ -52,7 +52,7 @@ class PenundaanOperasiElektifController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/penundan_operasi_elektif', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/penundaan_operasi_elektif', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Notifikasi;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BORController;
 use App\Http\Controllers\BTOController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\TOIController;
 use App\Http\Controllers\ALOSController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RasioPOBOController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\GantiPasswordController;
@@ -270,4 +272,6 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/kecepatan-waktu-tanggap-komplain', [KecepatanWaktuTanggapKomplainController::class, 'index']);
    Route::get('/kecepatan-waktu-tanggap-komplain/input', [KecepatanWaktuTanggapKomplainController::class, 'create']);
    Route::post('/kecepatan-waktu-tanggap-komplain/submit', [KecepatanWaktuTanggapKomplainController::class, 'store']);
+
+   Route::post('/notifikasi/delete', [NotifikasiController::class, 'delete']);
 });

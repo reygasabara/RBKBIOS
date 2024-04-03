@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -23,7 +24,32 @@ class PengeluaranController extends Controller
         $dataPengeluaran = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/akuntansi/pengeluaran');
         $jsonPengeluaran = $dataPengeluaran->json();
         $pengeluaran = $jsonPengeluaran['data'];
-        return view('layers.pengeluaran.index',["datas"=>$pengeluaran['datas'], 'active'=>['keuangan', 'pengeluaran'], 'savedData' => session('savedData')]);
+        $datas = $pengeluaran['datas'];
+        
+        usort($datas, function($a, $b) {
+            return strtotime($a['updated_at']) - strtotime($b['updated_at']);
+        });
+            
+        $lastUpdate = end($datas)['updated_at'];
+        $updateDatetime = date("Y-m-d 15:00:00", strtotime("-1 day"));
+        $updateStatus = 'not updated';
+        $notifikasi = []; 
+
+        if ($lastUpdate >= $updateDatetime) {
+            $updateStatus = 'updated';
+        } 
+
+        $filterNotifikasi = Notifikasi::where('submenu', 'Pengeluaran')->get();
+
+        if ($filterNotifikasi->isNotEmpty()) {
+            foreach ($filterNotifikasi as $data) {
+                $pesan = '[' . $data['updated_at'] . '] ' . $data['pesan'] . ' pada transaksi tanggal ' . $data['tgl_transaksi'] . ' dengan kode akun ' . $data['keunikan'] . '.';
+                array_push($notifikasi, $pesan);
+            }
+            $updateStatus = 'partially updated';
+        }
+
+        return view('layers.pengeluaran.index',["datas"=>$datas, 'active'=>['keuangan', 'pengeluaran'], "updateStatus"=>$updateStatus, "lastUpdate"=>$lastUpdate, 'notifikasi' => $notifikasi, 'updateDatetime' => $updateDatetime, 'savedData' => session('savedData')]);
     }
 
     /**

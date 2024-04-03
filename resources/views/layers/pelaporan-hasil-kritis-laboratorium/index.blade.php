@@ -28,7 +28,7 @@
 
                 <div>
                     <h6 class="text-right">
-                        <strong><em>*Data dikirimkan per periode semesterana</em></strong>
+                        <strong><em>*Data dikirimkan per periode semesteran</em></strong>
                     </h6>
                 </div>
             </div>

@@ -20,9 +20,9 @@ class KepatuhanPencegahanResikoPasienJatuhController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKepatuhanPencegahanPasienJatuh = Http::withHeaders(['token' => $token])->post('https://' . '' . env('DOMAIN_NAME') . '' . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_upaya_pencegahan_resiko_pasien_jatuh');
+        $dataKepatuhanPencegahanPasienJatuh = Http::withHeaders(['token' => $token])->post('https://' . '' . env('DOMAIN_NAME') . '' . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_upaya_pencegahan_risiko_pasien_jatuh');
         $jsonKepatuhanPencegahanPasienJatuh = $dataKepatuhanPencegahanPasienJatuh->json();
-        dd($jsonKepatuhanPencegahanPasienJatuh);
+        // dd($jsonKepatuhanPencegahanPasienJatuh);
         $kepatuhanPencegahanPasienJatuh = $jsonKepatuhanPencegahanPasienJatuh['data'];
         return view('layers.kepatuhan-upaya-pencegahan-resiko-pasien-jatuh.index',["datas"=>$kepatuhanPencegahanPasienJatuh['datas'], 'active'=>['ikt', 'kepatuhan_upaya_pencegahan_resiko_pasien_jatuh'], 'savedData' => session('savedData')]);
     }
@@ -53,7 +53,7 @@ class KepatuhanPencegahanResikoPasienJatuhController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_upaya_pencegahan_resiko_pasien_jatuh', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_upaya_pencegahan_risiko_pasien_jatuh', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

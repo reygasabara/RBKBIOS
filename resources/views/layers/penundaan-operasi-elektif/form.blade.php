@@ -22,10 +22,10 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Form Waktu Tunggu Rawat Jalan</h3>
+                <h3 class="box-title">Form Penundaan Operasi Elektif</h3>
             </div>
 
-            <form role="form" method="POST" action="/waktu-tunggu-ralan/submit">
+            <form role="form" method="POST" action="/penundaan-operasi-elektif/submit">
                 @csrf
 
                 <div class="box-body">

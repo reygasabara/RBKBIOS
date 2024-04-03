@@ -20,9 +20,8 @@ class KepatuhanAlurKlinisController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataKepatuhanAlurKlinis = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_alur_klinis');
+        $dataKepatuhanAlurKlinis = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_clinical_pathway');
         $jsonKepatuhanAlurKlinis = $dataKepatuhanAlurKlinis->json();
-        dd($jsonKepatuhanAlurKlinis);
         $kepatuhanAlurKlinis = $jsonKepatuhanAlurKlinis['data'];
         return view('layers.kepatuhan-alur-klinis.index',["datas"=>$kepatuhanAlurKlinis['datas'], 'active'=>['ikt', 'kepatuhan_alur_klinis'], 'savedData' => session('savedData')]);
     }
@@ -53,7 +52,7 @@ class KepatuhanAlurKlinisController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_alur_klinis', $validatedData);
+        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_clinical_pathway', $validatedData);
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

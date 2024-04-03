@@ -19,8 +19,7 @@ class IndeksKepuasanMasyarakatController extends Controller
         ]);
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
-
-        $dataIKM = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/ikm_kesehatan');
+        $dataIKM = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/ikm_kesehatan');
         $jsonIKM = $dataIKM->json();
         dd($jsonIKM);   
         $ikm = $jsonIKM['data'];
@@ -52,8 +51,9 @@ class IndeksKepuasanMasyarakatController extends Controller
 
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
-
         $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/ikm_kesehatan', $validatedData);
+
+        dd($response->json());
 
         $message = $response->json()['message'];
         $errorResponse = $response->json()['error'];

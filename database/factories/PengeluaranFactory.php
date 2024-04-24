@@ -19,7 +19,7 @@ class PengeluaranFactory extends Factory
     {
         return [
             'tgl_transaksi' => Carbon::yesterday(),
-            'kd_akun' => fake()->numberBetween(421111, 424960),
+            'kd_akun' => fake()->numberBetween(525121, 525129),
             'jumlah' =>  floor(fake()->numberBetween(1000, 20000000) / 1000) * 1000,
         ];
     }

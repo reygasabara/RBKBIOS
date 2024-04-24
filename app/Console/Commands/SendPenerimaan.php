@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Notifikasi;
 use Carbon\Carbon;
+use App\Models\Notifikasi;
 use App\Models\Penerimaan;
 use Illuminate\Console\Command;
+use App\Models\StatusPengiriman;
+use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
 class SendPenerimaan extends Command
@@ -30,12 +32,11 @@ class SendPenerimaan extends Command
     public function handle()
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
+        $targetDate = Carbon::yesterday()->format('Y-m-d');
+        $datas = Penerimaan::whereDate('tgl_transaksi', $targetDate)->get();
+        $statusPengiriman = [];
 
-        $penerimaan = Penerimaan::all();
-        $error = false;
-
-        foreach ($penerimaan as $data) {
-
+        foreach ($datas as $data) {
             $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
             'satker' => env('TOKEN_SATKER'),
             'key' => env('TOKEN_KEY')
@@ -48,10 +49,10 @@ class SendPenerimaan extends Command
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
+            $errors = 'Tidak ada';
 
             if ($response->successful()) { 
                 if ($errorResponse) {
-                    $error = true;
                     $errorLists = [];
 
                     foreach ($errorResponse as $fields) {
@@ -60,15 +61,13 @@ class SendPenerimaan extends Command
                         }
                     }
 
+                    $errors = implode(', ', $errorLists);
+                    $status = 'Gagal';
+                    array_push($statusPengiriman, $status);
                     $this->info('-> ' . json_encode($message) . '. Penyebab eror: ' .  json_encode($errorLists)); 
-                    
-                    $notifikasi = new Notifikasi();
-                    $notifikasi->tgl_transaksi = $data['tgl_transaksi'];
-                    $notifikasi->submenu = 'Penerimaan';
-                    $notifikasi->keunikan = $data['kd_akun'];
-                    $notifikasi->pesan = $message . '. Penyebabnya adalah ' . implode(', ', $errorLists);
-                    $notifikasi->save();
                 } else {
+                    $status = 'Sukses';
+                    array_push($statusPengiriman, $status);
                     $this->info('-> ' . $message);  
                 }
             } else {
@@ -80,18 +79,40 @@ class SendPenerimaan extends Command
                     }
                 }
                 
+                $errors = implode(', ', $errorLists);
+                $status = 'Gagal';
+                array_push($statusPengiriman, $status);
                 $this->info('-> ' . json_encode($message) .  json_encode($errorLists)); 
-                
-                $notifikasi = new Notifikasi();
-                $notifikasi->submenu = 'Penerimaan';
-                $notifikasi->pesan = $message . ' karena ' . implode(', ', $errorLists) . '.';
-                $notifikasi->save();
             }
+
+            $log = new LogPengirimanData();
+            $log->modul = 'Keuangan';
+            $log->jenis_data = 'Penerimaan';
+            $log->tgl_transaksi = $data['tgl_transaksi'];
+            $log->kata_kunci = 'Kode akun: ' . $data['kd_akun'];
+            $log->status = $status;
+            $log->pesan = $message;
+            $log->eror = $errors;
+            $log->waktu_pengiriman = Carbon::now();
+            $log->save();
         }
 
-        if (!$error) {
-            Notifikasi::where('submenu', 'Penerimaan')->delete();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Penerimaan')->firstOrFail();
+
+        if(count($statusPengiriman) == 0) {
+            $selectedData->status = 'Tidak ada data';
+        } else if(in_array("Gagal", $statusPengiriman)) {
+            if(in_array("Sukses", $statusPengiriman)) {
+                $selectedData->status = 'Diperbarui sebagian';
+            } else {
+                $selectedData->status = 'Gagal diperbarui';
+            }
+        } else {
+            $selectedData->status = 'Telah diperbarui';
         }
+
+        $selectedData->pengiriman_selanjutnya = Carbon::tomorrow()->format('Y-m-d');
+        $selectedData->save();
 
         $this->info('-----Proses pengiriman data selesai------');
     }

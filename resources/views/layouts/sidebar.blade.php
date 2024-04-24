@@ -195,13 +195,27 @@
                             href="/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh"><i class="fa fa-circle-o"></i>
                             Pencegahan Risiko Pasien Jatuh</a>
                     </li>
+                    <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
+                            href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
+                            Waktu Tanggap Komplain</a>
+                    </li>
+                </ul>
             </li>
-            <li @if ($active[1] == 'kecepatan_waktu_tanggap_komplain') class="active" @endif><a
-                    href="/kecepatan-waktu-tanggap-komplain"><i class="fa fa-circle-o"></i>
-                    Waktu Tanggap Komplain</a>
+            <li class="treeview @if ($active[0] == 'monitoring') active @endif">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Monitoring Pengiriman Data</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li @if ($active[1] == 'log') class="active" @endif><a
+                            href="/monitoring/log-pengiriman"><i class="fa fa-circle-o"></i> Log Pengiriman</a></li>
+                    <li @if ($active[1] == 'status') class="active" @endif><a
+                            href="/monitoring/status-pengiriman"><i class="fa fa-circle-o"></i> Status Pengiriman</a>
+                    </li>
+                </ul>
             </li>
-        </ul>
-        </li>
         </ul>
     </section>
     <!-- /.sidebar -->

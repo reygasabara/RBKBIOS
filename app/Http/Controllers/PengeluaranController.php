@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Notifikasi;
+use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PengeluaranController extends Controller
 {
@@ -13,43 +16,16 @@ class PengeluaranController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+    {   
+        $datas = Pengeluaran::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
+        $updated = Carbon::today()->toDateString() == $lastUpdate ? true : false;
 
-        $dataPengeluaran = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/akuntansi/pengeluaran');
-        $jsonPengeluaran = $dataPengeluaran->json();
-        $pengeluaran = $jsonPengeluaran['data'];
-        $datas = $pengeluaran['datas'];
-        
-        usort($datas, function($a, $b) {
-            return strtotime($a['updated_at']) - strtotime($b['updated_at']);
-        });
-            
-        $lastUpdate = end($datas)['updated_at'];
-        $updateDatetime = date("Y-m-d 15:00:00", strtotime("-1 day"));
-        $updateStatus = 'not updated';
-        $notifikasi = []; 
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
 
-        if ($lastUpdate >= $updateDatetime) {
-            $updateStatus = 'updated';
-        } 
-
-        $filterNotifikasi = Notifikasi::where('submenu', 'Pengeluaran')->get();
-
-        if ($filterNotifikasi->isNotEmpty()) {
-            foreach ($filterNotifikasi as $data) {
-                $pesan = '[' . $data['updated_at'] . '] ' . $data['pesan'] . ' pada transaksi tanggal ' . $data['tgl_transaksi'] . ' dengan kode akun ' . $data['keunikan'] . '.';
-                array_push($notifikasi, $pesan);
-            }
-            $updateStatus = 'partially updated';
-        }
-
-        return view('layers.pengeluaran.index',["datas"=>$datas, 'active'=>['keuangan', 'pengeluaran'], "updateStatus"=>$updateStatus, "lastUpdate"=>$lastUpdate, 'notifikasi' => $notifikasi, 'updateDatetime' => $updateDatetime, 'savedData' => session('savedData')]);
+        return view('layers.pengeluaran.index',["datas"=>$datas, 'active'=>['keuangan', 'pengeluaran'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -66,81 +42,51 @@ class PengeluaranController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
-            'kd_akun' => 'required|numeric',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
+            'kd_akun' => 'required|numeric|regex:/^5\d{5}$/',
             'jumlah' => 'required|numeric',
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
+            'kd_akun.regex' => 'Kode akun harus terdiri dari 6 digit dan diawali dengan angka 5',
         ]);
 
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $status = 'add';
+        $checkedData = Pengeluaran::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->get();
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/pengeluaran', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/pengeluaran')->with('savedData', $savedData);  
+        foreach($checkedData as $data) {
+            if($data['kd_akun'] == $validatedData['kd_akun']) {
+                $status = 'update';
+                break;
             }
-        } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($status == 'add') {
+            $data = new Pengeluaran();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->kd_akun = $validatedData['kd_akun'];
+            $data->jumlah = $validatedData['jumlah'];
+            $data->save();
+            Alert::success('Sukses!', 'Data dengan kode akun ' . $validatedData['kd_akun'] . ' berhasil ditambahkan');
+        } else {
+            $updatedData = Pengeluaran::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('kd_akun', $validatedData['kd_akun'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->kd_akun = $validatedData['kd_akun'];
+            $updatedData->jumlah = $validatedData['jumlah'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data dengan kode akun ' . $validatedData['kd_akun'] . ' berhasil diperbarui');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/pengeluaran'); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pengeluaran $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

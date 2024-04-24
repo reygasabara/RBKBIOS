@@ -53,6 +53,7 @@
         @include('layouts.sidebar')
 
         <div class="content-wrapper" style="margin-top: 45px">
+            @include('sweetalert::alert')
             @yield('content')
         </div>
 

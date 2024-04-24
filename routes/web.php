@@ -18,8 +18,10 @@ use App\Http\Controllers\KepuasanPasienController;
 use App\Http\Controllers\JumlahDokterGigiController;
 use App\Http\Controllers\JumlahDokterUmumController;
 use App\Http\Controllers\JumlahSanitarianController;
+use App\Http\Controllers\StatusPengirimanController;
 use App\Http\Controllers\JumlahRadiograferController;
 use App\Http\Controllers\JumlahTenagaBidanController;
+use App\Http\Controllers\LogPengirimanDataController;
 use App\Http\Controllers\JumlahFisioterapisController;
 use App\Http\Controllers\penyelenggaraanRMEController;
 use App\Http\Controllers\JumlahTenagaPerawatController;
@@ -92,18 +94,27 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/penerimaan', [PenerimaanController::class, 'index']);
    Route::get('/penerimaan/input', [PenerimaanController::class, 'create']);
    Route::post('/penerimaan/submit', [PenerimaanController::class, 'store']);
+   Route::delete('/penerimaan/delete/{id}', [PenerimaanController::class, 'destroy']);
+
    Route::get('/pengeluaran', [PengeluaranController::class, 'index']);
    Route::get('/pengeluaran/input', [PengeluaranController::class, 'create']);
    Route::post('/pengeluaran/submit', [PengeluaranController::class, 'store']);
+   Route::delete('/pengeluaran/delete/{id}', [PengeluaranController::class, 'destroy']);
+
    Route::get('/saldo-operasional', [SaldoRekeningOperasionalController::class, 'index']);
    Route::get('/saldo-operasional/input', [SaldoRekeningOperasionalController::class, 'create']);
    Route::post('/saldo-operasional/submit', [SaldoRekeningOperasionalController::class, 'store']);
+   Route::delete('/saldo-operasional/delete/{id}', [SaldoRekeningOperasionalController::class, 'destroy']);
+
    Route::get('/saldo-pengelolaan-kas', [SaldoRekeningPengelolaanKasController::class, 'index']);
    Route::get('/saldo-pengelolaan-kas/input', [SaldoRekeningPengelolaanKasController::class, 'create']);
    Route::post('/saldo-pengelolaan-kas/submit', [SaldoRekeningPengelolaanKasController::class, 'store']);
+   Route::delete('/saldo-pengelolaan-kas/delete/{id}', [SaldoRekeningPengelolaanKasController::class, 'destroy']);
+
    Route::get('/saldo-dana-kelolaan', [SaldoRekeningDanaKelolaanController::class, 'index']);
    Route::get('/saldo-dana-kelolaan/input', [SaldoRekeningDanaKelolaanController::class, 'create']);
    Route::post('/saldo-dana-kelolaan/submit', [SaldoRekeningDanaKelolaanController::class, 'store']);
+   Route::delete('/saldo-dana-kelolaan/delete/{id}', [SaldoRekeningDanaKelolaanController::class, 'destroy']);
 
    Route::get('/dokter-spesialis', [JumlahDokterSpesialisController::class, 'index']);
    Route::get('/dokter-spesialis/input', [JumlahDokterSpesialisController::class, 'create']);
@@ -274,4 +285,7 @@ Route::middleware(['auth'])->group(function () {
    Route::post('/kecepatan-waktu-tanggap-komplain/submit', [KecepatanWaktuTanggapKomplainController::class, 'store']);
 
    Route::post('/notifikasi/delete', [NotifikasiController::class, 'delete']);
+
+   Route::get('/monitoring/log-pengiriman', [LogPengirimanDataController::class, 'index']);
+   Route::get('/monitoring/status-pengiriman', [StatusPengirimanController::class, 'index']);
 });

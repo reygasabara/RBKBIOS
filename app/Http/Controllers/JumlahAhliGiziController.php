@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -20,10 +21,35 @@ class JumlahAhliGiziController extends Controller
         $jsonToken = $getToken->json();
         $token = $jsonToken['token'];
 
-        $dataAhliGizi = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/sdm/nutritionist');
-        $jsonAhliGizi = $dataAhliGizi->json();
-        $ahliGizi = $jsonAhliGizi['data'];
-        return view('layers.jumlah-ahli-gizi.index',["datas"=>$ahliGizi['datas'], 'active'=>['sdm', 'ahli_gizi'], 'savedData' => session('savedData')]);
+        $getData = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/sdm/nutritionist');
+        $dataJson = $getData->json();
+        $dataFromJson = $dataJson['data'];
+        $datas = $dataFromJson['datas'];
+        
+        usort($datas, function($a, $b) {
+            return strtotime($a['updated_at']) - strtotime($b['updated_at']);
+        });
+            
+        $lastUpdate = end($datas)['updated_at'];
+        $updateDatetime = date("Y-m-d 15:00:00", strtotime("-1 day"));
+        $updateStatus = 'not updated';
+        $notifikasi = []; 
+
+        if ($lastUpdate >= $updateDatetime) {
+            $updateStatus = 'updated';
+        } 
+
+        $filterNotifikasi = Notifikasi::where('submenu', 'Ahli Gizi')->orderBy('updated_at', 'DESC')->get();
+
+        if ($filterNotifikasi->isNotEmpty()) {
+            foreach ($filterNotifikasi as $data) {
+                $pesan = '[' . $data['updated_at'] . '] ' . $data['pesan'] . ' pada transaksi tanggal ' . $data['tgl_transaksi'];
+                array_push($notifikasi, $pesan);
+            }
+            $updateStatus = 'partially updated';
+        }
+
+        return view('layers.jumlah-ahli-gizi.index',["datas"=>$datas, 'active'=>['sdm', 'ahli_gizi'], "updateStatus"=>$updateStatus, "lastUpdate"=>$lastUpdate, 'notifikasi' => $notifikasi, 'updateDatetime' => $updateDatetime, 'savedData' => session('savedData')]);
     }
 
     /**

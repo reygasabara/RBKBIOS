@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
+use App\Models\SaldoDanaKelolaan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SaldoRekeningDanaKelolaanController extends Controller
 {
@@ -13,17 +17,15 @@ class SaldoRekeningDanaKelolaanController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = SaldoDanaKelolaan::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
+        $updated = Carbon::today()->toDateString() == $lastUpdate ? true : false;
 
-        $dataDanaKelolaan = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/keuangan/saldo/saldo_dana_kelolaan');
-        $jsonDanaKelolaan = $dataDanaKelolaan->json();
-        $danaKelolaan = $jsonDanaKelolaan['data'];
-        return view('layers.saldo-dana-kelolaan.index',["datas"=>$danaKelolaan['datas'], 'active'=>['keuangan', 'dana_kelolaan'], 'savedData' => session('savedData')]);
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.saldo-dana-kelolaan.index',["datas"=>$datas, 'active'=>['keuangan', 'dana_kelolaan'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,82 +42,54 @@ class SaldoRekeningDanaKelolaanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
-            'kdbank' => 'required|numeric',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
+            'kdbank' => 'required|numeric|in:002,008,009,011,013,014,016,019,022,026,028,031,032,037,040,041,042,045,046,048,050,067,089,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,147,153,200,213,330,422,426,427,441,451,484,494,506,517,521,547,553,555,601,773,781,949,950,990,201',
             'no_rekening' => 'required|numeric',
             'saldo_akhir' => 'required|numeric',
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
+            'kdbank.in' => 'Kode bank tidak diketahui'
         ]);
 
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $status = 'add';
+        $checkedData = SaldoDanaKelolaan::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->get();
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/saldo/saldo_dana_kelolaan', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/saldo-dana-kelolaan')->with('savedData', $savedData);  
+        foreach($checkedData as $data) {
+            if($data['no_rekening'] == $validatedData['no_rekening']) {
+                $status = 'update';
+                break;
             }
-        } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($status == 'add') {
+            $data = new SaldoDanaKelolaan();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->kdbank = $validatedData['kdbank'];
+            $data->no_rekening = $validatedData['no_rekening'];
+            $data->saldo_akhir = $validatedData['saldo_akhir'];
+            $data->save();
+            Alert::success('Sukses!', 'Data dengan no. rekening ' . $validatedData['no_rekening'] . ' berhasil ditambahkan');
+        } else {
+            $updatedData = SaldoDanaKelolaan::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('no_rekening', $validatedData['no_rekening'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->kdbank = $validatedData['kdbank'];
+            $updatedData->no_rekening = $validatedData['no_rekening'];
+            $updatedData->saldo_akhir = $validatedData['saldo_akhir'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data dengan no. rekening ' . $validatedData['no_rekening'] . ' berhasil diperbarui');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/saldo-dana-kelolaan');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SaldoDanaKelolaan $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

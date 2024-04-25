@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\SdmNonMedis;
 use Illuminate\Http\Request;
+use App\Models\StatusPengiriman;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JumlahTenagaNonMedisController extends Controller
 {
@@ -13,17 +17,20 @@ class JumlahTenagaNonMedisController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = SdmNonMedis::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $dataNonMedis = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/sdm/non_medis');
-        $jsonNonMedis = $dataNonMedis->json();
-        $nonMedis = $jsonNonMedis['data'];
-        return view('layers.jumlah-non-medis.index',["datas"=>$nonMedis['datas'], 'active'=>['sdm', 'non_medis'], 'savedData' => session('savedData')]);
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Dokter Spesialis')->first();
+        $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
+        $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
+
+        $updated = $lastUpdate >= $lastUpdateStatus && $lastUpdate < $nextUpdate? true : false;
+
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.jumlah-non-medis.index',["datas"=>$datas, 'active'=>['sdm', 'non_medis'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,84 +47,51 @@ class JumlahTenagaNonMedisController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'pns' => 'required|numeric',
             'pppk' => 'required|numeric',
             'anggota' => 'required|numeric',
             'non_pns_tetap' => 'required|numeric',
             'kontrak' => 'required|numeric'
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
-       
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $checkedData = SdmNonMedis::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->first();
+        $status = $checkedData ? 'update' : 'add';
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/sdm/non_medis', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/non-medis')->with('savedData', $savedData);  
-            }
+        if ($status == 'add') {
+            $data = new SdmNonMedis();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->pns = $validatedData['pns'];
+            $data->pppk = $validatedData['pppk'];
+            $data->anggota = $validatedData['anggota'];
+            $data->non_pns_tetap = $validatedData['non_pns_tetap'];
+            $data->kontrak = $validatedData['kontrak'];
+            $data->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil ditambahkan');
         } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
+            $updatedData = SdmNonMedis::where('tgl_transaksi', $validatedData['tgl_transaksi'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->pns = $validatedData['pns'];
+            $updatedData->pppk = $validatedData['pppk'];
+            $updatedData->anggota = $validatedData['anggota'];
+            $updatedData->non_pns_tetap = $validatedData['non_pns_tetap'];
+            $updatedData->kontrak = $validatedData['kontrak'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil diperbarui');
         }
+
+        return Redirect::to('/non-medis');   
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
+   /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SdmNonMedis $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

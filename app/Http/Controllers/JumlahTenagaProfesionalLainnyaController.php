@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Notifikasi;
 use Illuminate\Http\Request;
+use App\Models\StatusPengiriman;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\SdmTenagaProfesionalLainnya;
 
 class JumlahTenagaProfesionalLainnyaController extends Controller
 {
@@ -14,42 +18,20 @@ class JumlahTenagaProfesionalLainnyaController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = SdmTenagaProfesionalLainnya::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $getData = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/sdm/profesional_lain');
-        $dataJson = $getData->json();
-        $dataFromJson = $dataJson['data'];
-        $datas = $dataFromJson['datas'];
-        
-        usort($datas, function($a, $b) {
-            return strtotime($a['updated_at']) - strtotime($b['updated_at']);
-        });
-            
-        $lastUpdate = end($datas)['updated_at'];
-        $updateDatetime = date("Y-m-d 15:00:00", strtotime("-1 day"));
-        $updateStatus = 'not updated';
-        $notifikasi = []; 
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Dokter Spesialis')->first();
+        $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
+        $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
 
-        if ($lastUpdate >= $updateDatetime) {
-            $updateStatus = 'updated';
-        } 
+        $updated = $lastUpdate >= $lastUpdateStatus && $lastUpdate < $nextUpdate? true : false;
 
-        $filterNotifikasi = Notifikasi::where('submenu', 'Perawat')->orderBy('updated_at', 'DESC')->get();
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
 
-        if ($filterNotifikasi->isNotEmpty()) {
-            foreach ($filterNotifikasi as $data) {
-                $pesan = '[' . $data['updated_at'] . '] ' . $data['pesan'] . ' pada transaksi tanggal ' . $data['tgl_transaksi'];
-                array_push($notifikasi, $pesan);
-            }
-            $updateStatus = 'partially updated';
-        }
-
-        return view('layers.jumlah-profesional-lainnya.index',["datas"=>$datas, 'active'=>['sdm', 'profesional_lainnya'], "updateStatus"=>$updateStatus, "lastUpdate"=>$lastUpdate, 'notifikasi' => $notifikasi, 'updateDatetime' => $updateDatetime, 'savedData' => session('savedData')]);
+        return view('layers.jumlah-profesional-lainnya.index',["datas"=>$datas, 'active'=>['sdm', 'profesional_lainnya'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -66,84 +48,51 @@ class JumlahTenagaProfesionalLainnyaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'pns' => 'required|numeric',
             'pppk' => 'required|numeric',
             'anggota' => 'required|numeric',
             'non_pns_tetap' => 'required|numeric',
             'kontrak' => 'required|numeric'
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
-       
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $checkedData = SdmTenagaProfesionalLainnya::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->first();
+        $status = $checkedData ? 'update' : 'add';
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/sdm/profesional_lain', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/profesional-lainnya')->with('savedData', $savedData);  
-            }
+        if ($status == 'add') {
+            $data = new SdmTenagaProfesionalLainnya();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->pns = $validatedData['pns'];
+            $data->pppk = $validatedData['pppk'];
+            $data->anggota = $validatedData['anggota'];
+            $data->non_pns_tetap = $validatedData['non_pns_tetap'];
+            $data->kontrak = $validatedData['kontrak'];
+            $data->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil ditambahkan');
         } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
+            $updatedData = SdmTenagaProfesionalLainnya::where('tgl_transaksi', $validatedData['tgl_transaksi'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->pns = $validatedData['pns'];
+            $updatedData->pppk = $validatedData['pppk'];
+            $updatedData->anggota = $validatedData['anggota'];
+            $updatedData->non_pns_tetap = $validatedData['non_pns_tetap'];
+            $updatedData->kontrak = $validatedData['kontrak'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil diperbarui');
         }
+
+        return Redirect::to('/profesional-lainnya');   
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
+   /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SdmTenagaProfesionalLainnya $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

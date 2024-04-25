@@ -31,7 +31,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('send:apoteker')->dailyAt('14:46')->appendOutputTo('storage/logs/laravel.log');
         // $schedule->command('send:tenaga-profesional-lainnya')->dailyAt('14:46')->appendOutputTo('storage/logs/laravel.log');
 
-        $schedule->command('reset:status-pengiriman-data-harian')->dailyAt('08:00')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('reset:status-pengiriman-data-harian')->dailyAt('08:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('reset:status-pengiriman-data-tahunan')->yearlyOn(1, 1, '08:30')->appendOutputTo('storage/logs/laravel.log');
     }
 
     /**

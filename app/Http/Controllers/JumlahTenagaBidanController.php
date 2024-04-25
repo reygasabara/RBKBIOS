@@ -19,7 +19,7 @@ class JumlahTenagaBidanController extends Controller
         $datas = SdmBidan::orderBy('updated_at', 'desc')->get();
         $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Tenaga Bidan')->first();
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Tenaga Bidan')->first();
         $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
         $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
 

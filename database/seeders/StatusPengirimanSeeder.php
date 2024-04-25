@@ -57,7 +57,7 @@ class StatusPengirimanSeeder extends Seeder
 
         DB::table('status_pengiriman')->insert([[
             'modul' => 'SDM',
-            'jenis_data' => 'Dokter Spesialis',
+            'jenis_data' => 'Jumlah Dokter Spesialis',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -65,7 +65,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Dokter Gigi',
+            'jenis_data' => 'Jumlah Dokter Gigi',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -73,7 +73,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Dokter Umum',
+            'jenis_data' => 'Jumlah Dokter Umum',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -81,7 +81,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Tenaga Perawat',
+            'jenis_data' => 'Jumlah Tenaga Perawat',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -89,7 +89,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Tenaga Bidan',
+            'jenis_data' => 'Jumlah Tenaga Bidan',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -97,7 +97,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Pranata Laboratorium',
+            'jenis_data' => 'Jumlah Pranata Laboratorium',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -105,7 +105,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Radiografer',
+            'jenis_data' => 'Jumlah Radiografer',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -113,7 +113,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Ahli Gizi',
+            'jenis_data' => 'Jumlah Ahli Gizi',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -121,7 +121,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Fisioterapis',
+            'jenis_data' => 'Jumlah Fisioterapis',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -129,7 +129,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Apoteker',
+            'jenis_data' => 'Jumlah Apoteker',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -137,7 +137,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Tenaga Profesional Lainnya',
+            'jenis_data' => 'Jumlah Tenaga Profesional Lainnya',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -145,7 +145,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Tenaga Non-Medis',
+            'jenis_data' => 'Jumlah Tenaga Non-Medis',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -153,7 +153,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Tenaga Non-Medis Administrasi',
+            'jenis_data' => 'Jumlah Tenaga Non-Medis Administrasi',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',
@@ -161,7 +161,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2024-01-01 00:00:00',
         ], [
             'modul' => 'SDM',
-            'jenis_data' => 'Sanitarian',
+            'jenis_data' => 'Jumlah Sanitarian',
             'jadwal_pengiriman' => 'Tahunan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2025-01-01',

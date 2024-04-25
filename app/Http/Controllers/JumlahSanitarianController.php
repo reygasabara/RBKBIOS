@@ -20,7 +20,7 @@ class JumlahSanitarianController extends Controller
         $datas = SdmSanitarian::orderBy('updated_at', 'desc')->get();
         $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Dokter Spesialis')->first();
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Sanitarian')->first();
         $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
         $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
 

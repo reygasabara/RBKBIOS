@@ -3,28 +3,28 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Models\Notifikasi;
-use App\Models\SdmPranataLab;
+use App\Models\SdmNonMedis;
 use Illuminate\Console\Command;
 use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
+use App\Models\SdmSanitarian;
 use Illuminate\Support\Facades\Http;
 
-class SendPranataLaboratorium extends Command
+class SendSanitarian extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:pranata-laboratorium';
+    protected $signature = 'send:sanitarian';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mengirim data jumlah pranata laboratorium ...';
+    protected $description = 'Mengirim data jumlah sanitarian ...';
 
     /**
      * Execute the console command.
@@ -33,7 +33,7 @@ class SendPranataLaboratorium extends Command
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
         $targetDate = Carbon::now()->subYear()->format('Y-m-d');
-        $datas = SdmPranataLab::whereDate('tgl_transaksi', $targetDate)->get();
+        $datas = SdmSanitarian::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 
         foreach ($datas as $data) {
@@ -46,7 +46,7 @@ class SendPranataLaboratorium extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/sdm/pranata_laboratorium', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/sdm/non_medis', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
@@ -92,7 +92,7 @@ class SendPranataLaboratorium extends Command
 
             $log = new LogPengirimanData();
             $log->modul = 'SDM';
-            $log->jenis_data = 'Jumlah Pranata Laboratorium';
+            $log->jenis_data = 'Jumlah Tenaga Sanitarian';
             $log->tgl_transaksi = $data['tgl_transaksi'];
             $log->kata_kunci = '-';
             $log->status = $status;
@@ -102,7 +102,7 @@ class SendPranataLaboratorium extends Command
             $log->save();
         }
 
-        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah Pranata Laboratorium')->firstOrFail();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah Sanitarian')->firstOrFail();
 
         if(count($statusPengiriman) == 0) {
             $selectedData->status = 'Tidak ada data';
@@ -122,4 +122,3 @@ class SendPranataLaboratorium extends Command
         $this->info('-----Proses pengiriman data selesai------');
     }
 }
-

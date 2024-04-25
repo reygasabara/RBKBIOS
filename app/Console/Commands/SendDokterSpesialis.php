@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Models\Notifikasi;
 use Illuminate\Console\Command;
+use App\Models\StatusPengiriman;
+use App\Models\LogPengirimanData;
 use App\Models\SdmDokterSpesialis;
 use Illuminate\Support\Facades\Http;
 
@@ -30,9 +31,9 @@ class SendDokterSpesialis extends Command
     public function handle()
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
-
-        $datas = SdmDokterSpesialis::all();
-        $error = false;
+        $targetDate = Carbon::now()->subYear()->format('Y-m-d');
+        $datas = SdmDokterSpesialis::whereDate('tgl_transaksi', $targetDate)->get();
+        $statusPengiriman = [];
 
         foreach ($datas as $data) {
 
@@ -48,6 +49,7 @@ class SendDokterSpesialis extends Command
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
+            $errors = 'Tidak ada';
 
             if ($response->successful()) { 
                 if ($errorResponse) {
@@ -60,15 +62,15 @@ class SendDokterSpesialis extends Command
                         }
                     }
 
+                    $errors = implode(', ', $errorLists);
+                    $status = 'Gagal';
+                    array_push($statusPengiriman, $status);
+
                     $this->info('-> ' . json_encode($message) . '. Penyebab eror: ' .  json_encode($errorLists)); 
-                    
-                    $notifikasi = new Notifikasi();
-                    $notifikasi->tgl_transaksi = $data['tgl_transaksi'];
-                    $notifikasi->submenu = 'Dokter Spesi';
-                    $notifikasi->keunikan = $data['tgl_transaksi'];
-                    $notifikasi->pesan = $message . '. Penyebabnya adalah ' . implode(', ', $errorLists);
-                    $notifikasi->save();
                 } else {
+                    $status = 'Sukses';
+                    array_push($statusPengiriman, $status);
+
                     $this->info('-> ' . $message);  
                 }
             } else {
@@ -80,18 +82,41 @@ class SendDokterSpesialis extends Command
                     }
                 }
                 
+                $errors = implode(', ', $errorLists);
+                $status = 'Gagal';
+                array_push($statusPengiriman, $status);
+
                 $this->info('-> ' . json_encode($message) .  json_encode($errorLists)); 
-                
-                $notifikasi = new Notifikasi();
-                $notifikasi->submenu = 'Dokter Spesialis';
-                $notifikasi->pesan = $message . ' karena ' . implode(', ', $errorLists) . '.';
-                $notifikasi->save();
             }
+
+            $log = new LogPengirimanData();
+            $log->modul = 'SDM';
+            $log->jenis_data = 'Jumlah Dokter Spesialis';
+            $log->tgl_transaksi = $data['tgl_transaksi'];
+            $log->kata_kunci = '-';
+            $log->status = $status;
+            $log->pesan = $message;
+            $log->eror = $errors;
+            $log->waktu_pengiriman = Carbon::now();
+            $log->save();
         }
 
-        if (!$error) {
-            Notifikasi::where('submenu', 'Dokter Spesialis')->delete();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah Dokter Spesialis')->firstOrFail();
+
+        if(count($statusPengiriman) == 0) {
+            $selectedData->status = 'Tidak ada data';
+        } else if(in_array("Gagal", $statusPengiriman)) {
+            if(in_array("Sukses", $statusPengiriman)) {
+                $selectedData->status = 'Diperbarui sebagian';
+            } else {
+                $selectedData->status = 'Gagal diperbarui';
+            }
+        } else {
+            $selectedData->status = 'Telah diperbarui';
         }
+
+        $selectedData->pengiriman_selanjutnya = Carbon::now()->addYear()->format('Y-m-d');
+        $selectedData->save();
 
         $this->info('-----Proses pengiriman data selesai------');
     }

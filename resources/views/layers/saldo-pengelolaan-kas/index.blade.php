@@ -63,7 +63,7 @@
                                 <td>{{ $data['nilai_deposito'] }}</td>
                                 <td>{{ $data['nilai_bunga'] }}</td>
                                 <td><a href="saldo-pengelolaan-kas/delete/{{ $data['id'] }}" class="btn btn-danger"
-                                        data-confirm-delete="true">Delete</a></td>
+                                        data-confirm-delete="true">Hapus</a></td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -20,10 +20,10 @@ class jumlahDokterSpesialisController extends Controller
         $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
         $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Dokter Spesialis')->first();
-        $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
-        $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
+        $lastUpdateStatus =  $getStatusPengiriman['updated_at']->format('Y-m-d');
+        $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
 
-        $updated = $lastUpdate >= $lastUpdateStatus && $lastUpdate < $nextUpdate? true : false;
+        $updated = $lastUpdate >= $targetDate || (Carbon::now()->format('Y-m-d') < $targetDate && $lastUpdate == $lastUpdateStatus)? true : false;
 
         $title = 'Menghapus Data!';
         $text = "Apakah Anda yakin ingin menghapus data?";

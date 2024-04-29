@@ -21,9 +21,9 @@ class JumlahApotekerController extends Controller
 
         $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Apoteker')->first();
         $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
-        $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
+        $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
 
-        $updated = $lastUpdate >= $lastUpdateStatus && $lastUpdate < $nextUpdate? true : false;
+        $updated = $lastUpdate >= $targetDate || (Carbon::now()->format('Y-m-d') < $targetDate && $lastUpdate == $lastUpdateStatus)? true : false;
 
         $title = 'Menghapus Data!';
         $text = "Apakah Anda yakin ingin menghapus data?";

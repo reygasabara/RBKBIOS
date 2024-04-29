@@ -8,6 +8,7 @@ use App\Http\Controllers\TOIController;
 use App\Http\Controllers\ALOSController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RasioPOBOController;
+use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PenerimaanController;
 use App\Http\Controllers\PengeluaranController;
@@ -314,6 +315,7 @@ Route::middleware(['auth'])->group(function () {
    Route::post('/kecepatan-waktu-tanggap-komplain/submit', [KecepatanWaktuTanggapKomplainController::class, 'store']);
 
    Route::post('/notifikasi/delete', [NotifikasiController::class, 'delete']);
+   Route::get('/run-command', [SchedulerController::class, 'runCommand']);
 
    Route::get('/monitoring/log-pengiriman', [LogPengirimanDataController::class, 'index']);
    Route::get('/monitoring/status-pengiriman', [StatusPengirimanController::class, 'index']);

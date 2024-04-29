@@ -177,7 +177,7 @@
 
                   <div class="form-group">
                       <label class="control-sidebar-subheading">
-                          Delete chat history
+                          Hapus chat history
                           <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
                       </label>
                   </div>

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use App\Models\SdmDokterGigi;
 use App\Models\StatusPengiriman;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -23,9 +21,9 @@ class JumlahDokterGigiController extends Controller
 
         $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Dokter Gigi')->first();
         $lastUpdateStatus = $getStatusPengiriman['updated_at']->format('Y-m-d');
-        $nextUpdate = $getStatusPengiriman['pengiriman_selanjutnya'];
+        $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
 
-        $updated = $lastUpdate >= $lastUpdateStatus && $lastUpdate < $nextUpdate? true : false;
+        $updated = $lastUpdate >= $targetDate || (Carbon::now()->format('Y-m-d') < $targetDate && $lastUpdate == $lastUpdateStatus)? true : false;
 
         $title = 'Menghapus Data!';
         $text = "Apakah Anda yakin ingin menghapus data?";

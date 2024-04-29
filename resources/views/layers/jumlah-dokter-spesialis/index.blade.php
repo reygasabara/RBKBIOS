@@ -73,7 +73,7 @@
                                 <td>{{ $data['non_pns_tetap'] }}</td>
                                 <td>{{ $data['kontrak'] }}</td>
                                 <td><a href="dokter-spesialis/delete/{{ $data['id'] }}" class="btn btn-danger"
-                                        data-confirm-delete="true">Delete</a></td>
+                                        data-confirm-delete="true">Hapus</a></td>
                             </tr>
                         @endforeach
                     </tbody>

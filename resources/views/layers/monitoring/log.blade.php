@@ -12,7 +12,12 @@
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
                         <div class="input-group-btn">
-                            <a href="/visite-pertama/input" class="btn btn-success">Input</a>
+                            {{-- <a href="/visite-pertama/input" class="btn btn-success">Input</a> --}}
+                            <form action="/run-command" method="get">
+                                @csrf
+                                <button type="submit">Jalankan Perintah</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

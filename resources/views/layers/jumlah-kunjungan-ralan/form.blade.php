@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
-                            placeholder="Masukkan jumlah kunjungan" required>
+                            placeholder="Masukkan jumlah pasien rawat jalan per kunjungan" required>
                     </div>
                 </div>
 

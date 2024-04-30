@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('layanan_jumlah_pasien_ranaps', function (Blueprint $table) {
             $table->id();
+            $table->date('tgl_transaksi');
             $table->string('kode_kelas');
             $table->integer('jumlah');
             $table->timestamps();

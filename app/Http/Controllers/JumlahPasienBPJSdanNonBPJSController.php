@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\LayananPasienBPJSNonBPJS;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JumlahPasienBPJSdanNonBPJSController extends Controller
 {
@@ -13,17 +16,15 @@ class JumlahPasienBPJSdanNonBPJSController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = LayananPasienBPJSNonBPJS::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
+        $updated = Carbon::today()->toDateString() == $lastUpdate ? true : false;
 
-        $dataPasienBPJSdanNon = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/bpjs_nonbpbjs');
-        $jsonPasienBPJSdanNon = $dataPasienBPJSdanNon->json();
-        $pasienBPJSdanNon = $jsonPasienBPJSdanNon['data'];
-        return view('layers.jumlah-pasien-bpjs-nonbpjs.index',["datas"=>$pasienBPJSdanNon['datas'], 'active'=>['layanan', 'bpjs_nonbpjs'], 'savedData' => session('savedData')]);
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.jumlah-pasien-bpjs-nonbpjs.index',["datas"=>$datas, 'active'=>['layanan', 'bpjs_nonbpjs'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,81 +41,44 @@ class JumlahPasienBPJSdanNonBPJSController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'jumlah_bpjs' => 'required|numeric',
             'jumlah_non_bpjs' => 'required|numeric',
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
        
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $checkedData = LayananPasienBPJSNonBPJS::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->first();
+        $status = $checkedData ? 'update' : 'add';
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bpjs_nonbpbjs', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/pasien-bpjs-nonbpjs')->with('savedData', $savedData);  
-            }
+        if ($status == 'add') {
+            $data = new LayananPasienBPJSNonBPJS();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->jumlah_bpjs = $validatedData['jumlah_bpjs'];
+            $data->jumlah_non_bpjs = $validatedData['jumlah_non_bpjs'];
+            $data->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil ditambahkan');
         } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
+            $updatedData = LayananPasienBPJSNonBPJS::where('tgl_transaksi', $validatedData['tgl_transaksi'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->jumlah_bpjs = $validatedData['jumlah_bpjs'];
+            $updatedData->jumlah_bpjs = $validatedData['jumlah_bpjs'];
+            $updatedData->jumlah_non_bpjs = $validatedData['jumlah_non_bpjs'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil diperbarui');
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/pasien-bpjs-nonbpjs');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LayananPasienBPJSNonBPJS $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

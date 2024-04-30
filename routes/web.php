@@ -192,54 +192,88 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/pasien-ranap', [JumlahPasienRawatInapController::class, 'index']);
    Route::get('/pasien-ranap/input', [JumlahPasienRawatInapController::class, 'create']);
    Route::post('/pasien-ranap/submit', [JumlahPasienRawatInapController::class, 'store']);
+   Route::delete('/pasien-ranap/delete/{id}', [JumlahPasienRawatInapController::class, 'destroy']);
+   
    Route::get('/pasien-igd', [JumlahPasienRawatDaruratController::class, 'index']);
    Route::get('/pasien-igd/input', [JumlahPasienRawatDaruratController::class, 'create']);
    Route::post('/pasien-igd/submit', [JumlahPasienRawatDaruratController::class, 'store']);
+   Route::delete('/pasien-igd/delete/{id}', [JumlahPasienRawatDaruratController::class, 'destroy']);
+   
    Route::get('/lab-sampel', [JumlahLayananLaboratoriumSampelController::class, 'index']);
    Route::get('/lab-sampel/input', [JumlahLayananLaboratoriumSampelController::class, 'create']);
    Route::post('/lab-sampel/submit', [JumlahLayananLaboratoriumSampelController::class, 'store']);
+   Route::delete('/lab-sampel/delete/{id}', [JumlahLayananLaboratoriumSampelController::class, 'destroy']);
+   
    Route::get('/lab-parameter', [JumlahLayananLaboratoriumParameterController::class, 'index']);
    Route::get('/lab-parameter/input', [JumlahLayananLaboratoriumParameterController::class, 'create']);
    Route::post('/lab-parameter/submit', [JumlahLayananLaboratoriumParameterController::class, 'store']);
+   Route::delete('/lab-parameter/delete/{id}', [JumlahLayananLaboratoriumParameterController::class, 'destroy']);
+   
    Route::get('/tindakan-operasi', [JumlahTindakanOperasiController::class, 'index']);
    Route::get('/tindakan-operasi/input', [JumlahTindakanOperasiController::class, 'create']);
    Route::post('/tindakan-operasi/submit', [JumlahTindakanOperasiController::class, 'store']);
+   Route::delete('/tindakan-operasi/delete/{id}', [JumlahTindakanOperasiController::class, 'destroy']);
+   
    Route::get('/layanan-radiologi', [JumlahLayananRadiologiController::class, 'index']);
    Route::get('/layanan-radiologi/input', [JumlahLayananRadiologiController::class, 'create']);
    Route::post('/layanan-radiologi/submit', [JumlahLayananRadiologiController::class, 'store']);
+   Route::delete('/layanan-radiologi/delete/{id}', [JumlahLayananRadiologiController::class, 'destroy']);
+   
    Route::get('/layanan-forensik', [JumlahLayananForensikController::class, 'index']);
    Route::get('/layanan-forensik/input', [JumlahLayananForensikController::class, 'create']);
    Route::post('/layanan-forensik/submit', [JumlahLayananForensikController::class, 'store']);
+   Route::delete('/layanan-forensik/delete/{id}', [JumlahLayananForensikController::class, 'destroy']);
+   
    Route::get('/kunjungan-ralan', [JumlahKunjunganRawatJalanController::class, 'index']);
    Route::get('/kunjungan-ralan/input', [JumlahKunjunganRawatJalanController::class, 'create']);
    Route::post('/kunjungan-ralan/submit', [JumlahKunjunganRawatJalanController::class, 'store']);
+   Route::delete('/kunjungan-ralan/delete/{id}', [JumlahKunjunganRawatJalanController::class, 'destroy']);
+   
    Route::get('/pasien-ralan-poli', [JumlahPasienRawatJalanPoliController::class, 'index']);
    Route::get('/pasien-ralan-poli/input', [JumlahPasienRawatJalanPoliController::class, 'create']);
    Route::post('/pasien-ralan-poli/submit', [JumlahPasienRawatJalanPoliController::class, 'store']);
+   Route::delete('/pasien-ralan-poli/delete/{id}', [JumlahPasienRawatJalanPoliController::class, 'destroy']);
+   
    Route::get('/pasien-bpjs-nonbpjs', [JumlahPasienBPJSdanNonBPJSController::class, 'index']);
    Route::get('/pasien-bpjs-nonbpjs/input', [JumlahPasienBPJSdanNonBPJSController::class, 'create']);
    Route::post('/pasien-bpjs-nonbpjs/submit', [JumlahPasienBPJSdanNonBPJSController::class, 'store']);
+   Route::delete('/pasien-bpjs-nonbpjs/delete/{id}', [JumlahPasienBPJSdanNonBPJSController::class, 'destroy']);
+   
    Route::get('/layanan-farmasi', [JumlahLayananFarmasiController::class, 'index']);
    Route::get('/layanan-farmasi/input', [JumlahLayananFarmasiController::class, 'create']);
    Route::post('/layanan-farmasi/submit', [JumlahLayananFarmasiController::class, 'store']);
+   Route::delete('/layanan-farmasi/delete/{id}', [JumlahLayananFarmasiController::class, 'destroy']);
+   
    Route::get('/bor', [BORController::class, 'index']);
    Route::get('/bor/input', [BORController::class, 'create']);
    Route::post('/bor/submit', [BORController::class, 'store']);
+   Route::delete('/bor/delete/{id}', [BORController::class, 'destroy']);
+   
    Route::get('/toi', [TOIController::class, 'index']);
    Route::get('/toi/input', [TOIController::class, 'create']);
    Route::post('/toi/submit', [TOIController::class, 'store']);
+   Route::delete('/toi/delete/{id}', [TOIController::class, 'destroy']);
+   
    Route::get('/alos', [ALOSController::class, 'index']);
    Route::get('/alos/input', [ALOSController::class, 'create']);
    Route::post('/alos/submit', [ALOSController::class, 'store']);
+   Route::delete('/alos/delete/{id}', [ALOSController::class, 'destroy']);
+   
    Route::get('/bto', [BTOController::class, 'index']);
    Route::get('/bto/input', [BTOController::class, 'create']);
    Route::post('/bto/submit', [BTOController::class, 'store']);
+   Route::delete('/bto/delete/{id}', [BTOController::class, 'destroy']);
+   
    Route::get('/dokpol', [JumlahPelayananDokpolController::class, 'index']);
    Route::get('/dokpol/input', [JumlahPelayananDokpolController::class, 'create']);
    Route::post('/dokpol/submit', [JumlahPelayananDokpolController::class, 'store']);
+   Route::delete('/dokpol/delete/{id}', [JumlahPelayananDokpolController::class, 'destroy']);
+   
    Route::get('/ikm', [IndeksKepuasanMasyarakatController::class, 'index']);
    Route::get('/ikm/input', [IndeksKepuasanMasyarakatController::class, 'create']);
    Route::post('/ikm/submit', [IndeksKepuasanMasyarakatController::class, 'store']);
+   Route::delete('/ikm/delete/{id}', [IndeksKepuasanMasyarakatController::class, 'destroy']);
+   
 
    Route::get('/visite-dibawah-sepuluh', [JumlahVisitePasienDibawahJam10Controller::class, 'index']);
    Route::get('/visite-dibawah-sepuluh/input', [JumlahVisitePasienDibawahJam10Controller::class, 'create']);

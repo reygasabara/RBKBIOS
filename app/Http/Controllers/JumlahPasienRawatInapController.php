@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\LayananJumlahPasienRanap;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JumlahPasienRawatInapController extends Controller
 {
@@ -13,17 +15,15 @@ class JumlahPasienRawatInapController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = LayananJumlahPasienRanap::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
+        $updated = Carbon::today()->toDateString() == $lastUpdate ? true : false;
 
-        $dataPasienRawatInap = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/pasien_ranap');
-        $jsonPasienRawatInap = $dataPasienRawatInap->json();
-        $pasienRawatInap = $jsonPasienRawatInap['data'];
-        return view('layers.jumlah-pasien-ranap.index',["datas"=>$pasienRawatInap['datas'], 'active'=>['layanan', 'pasien_ranap'], 'savedData' => session('savedData')]);
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.jumlah-pasien-ranap.index',["datas"=>$datas, 'active'=>['layanan', 'pasien_ranap'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,81 +40,50 @@ class JumlahPasienRawatInapController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'kode_kelas' => 'required|string',
             'jumlah' => 'required|numeric',
-        ]);
-       
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $status = 'add';
+        $checkedData = LayananJumlahPasienRanap::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->get();
 
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/pasien_ranap', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/pasien-ranap')->with('savedData', $savedData);  
+        foreach($checkedData as $data) {
+            if($data['kode_kelas'] == $validatedData['kode_kelas']) {
+                $status = 'update';
+                break;
             }
-        } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($status == 'add') {
+            $data = new LayananJumlahPasienRanap();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->kode_kelas = $validatedData['kode_kelas'];
+            $data->jumlah = $validatedData['jumlah'];
+            $data->save();
+            Alert::success('Sukses!', 'Data kelas ' . $validatedData['kode_kelas'] . ' berhasil ditambahkan');
+        } else {
+            $updatedData = LayananJumlahPasienRanap::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('kode_kelas', $validatedData['kode_kelas'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->kode_kelas = $validatedData['kode_kelas'];
+            $updatedData->jumlah = $validatedData['jumlah'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data kelas ' . $validatedData['kode_kelas'] . ' berhasil diperbarui');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/pasien-ranap'); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LayananJumlahPasienRanap $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

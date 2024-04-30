@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\LayananBTO;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\StatusPengiriman;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BTOController extends Controller
 {
@@ -13,17 +16,20 @@ class BTOController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = LayananBTO::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $dataBTO = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/bto');
-        $jsonBTO = $dataBTO->json();
-        $bto = $jsonBTO['data'];
-        return view('layers.bto.index',["datas"=>$bto['datas'], 'active'=>['layanan', 'bto'], 'savedData' => session('savedData')]);
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Dokter Spesialis')->first();
+        $lastUpdateStatus =  $getStatusPengiriman['updated_at']->format('Y-m-d');
+        $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
+
+        $updated = $lastUpdate >= $targetDate || (Carbon::now()->format('Y-m-d') < $targetDate && $lastUpdate == $lastUpdateStatus)? true : false;
+
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.bto.index',["datas"=>$datas, 'active'=>['layanan', 'bto'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,80 +46,40 @@ class BTOController extends Controller
     public function store(Request $request)
     {   
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'bto' => 'required|numeric',
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
+       
+        $checkedData = LayananBTO::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->first();
+        $status = $checkedData ? 'update' : 'add';
 
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
-
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bto', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/bto')->with('savedData', $savedData);  
-            }
+        if ($status == 'add') {
+            $data = new LayananBTO();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->bto = $validatedData['bto'];
+            $data->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil ditambahkan');
         } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
+            $updatedData = LayananBTO::where('tgl_transaksi', $validatedData['tgl_transaksi'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->bto = $validatedData['bto'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil diperbarui');
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/bto');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LayananBTO $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

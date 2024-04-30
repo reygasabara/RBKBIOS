@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\LayananLabParameter;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JumlahLayananLaboratoriumParameterController extends Controller
 {
@@ -13,17 +15,15 @@ class JumlahLayananLaboratoriumParameterController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = LayananLabParameter::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
+        $updated = Carbon::today()->toDateString() == $lastUpdate ? true : false;
 
-        $dataLabParameter = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/layanan/laboratorium_detail');
-        $jsonLabParameter = $dataLabParameter->json();
-        $labParameter = $jsonLabParameter['data'];
-        return view('layers.jumlah-lab-parameter.index',["datas"=>$labParameter['datas'], 'active'=>['layanan', 'lab_parameter'], 'savedData' => session('savedData')]);
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.jumlah-lab-parameter.index',["datas"=>$datas, 'active'=>['layanan', 'lab_parameter'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,81 +40,50 @@ class JumlahLayananLaboratoriumParameterController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'nama_layanan' => 'required|string',
             'jumlah' => 'required|numeric',
-        ]);
-       
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $status = 'add';
+        $checkedData = LayananLabParameter::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->get();
 
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/laboratorium_detail', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/lab-parameter')->with('savedData', $savedData);  
+        foreach($checkedData as $data) {
+            if($data['nama_layanan'] == $validatedData['nama_layanan']) {
+                $status = 'update';
+                break;
             }
-        } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($status == 'add') {
+            $data = new LayananLabParameter();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->nama_layanan = $validatedData['nama_layanan'];
+            $data->jumlah = $validatedData['jumlah'];
+            $data->save();
+            Alert::success('Sukses!', 'Data layanan ' . $validatedData['nama_layanan'] . ' berhasil ditambahkan');
+        } else {
+            $updatedData = LayananLabParameter::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('nama_layanan', $validatedData['nama_layanan'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->nama_layanan = $validatedData['nama_layanan'];
+            $updatedData->jumlah = $validatedData['jumlah'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data layanan ' . $validatedData['nama_layanan'] . ' berhasil diperbarui');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/lab-parameter'); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LayananLabParameter $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

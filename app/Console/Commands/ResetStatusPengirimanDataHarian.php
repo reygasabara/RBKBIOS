@@ -20,7 +20,7 @@ class ResetStatusPengirimanDataHarian extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Reset status pengiriman data harian ...';
 
     /**
      * Execute the console command.

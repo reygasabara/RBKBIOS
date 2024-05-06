@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands;
 
+use App\Models\LayananLabSampel;
 use Carbon\Carbon;
-use App\Models\Pengeluaran;
 use Illuminate\Console\Command;
 use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
-class SendPengeluaran extends Command
+class SendJumlahLayananLabSampel extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:pengeluaran';
+    protected $signature = 'send:jumlah-layanan-lab-sampel';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mengirim data pengeluaran keuangan...';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class SendPengeluaran extends Command
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
         $targetDate = Carbon::yesterday()->format('Y-m-d');
-        $datas = Pengeluaran::whereDate('tgl_transaksi', $targetDate)->get();
+        $datas = LayananLabSampel::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 
         foreach ($datas as $data) {
@@ -45,7 +45,7 @@ class SendPengeluaran extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/pengeluaran', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/laboratorium', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
@@ -90,10 +90,10 @@ class SendPengeluaran extends Command
             }
             
             $log = new LogPengirimanData();
-            $log->modul = 'Keuangan';
-            $log->jenis_data = 'Pengeluaran';
+            $log->modul = 'Layanan';
+            $log->jenis_data = 'Jumlah Layanan Laboratorium (Sampel)';
             $log->tgl_transaksi = $data['tgl_transaksi'];
-            $log->kata_kunci = 'Kode akun: ' . $data['kd_akun'];
+            $log->kata_kunci = '-';
             $log->status = $status;
             $log->pesan = $message;
             $log->eror = $errors;
@@ -101,7 +101,7 @@ class SendPengeluaran extends Command
             $log->save();
         }
 
-        $selectedData = StatusPengiriman::Where('jenis_data', 'Pengeluaran')->firstOrFail();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah Layanan Laboratorium (Sampel)')->firstOrFail();
 
         if(count($statusPengiriman) == 0) {
             $selectedData->status = 'Tidak ada data';

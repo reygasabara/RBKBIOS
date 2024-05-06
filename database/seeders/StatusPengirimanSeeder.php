@@ -179,7 +179,7 @@ class StatusPengirimanSeeder extends Seeder
             'updated_at' => '2000-01-01 00:00:00',
         ], [
             'modul' => 'Layanan',
-            'jenis_data' => 'umlah Pasien Rawat Darurat',
+            'jenis_data' => 'Jumlah Pasien Rawat Darurat',
             'jadwal_pengiriman' => 'Harian',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
@@ -260,7 +260,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Bed Occupancy Ratio (BOR)',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',
@@ -268,7 +268,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Turn Over Interval (TOI)',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',
@@ -276,7 +276,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Average Length of Stay (ALOS)',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',
@@ -284,7 +284,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Bed Turn Over (BTO)',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',
@@ -292,7 +292,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Jumlah Pelayanan Dokpol',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',
@@ -300,7 +300,7 @@ class StatusPengirimanSeeder extends Seeder
         ], [
             'modul' => 'Layanan',
             'jenis_data' => 'Indeks Kepuasan Masyarakat (IKM)',
-            'jadwal_pengiriman' => 'Harian',
+            'jadwal_pengiriman' => 'Bulanan',
             'status' => 'Belum diperbarui',
             'pengiriman_selanjutnya' => '2000-01-01',
             'created_at' => '2000-01-01 00:00:00',

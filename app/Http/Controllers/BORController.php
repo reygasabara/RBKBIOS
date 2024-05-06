@@ -19,7 +19,7 @@ class BORController extends Controller
         $datas = LayananBOR::orderBy('updated_at', 'desc')->get();
         $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Dokter Spesialis')->first();
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Bed Occupancy Ratio (BOR)')->first();
         $lastUpdateStatus =  $getStatusPengiriman['updated_at']->format('Y-m-d');
         $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
 

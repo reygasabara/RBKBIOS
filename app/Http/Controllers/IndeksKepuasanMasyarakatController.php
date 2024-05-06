@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\LayananIKM;
 use Illuminate\Http\Request;
 use App\Models\StatusPengiriman;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -20,7 +19,7 @@ class IndeksKepuasanMasyarakatController extends Controller
         $datas = LayananIKM::orderBy('updated_at', 'desc')->get();
         $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Jumlah Dokter Spesialis')->first();
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Indeks Kepuasan Masyarakat (IKM)')->first();
         $lastUpdateStatus =  $getStatusPengiriman['updated_at']->format('Y-m-d');
         $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
 

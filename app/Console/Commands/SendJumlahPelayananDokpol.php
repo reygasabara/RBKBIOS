@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
-use App\Models\Pengeluaran;
+use App\Models\LayananDokpol;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
-class SendPengeluaran extends Command
+class SendJumlahPelayananDokpol extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:pengeluaran';
+    protected $signature = 'send:jumlah-pelayanan-dokpol';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mengirim data pengeluaran keuangan...';
+    protected $description = 'Mengirim data jumlah pelayanan dokpol';
 
     /**
      * Execute the console command.
@@ -31,8 +31,8 @@ class SendPengeluaran extends Command
     public function handle()
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
-        $targetDate = Carbon::yesterday()->format('Y-m-d');
-        $datas = Pengeluaran::whereDate('tgl_transaksi', $targetDate)->get();
+        $targetDate = Carbon::now()->subDay()->format('Y-m-d');
+        $datas = LayananDokpol::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 
         foreach ($datas as $data) {
@@ -45,7 +45,7 @@ class SendPengeluaran extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/pengeluaran', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/dokpol', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
@@ -70,7 +70,7 @@ class SendPengeluaran extends Command
                 } else {
                     $status = 'Sukses';
                     array_push($statusPengiriman, $status);
-                    
+
                     $this->info('-> ' . $message);  
                 }
             } else {
@@ -86,14 +86,14 @@ class SendPengeluaran extends Command
                 $status = 'Gagal';
                 array_push($statusPengiriman, $status);
 
-                    $this->info('-> ' . json_encode($message) .  json_encode($errorLists)); 
+                $this->info('-> ' . json_encode($message) .  json_encode($errorLists)); 
             }
-            
+
             $log = new LogPengirimanData();
-            $log->modul = 'Keuangan';
-            $log->jenis_data = 'Pengeluaran';
+            $log->modul = 'Layanan';
+            $log->jenis_data = 'Jumlah Pelayanan Dokpol';
             $log->tgl_transaksi = $data['tgl_transaksi'];
-            $log->kata_kunci = 'Kode akun: ' . $data['kd_akun'];
+            $log->kata_kunci = '-';
             $log->status = $status;
             $log->pesan = $message;
             $log->eror = $errors;
@@ -101,7 +101,7 @@ class SendPengeluaran extends Command
             $log->save();
         }
 
-        $selectedData = StatusPengiriman::Where('jenis_data', 'Pengeluaran')->firstOrFail();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah Pelayanan Dokpol')->firstOrFail();
 
         if(count($statusPengiriman) == 0) {
             $selectedData->status = 'Tidak ada data';
@@ -115,7 +115,7 @@ class SendPengeluaran extends Command
             $selectedData->status = 'Telah diperbarui';
         }
 
-        $selectedData->pengiriman_selanjutnya = Carbon::tomorrow()->format('Y-m-d');
+        $selectedData->pengiriman_selanjutnya = Carbon::now()->addMonth()->format('Y-m-d');
         $selectedData->save();
 
         $this->info('-----Proses pengiriman data selesai------');

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\StatusPengiriman;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\IktKepatuhanWaktuVisiteDpjp;
 
 class KepatuhanWaktuVisiteDPJPController extends Controller
 {
@@ -13,17 +16,20 @@ class KepatuhanWaktuVisiteDPJPController extends Controller
      */
     public function index()
     {
-        $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-            'satker' => env('TOKEN_SATKER'),
-            'key' => env('TOKEN_KEY')
-        ]);
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
+        $datas = IktKepatuhanWaktuVisiteDpjp::orderBy('updated_at', 'desc')->get();
+        $lastUpdate = $datas->count() ? Carbon::parse($datas->first()['updated_at'])->format('Y-m-d') : '2000-01-01';
 
-        $dataKepatuhanDPJP = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/get/data/kesehatan/ikt/kepatuhan_waktu_visite_dpjp');
-        $jsonKepatuhanDPJP = $dataKepatuhanDPJP->json();
-        $kepatuhanDPJP = $jsonKepatuhanDPJP['data'];
-        return view('layers.kepatuhan-waktu-visite-dpjp.index',["datas"=>$kepatuhanDPJP['datas'], 'active'=>['ikt', 'kepatuhan_waktu_visite_dpjp'], 'savedData' => session('savedData')]);
+        $getStatusPengiriman = StatusPengiriman::where('jenis_data', 'Kepatuhan Waktu Visite DPJP')->first();
+        $lastUpdateStatus =  $getStatusPengiriman['updated_at']->format('Y-m-d');
+        $targetDate = Carbon::parse($getStatusPengiriman['pengiriman_selanjutnya'])->subday()->format('Y-m-d');
+
+        $updated = $lastUpdate >= $targetDate || (Carbon::now()->format('Y-m-d') < $targetDate && $lastUpdate == $lastUpdateStatus)? true : false;
+
+        $title = 'Menghapus Data!';
+        $text = "Apakah Anda yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
+        return view('layers.kepatuhan-waktu-visite-dpjp.index',["datas"=>$datas, 'active'=>['ikt', 'kepatuhan_waktu_visite_dpjp'], "updated"=>$updated, "lastUpdate"=>$lastUpdate]);
     }
 
     /**
@@ -40,80 +46,40 @@ class KepatuhanWaktuVisiteDPJPController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tgl_transaksi' => 'required|date_format:Y-m-d',
+            'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'jumlah' => 'required|numeric',
+        ], [
+            'tgl_transaksi.date_format' => 'Format tanggal harus \'YYYY-MM-DD\'',
+            'tgl_transaksi.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini',
         ]);
        
-       $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
-        'satker' => env('TOKEN_SATKER'),
-        'key' => env('TOKEN_KEY')
-        ]);
+        $checkedData = IktKepatuhanWaktuVisiteDpjp::Where('tgl_transaksi', $validatedData['tgl_transaksi'])->first();
+        $status = $checkedData ? 'update' : 'add';
 
-        $jsonToken = $getToken->json();
-        $token = $jsonToken['token'];
-
-        $response = Http::withHeaders(['token' => $token])->post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_waktu_visite_dpjp', $validatedData);
-
-        $message = $response->json()['message'];
-        $errorResponse = $response->json()['error'];
-
-        if ($response->successful()) { 
-            if ($errorResponse) {
-                $errorLists = [];
-
-                foreach ($errorResponse as $fields) {
-                    foreach ($fields as $error) {
-                        array_push($errorLists, $error);
-                    }
-                }
-
-                return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
-            } else {
-                $savedData = true;
-                return Redirect::to('/kepatuhan-waktu-visite-dpjp')->with('savedData', $savedData);  
-            }
+        if ($status == 'add') {
+            $data = new IktKepatuhanWaktuVisiteDpjp();
+            $data->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $data->jumlah = $validatedData['jumlah'];
+            $data->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil ditambahkan');
         } else {
-            $errorLists = [];
-
-            foreach ($errorResponse as $fields) {
-                foreach ($fields as $error) {
-                    array_push($errorLists, $error);
-                }
-            }
-
-            return redirect()->back()->withErrors($errorLists)->withInput($validatedData)->with('message', $message);  
+            $updatedData = IktKepatuhanWaktuVisiteDpjp::where('tgl_transaksi', $validatedData['tgl_transaksi'])->firstOrFail();
+            $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
+            $updatedData->jumlah = $validatedData['jumlah'];
+            $updatedData->save();
+            Alert::success('Sukses!', 'Data pada tanggal transaksi ' . $validatedData['tgl_transaksi'] . ' berhasil diperbarui');
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return Redirect::to('/kepatuhan-waktu-visite-dpjp');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(IktKepatuhanWaktuVisiteDpjp $id)
     {
-        //
+        $id->delete();
+        alert()->success('Sukses!','Data berhasil dihapus!');
+        return redirect()->back();
     }
 }

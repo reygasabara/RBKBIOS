@@ -278,75 +278,123 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/visite-dibawah-sepuluh', [JumlahVisitePasienDibawahJam10Controller::class, 'index']);
    Route::get('/visite-dibawah-sepuluh/input', [JumlahVisitePasienDibawahJam10Controller::class, 'create']);
    Route::post('/visite-dibawah-sepuluh/submit', [JumlahVisitePasienDibawahJam10Controller::class, 'store']);
+   Route::delete('/visite-dibawah-sepuluh/delete/{id}', [JumlahVisitePasienDibawahJam10Controller::class, 'destroy']);
+
    Route::get('/visite-sepuluh-duabelas', [JumlahVisitePasien10Sd12Controller::class, 'index']);
    Route::get('/visite-sepuluh-duabelas/input', [JumlahVisitePasien10Sd12Controller::class, 'create']);
    Route::post('/visite-sepuluh-duabelas/submit', [JumlahVisitePasien10Sd12Controller::class, 'store']);
+   Route::delete('/visite-sepuluh-duabelas/delete/{id}', [JumlahVisitePasien10Sd12Controller::class, 'destroy']);
+
    Route::get('/visite-diatas-duabelas', [JumlahVisitePasienDiatasJam12Controller::class, 'index']);
    Route::get('/visite-diatas-duabelas/input', [JumlahVisitePasienDiatasJam12Controller::class, 'create']);
    Route::post('/visite-diatas-duabelas/submit', [JumlahVisitePasienDiatasJam12Controller::class, 'store']);
+   Route::delete('/visite-diatas-duabelas/delete/{id}', [JumlahVisitePasienDiatasJam12Controller::class, 'destroy']);
+
    Route::get('/dpjp-non-visite', [JumlahDPJPTidakVisiteController::class, 'index']);
    Route::get('/dpjp-non-visite/input', [JumlahDPJPTidakVisiteController::class, 'create']);
    Route::post('/dpjp-non-visite/submit', [JumlahDPJPTidakVisiteController::class, 'store']);
+   Route::delete('/dpjp-non-visite/delete/{id}', [JumlahDPJPTidakVisiteController::class, 'destroy']);
+
    Route::get('/visite-pertama', [JumlahKegiatanVisitePasienPertamaController::class, 'index']);
    Route::get('/visite-pertama/input', [JumlahKegiatanVisitePasienPertamaController::class, 'create']);
    Route::post('/visite-pertama/submit', [JumlahKegiatanVisitePasienPertamaController::class, 'store']);
+   Route::delete('/visite-pertama/delete/{id}', [JumlahKegiatanVisitePasienPertamaController::class, 'destroy']);
+
    Route::get('/rasio-pobo', [RasioPOBOController::class, 'index']);
    Route::get('/rasio-pobo/input', [RasioPOBOController::class, 'create']);
    Route::post('/rasio-pobo/submit', [RasioPOBOController::class, 'store']);
+   Route::delete('/rasio-pobo/delete/{id}', [RasioPOBOController::class, 'destroy']);
+
    Route::get('/pertumbuhan-pendapatan-pengelolaan-aset-blu', [PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController::class, 'index']);
    Route::get('/pertumbuhan-pendapatan-pengelolaan-aset-blu/input', [PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController::class, 'create']);
    Route::post('/pertumbuhan-pendapatan-pengelolaan-aset-blu/submit', [PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController::class, 'store']);
+   Route::delete('/pertumbuhan-pendapatan-pengelolaan-aset-blu/delete/{id}', [PertumbuhanRealisasiPendapatanDariPengelolaanAsetBLUController::class, 'destroy']);
+
    Route::get('/penyelenggaraan-rme', [penyelenggaraanRMEController::class, 'index']);
    Route::get('/penyelenggaraan-rme/input', [penyelenggaraanRMEController::class, 'create']);
    Route::post('/penyelenggaraan-rme/submit', [penyelenggaraanRMEController::class, 'store']);
+   Route::delete('/penyelenggaraan-rme/delete/{id}', [penyelenggaraanRMEController::class, 'destroy']);
+
    Route::get('/kepatuhan-pelaksanaan-prokes', [KepatuhanPelaksanaanProkesController::class, 'index']);
    Route::get('/kepatuhan-pelaksanaan-prokes/input', [KepatuhanPelaksanaanProkesController::class, 'create']);
    Route::post('/kepatuhan-pelaksanaan-prokes/submit', [KepatuhanPelaksanaanProkesController::class, 'store']);
+   Route::delete('/kepatuhan-pelaksanaan-prokes/delete/{id}', [KepatuhanPelaksanaanProkesController::class, 'destroy']);
+
    Route::get('/alkes', [PembelianAlkesDalamNegeriController::class, 'index']);
    Route::get('/alkes/input', [PembelianAlkesDalamNegeriController::class, 'create']);
    Route::post('/alkes/submit', [PembelianAlkesDalamNegeriController::class, 'store']);
+   Route::delete('/alkes/delete/{id}', [PembelianAlkesDalamNegeriController::class, 'destroy']);
+
    Route::get('/kepuasan-pasien', [KepuasanPasienController::class, 'index']);
    Route::get('/kepuasan-pasien/input', [KepuasanPasienController::class, 'create']);
    Route::post('/kepuasan-pasien/submit', [KepuasanPasienController::class, 'store']);
+   Route::delete('/kepuasan-pasien/delete/{id}', [KepuasanPasienController::class, 'destroy']);
+
    Route::get('/kepatuhan-waktu-visite-dpjp', [KepatuhanWaktuVisiteDPJPController::class, 'index']);
    Route::get('/kepatuhan-waktu-visite-dpjp/input', [KepatuhanWaktuVisiteDPJPController::class, 'create']);
    Route::post('/kepatuhan-waktu-visite-dpjp/submit', [KepatuhanWaktuVisiteDPJPController::class, 'store']);
+   Route::delete('/kepatuhan-waktu-visite-dpjp/delete/{id}', [KepatuhanWaktuVisiteDPJPController::class, 'destroy']);
+
    Route::get('/kepatuhan-kebersihan-tangan', [KepatuhanKebersihanTanganController::class, 'index']);
    Route::get('/kepatuhan-kebersihan-tangan/input', [KepatuhanKebersihanTanganController::class, 'create']);
    Route::post('/kepatuhan-kebersihan-tangan/submit', [KepatuhanKebersihanTanganController::class, 'store']);
+   Route::delete('/kepatuhan-kebersihan-tangan/delete/{id}', [KepatuhanKebersihanTanganController::class, 'destroy']);
+
    Route::get('/kepatuhan-penggunaan-apd', [KepatuhanPenggunaanAPDController::class, 'index']);
    Route::get('/kepatuhan-penggunaan-apd/input', [KepatuhanPenggunaanAPDController::class, 'create']);
    Route::post('/kepatuhan-penggunaan-apd/submit', [KepatuhanPenggunaanAPDController::class, 'store']);
+   Route::delete('/kepatuhan-penggunaan-apd/delete/{id}', [KepatuhanPenggunaanAPDController::class, 'destroy']);
+
    Route::get('/kepatuhan-identifikasi-pasien', [KepatuhanIdentifikasiPasienController::class, 'index']);
    Route::get('/kepatuhan-identifikasi-pasien/input', [KepatuhanIdentifikasiPasienController::class, 'create']);
    Route::post('/kepatuhan-identifikasi-pasien/submit', [KepatuhanIdentifikasiPasienController::class, 'store']);
+   Route::delete('/kepatuhan-identifikasi-pasien/delete/{id}', [KepatuhanIdentifikasiPasienController::class, 'destroy']);
+
    Route::get('/waktu-tanggap-operasi-seksio-sesarea', [WaktuTanggapOperasiSeksioSesareaEmergensiController::class, 'index']);
    Route::get('/waktu-tanggap-operasi-seksio-sesarea/input', [WaktuTanggapOperasiSeksioSesareaEmergensiController::class, 'create']);
    Route::post('/waktu-tanggap-operasi-seksio-sesarea/submit', [WaktuTanggapOperasiSeksioSesareaEmergensiController::class, 'store']);
+   Route::delete('/waktu-tanggap-operasi-seksio-sesarea/delete/{id}', [WaktuTanggapOperasiSeksioSesareaEmergensiController::class, 'destroy']);
+
    Route::get('/waktu-tunggu-ralan', [WaktuTungguRawatJalanController::class, 'index']);
    Route::get('/waktu-tunggu-ralan/input', [WaktuTungguRawatJalanController::class, 'create']);
    Route::post('/waktu-tunggu-ralan/submit', [WaktuTungguRawatJalanController::class, 'store']);
+   Route::delete('/waktu-tunggu-ralan/delete/{id}', [WaktuTungguRawatJalanController::class, 'destroy']);
+
    Route::get('/penundaan-operasi-elektif', [PenundaanOperasiElektifController::class, 'index']);
    Route::get('/penundaan-operasi-elektif/input', [PenundaanOperasiElektifController::class, 'create']);
    Route::post('/penundaan-operasi-elektif/submit', [PenundaanOperasiElektifController::class, 'store']);
+   Route::delete('/penundaan-operasi-elektif/delete/{id}', [PenundaanOperasiElektifController::class, 'destroy']);
+
    Route::get('/kepatuhan-waktu-visite-dokter', [KepatuhanWaktuVisiteDokterController::class, 'index']);
    Route::get('/kepatuhan-waktu-visite-dokter/input', [KepatuhanWaktuVisiteDokterController::class, 'create']);
    Route::post('/kepatuhan-waktu-visite-dokter/submit', [KepatuhanWaktuVisiteDokterController::class, 'store']);
+   Route::delete('/kepatuhan-waktu-visite-dokter/delete/{id}', [KepatuhanWaktuVisiteDokterController::class, 'destroy']);
+
    Route::get('/pelaporan-hasil-kritis-laboratorium', [PelaporanHasilKritisLabController::class, 'index']);
    Route::get('/pelaporan-hasil-kritis-laboratorium/input', [PelaporanHasilKritisLabController::class, 'create']);
    Route::post('/pelaporan-hasil-kritis-laboratorium/submit', [PelaporanHasilKritisLabController::class, 'store']);
+   Route::delete('/pelaporan-hasil-kritis-laboratorium/delete/{id}', [PelaporanHasilKritisLabController::class, 'destroy']);
+
    Route::get('/kepatuhan-penggunaan-fornas', [KepatuhanPenggunaanFormulariumNasionalController::class, 'index']);
    Route::get('/kepatuhan-penggunaan-fornas/input', [KepatuhanPenggunaanFormulariumNasionalController::class, 'create']);
    Route::post('/kepatuhan-penggunaan-fornas/submit', [KepatuhanPenggunaanFormulariumNasionalController::class, 'store']);
+   Route::delete('/kepatuhan-penggunaan-fornas/delete/{id}', [KepatuhanPenggunaanFormulariumNasionalController::class, 'destroy']);
+
    Route::get('/kepatuhan-alur-klinis', [KepatuhanAlurKlinisController::class, 'index']);
    Route::get('/kepatuhan-alur-klinis/input', [KepatuhanAlurKlinisController::class, 'create']);
    Route::post('/kepatuhan-alur-klinis/submit', [KepatuhanAlurKlinisController::class, 'store']);
+   Route::delete('/kepatuhan-alur-klinis/delete/{id}', [KepatuhanAlurKlinisController::class, 'destroy']);
+
    Route::get('/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh', [KepatuhanPencegahanResikoPasienJatuhController::class, 'index']);
    Route::get('/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh/input', [KepatuhanPencegahanResikoPasienJatuhController::class, 'create']);
    Route::post('/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh/submit', [KepatuhanPencegahanResikoPasienJatuhController::class, 'store']);
+   Route::delete('/kepatuhan-upaya-pencegahan-resiko-pasien-jatuh/delete/{id}', [KepatuhanPencegahanResikoPasienJatuhController::class, 'destroy']);
+
    Route::get('/kecepatan-waktu-tanggap-komplain', [KecepatanWaktuTanggapKomplainController::class, 'index']);
    Route::get('/kecepatan-waktu-tanggap-komplain/input', [KecepatanWaktuTanggapKomplainController::class, 'create']);
    Route::post('/kecepatan-waktu-tanggap-komplain/submit', [KecepatanWaktuTanggapKomplainController::class, 'store']);
+   Route::delete('/kecepatan-waktu-tanggap-komplain/delete/{id}', [KecepatanWaktuTanggapKomplainController::class, 'destroy']);
+
 
    Route::post('/notifikasi/delete', [NotifikasiController::class, 'delete']);
    Route::get('/run-command', [SchedulerController::class, 'runCommand']);

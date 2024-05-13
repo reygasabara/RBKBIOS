@@ -6,16 +6,7 @@
 
 @section('content')
     <section class="content">
-
-        @if ($savedData)
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <p>Data berhasil disimpan.</p>
-            </div>
-        @endif
-
-        <div class="box">
+        <div class="box" style="position: relative">
             <div class="box-header with-border">
                 <h3 class="box-title">Kepatuhan Pelaksanaan Protokol Kesehatan</h3>
                 <div class="box-tools">
@@ -27,9 +18,26 @@
                 </div>
 
                 <div>
-                    <h6 class="text-right">
-                        <strong><em>*Data dikirimkan per periode triwulanan</em></strong>
-                    </h6>
+                    <div class="col-sm-3" style="margin-top: 15px; translate: -15px;">
+                        @if ($updated)
+                            <div style="width: 200px; padding:  0 10px;background-color:#30fa11d8">
+                                <p><b>Status</b> : Data telah diperbarui.</p>
+                            </div>
+                            <h6>Terakhir Update : {{ $lastUpdate }}</h6>
+                        @else
+                            <div class="bg-danger" style="width: 220px; padding:  0 10px;">
+                                <p><b>Status</b> :Data belum diperbarui.</p>
+                            </div>
+                            <h6>Terakhir Update : {{ $lastUpdate }}</h6>
+                        @endif
+                    </div>
+
+                    <div class="col-sm-9" style="translate: 15px;">
+                        <h6 class="text-right">
+                            <strong><em>*Data dikirimkan per periode triwulanan</em></strong>
+                        </h6>
+                    </div>
+
                 </div>
             </div>
             <div class="box-body">

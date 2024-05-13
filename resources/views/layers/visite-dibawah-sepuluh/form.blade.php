@@ -31,7 +31,7 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label for="tanggalTransaksi">Tanggal Transaksi</label>
-                        <input type="date" class="form-control" value="{{ old('tgl_transaksi') }}" id="tanggalTransaksi"
+                        <input type="date" class="form-control" value="{{ old('tgl_transaksi') }} " id="tanggalTransaksi"
                             name="tgl_transaksi" placeholder="Masukkan tanggal transaksi" required>
 
                     </div>

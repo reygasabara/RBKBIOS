@@ -36,8 +36,8 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="jumlah">Nilai</label>
-                        <input type="number" class="form-control" value="{{ old('jumlah') }}" id="jumlah" name="jumlah"
+                        <label for="nilai">Nilai</label>
+                        <input type="number" class="form-control" value="{{ old('nilai') }}" id="nilai" name="nilai"
                             placeholder="Masukkan hasil survei kepuasan pasien" required>
                     </div>
                 </div>

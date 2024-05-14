@@ -11,6 +11,6 @@ class IktKepuasanPasien extends Model
 
     protected $fillable = [
         'tgl_transaksi',
-        'nilai',
+        'jumlah',
     ];
 }

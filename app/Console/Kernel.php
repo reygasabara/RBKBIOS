@@ -55,8 +55,36 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:ikm')->monthlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
 
 
+        $schedule->command('send:visite-dibawah-jam-10')->dailyAt('15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-10-sampai-12')->dailyAt('15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-diatas-jam-12')->dailyAt('15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:dpjp-tidak-visite')->dailyAt('15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-pertama')->dailyAt('15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:rasio-pobo')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:pendapaatan-aset-blu')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:penyelenggaraan-rme')->quarterlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-pelaksanaan-prokes')->quarterlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:pembelian-alkes')->yearlyOn(1, 1, '15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepuasan-pasien')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-waktu-visite-dpjp')->quarterlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-kebersihan-tangan')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-penggunaan-apd')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-identifikasi-pasien')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:waktu-tanggap-operasi')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:waktu-tunggu-ralan')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:penundaan-operasi-elektif')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-waktu-visite-dokter')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:pelaporan-hasil-kritis-laboratorium')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-penggunaan-fornas')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:kepatuhan-alur-klinis')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:pencegahan-resiko-pasien-jatuh')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:waktu-tanggap-komplain')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
+
+
         $schedule->command('reset:status-pengiriman-data-harian')->dailyAt('08:30')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('reset:status-pengiriman-data-bulanan')->monthlyOn(1, '08:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('reset:status-pengiriman-data-triwulanan')->quarterlyOn(1, '08:30')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('reset:status-pengiriman-data-semesteran')->cron('30 15 1 1,7 *') ->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('reset:status-pengiriman-data-tahunan')->yearlyOn(1, 1, '08:30')->appendOutputTo('storage/logs/laravel.log');
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ikt_kepuasan_pasiens', function (Blueprint $table) {
             $table->id();
             $table->date('tgl_transaksi');
-            $table->integer('nilai');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }

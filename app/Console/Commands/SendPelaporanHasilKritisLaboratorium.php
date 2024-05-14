@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands;
 
+use App\Models\IktPelaporanHasilKritisLab;
 use Carbon\Carbon;
-use App\Models\Penerimaan;
 use Illuminate\Console\Command;
 use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
-class SendPenerimaan extends Command
+class SendPelaporanHasilKritisLaboratorium extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:penerimaan';
+    protected $signature = 'send:pelaporan-hasil-kritis-laboratorium';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mengirim data penerimaan keuangan...';
+    protected $description = 'Mengirim data pelaporan hasil kritis laboratorium...';
 
     /**
      * Execute the console command.
@@ -31,11 +31,12 @@ class SendPenerimaan extends Command
     public function handle()
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
-        $targetDate = Carbon::yesterday()->format('Y-m-d');
-        $datas = Penerimaan::whereDate('tgl_transaksi', $targetDate)->get();
+        $targetDate = Carbon::now()->subDay()->format('Y-m-d');
+        $datas = IktPelaporanHasilKritisLab::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 
         foreach ($datas as $data) {
+
             $getToken = Http::post('https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/token',[
             'satker' => env('TOKEN_SATKER'),
             'key' => env('TOKEN_KEY')
@@ -44,7 +45,7 @@ class SendPenerimaan extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/penerimaan', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/pelaporan_hasil_kritis_laboratorium', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
@@ -52,6 +53,7 @@ class SendPenerimaan extends Command
 
             if ($response->successful()) { 
                 if ($errorResponse) {
+                    $error = true;
                     $errorLists = [];
 
                     foreach ($errorResponse as $fields) {
@@ -63,10 +65,12 @@ class SendPenerimaan extends Command
                     $errors = implode(', ', $errorLists);
                     $status = 'Gagal';
                     array_push($statusPengiriman, $status);
+
                     $this->info('-> ' . json_encode($message) . '. Penyebab eror: ' .  json_encode($errorLists)); 
                 } else {
                     $status = 'Sukses';
                     array_push($statusPengiriman, $status);
+
                     $this->info('-> ' . $message);  
                 }
             } else {
@@ -81,14 +85,15 @@ class SendPenerimaan extends Command
                 $errors = implode(', ', $errorLists);
                 $status = 'Gagal';
                 array_push($statusPengiriman, $status);
+
                 $this->info('-> ' . json_encode($message) .  json_encode($errorLists)); 
             }
 
             $log = new LogPengirimanData();
-            $log->modul = 'Keuangan';
-            $log->jenis_data = 'Penerimaan';
+            $log->modul = 'IKT';
+            $log->jenis_data = 'Pelaporan Hasil Kritis Laboratorium';
             $log->tgl_transaksi = $data['tgl_transaksi'];
-            $log->kata_kunci = 'Kode akun: ' . $data['kd_akun'];
+            $log->kata_kunci = '-';
             $log->status = $status;
             $log->pesan = $message;
             $log->eror = $errors;
@@ -96,7 +101,7 @@ class SendPenerimaan extends Command
             $log->save();
         }
 
-        $selectedData = StatusPengiriman::Where('jenis_data', 'Penerimaan')->firstOrFail();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Pelaporan Hasil Kritis Laboratorium')->firstOrFail();
 
         if(count($statusPengiriman) == 0) {
             $selectedData->status = 'Tidak ada data';
@@ -110,7 +115,7 @@ class SendPenerimaan extends Command
             $selectedData->status = 'Telah diperbarui';
         }
 
-        $selectedData->pengiriman_selanjutnya = Carbon::tomorrow()->format('Y-m-d');
+        $selectedData->pengiriman_selanjutnya = Carbon::now()->addMonths(6)->format('Y-m-d');
         $selectedData->save();
 
         $this->info('-----Proses pengiriman data selesai------');

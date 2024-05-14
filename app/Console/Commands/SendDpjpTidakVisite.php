@@ -2,28 +2,28 @@
 
 namespace App\Console\Commands;
 
+use App\Models\IktDpjpTidakVisite;
 use Carbon\Carbon;
-use App\Models\Penerimaan;
 use Illuminate\Console\Command;
 use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
-class SendPenerimaan extends Command
+class SendDpjpTidakVisite extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:penerimaan';
+    protected $signature = 'send:dpjp-tidak-visite';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Mengirim data penerimaan keuangan...';
+    protected $description = 'Mengirim data jumlah DPJP tidak visite ...';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class SendPenerimaan extends Command
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
         $targetDate = Carbon::yesterday()->format('Y-m-d');
-        $datas = Penerimaan::whereDate('tgl_transaksi', $targetDate)->get();
+        $datas = IktDpjpTidakVisite::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 
         foreach ($datas as $data) {
@@ -44,7 +44,7 @@ class SendPenerimaan extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/keuangan/akuntansi/penerimaan', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/dpjp_non_visite', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];
@@ -85,10 +85,10 @@ class SendPenerimaan extends Command
             }
 
             $log = new LogPengirimanData();
-            $log->modul = 'Keuangan';
-            $log->jenis_data = 'Penerimaan';
+            $log->modul = 'IKT';
+            $log->jenis_data = 'Jumlah DPJP Tidak Visite';
             $log->tgl_transaksi = $data['tgl_transaksi'];
-            $log->kata_kunci = 'Kode akun: ' . $data['kd_akun'];
+            $log->kata_kunci = '-';
             $log->status = $status;
             $log->pesan = $message;
             $log->eror = $errors;
@@ -96,7 +96,7 @@ class SendPenerimaan extends Command
             $log->save();
         }
 
-        $selectedData = StatusPengiriman::Where('jenis_data', 'Penerimaan')->firstOrFail();
+        $selectedData = StatusPengiriman::Where('jenis_data', 'Jumlah DPJP Tidak Visite')->firstOrFail();
 
         if(count($statusPengiriman) == 0) {
             $selectedData->status = 'Tidak ada data';

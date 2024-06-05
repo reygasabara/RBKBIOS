@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -16,10 +17,10 @@ class UserSeeder extends Seeder
     {
         $user = User::firstOrCreate([
             'name' => 'Administrator',
-            'username' => env('USER_USERNAME'),
-            'email' => env('USER_EMAIL'),
+            'username' => 'adminrsbk',
+            'email' => 'adminrsbk@gmail.com',
             'email_verified_at' => now(),
-            'password' => env('USER_PASSWORD'),
+            'password' => Hash::make('adminrsb99'),
             'remember_token' => Str::random(10),
         ]);
         $user->assignRole('admin');

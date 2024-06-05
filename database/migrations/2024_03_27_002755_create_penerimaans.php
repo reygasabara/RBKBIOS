@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penerimaan', function (Blueprint $table) {
+        Schema::create('penerimaans', function (Blueprint $table) {
             $table->id();
             $table->date('tgl_transaksi');
             $table->integer('kd_akun');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penerimaan');
+        Schema::dropIfExists('penerimaans');
     }
 };

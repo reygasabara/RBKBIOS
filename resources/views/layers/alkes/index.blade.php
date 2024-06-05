@@ -34,7 +34,7 @@
 
                     <div class="col-sm-9" style="translate: 15px;">
                         <h6 class="text-right">
-                            <strong><em>*Data dikirimkan per periode tahunan</em></strong>
+                            <strong><em>*Data dikirimkan per periode tahunan (tidak bersifat akumulatif)</em></strong>
                         </h6>
                     </div>
                 </div>

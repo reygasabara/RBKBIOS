@@ -34,7 +34,7 @@
 
                     <div class="col-sm-9" style="translate: 15px;">
                         <h6 class="text-right">
-                            <strong><em>*Data dikirimkan per periode semesteran</em></strong> <br>
+                            <strong><em>*Data dikirimkan per periode semesteran (tidak bersifat akumulatif)</em></strong> <br>
                             <strong><em>*Data yang dikirimkan sesuai dengan PerMenPanRB Nomor 14 tahun 2017</em></strong>
                         </h6>
                     </div>

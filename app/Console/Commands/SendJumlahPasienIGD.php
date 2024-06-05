@@ -33,6 +33,7 @@ class SendJumlahPasienIGD extends Command
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
         $targetDate = Carbon::yesterday()->format('Y-m-d');
         $datas = LayananJumlahPasienIGD::whereDate('tgl_transaksi', $targetDate)->get();
+        $this->info("berhasil");
         $statusPengiriman = [];
 
         foreach ($datas as $data) {

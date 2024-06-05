@@ -34,7 +34,7 @@
 
                     <div class="col-sm-9" style="translate: 15px;">
                         <h6 class="text-right">
-                            <strong><em>*Data dikirimkan per periode harian</em></strong>
+                            <strong><em>*Data dikirimkan per periode harian (tidak bersifat akumulatif)</em></strong>
                             <br>
                             <strong><em>*Data yang dikirimkan dari seluruh poli.
                                 </em></strong>

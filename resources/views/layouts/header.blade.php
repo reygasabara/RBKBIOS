@@ -1,6 +1,6 @@
 <header class="main-header" style="position:fixed;width:100%">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>R</b>B</span>
         <!-- logo for regular state and mobile devices -->
@@ -18,7 +18,7 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs">Administrator</span>
+                        <span class="hidden-xs">{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu" style="margin-top:10px;margin-right:10px;box-shadow:-1px 1px 5px;">
                         <!-- User image -->
@@ -28,7 +28,7 @@
                                     account_circle
                                 </span>
                                 <br>
-                                <span class="text-center">Administrator</span>
+                                <span class="text-center">{{ Auth::user()->name }}</span>
                             </p>
 
                         </li>

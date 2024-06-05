@@ -45,7 +45,7 @@ class SendKepatuhanAlurKlinis extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_alur_klinis', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/ikt/kepatuhan_clinical_pathway', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];

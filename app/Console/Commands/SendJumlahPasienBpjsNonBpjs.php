@@ -45,7 +45,7 @@ class SendJumlahPasienBpjsNonBpjs extends Command
             $jsonToken = $getToken->json();
             $token = $jsonToken['token'];
 
-            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bpjs_nonbpjs', $data);
+            $response = Http::withHeaders(['token' => $token])->post('Https://' . env('DOMAIN_NAME') . '.kemenkeu.go.id/api/ws/kesehatan/layanan/bpjs_nonbpbjs', $data);
 
             $message = $response->json()['message'];
             $errorResponse = $response->json()['error'];

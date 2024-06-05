@@ -38,7 +38,7 @@
                             <strong><em>*Data awal dikirimkan pada awal tahun berkenaan. Sedangkan, updating data dikirimkan
                                     per
                                     periode
-                                    semesteran/tahunan.</em></strong>
+                                    semesteran/tahunan (bersifat akumulatif)</em></strong>
                             <br>
                             <strong><em>*Data yang dikirimkan merupakan jumlah pegawai sesuai kriteria, termasuk Dokter Gigi
                                     Spesialis.</em></strong>

@@ -93,7 +93,7 @@ class SendJumlahPasienRanap extends Command
             $log->modul = 'Layanan';
             $log->jenis_data = 'Jumlah Pasien Rawat Inap';
             $log->tgl_transaksi = $data['tgl_transaksi'];
-            $log->kata_kunci = 'Kode kelas: ' . $data['kd_kelas'];
+            $log->kata_kunci = 'Kelas: ' . $data['kode_kelas'];
             $log->status = $status;
             $log->pesan = $message;
             $log->eror = $errors;

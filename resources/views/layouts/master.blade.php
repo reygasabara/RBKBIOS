@@ -40,6 +40,11 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
+    <style>
+        .swal2-popup {
+            font-size: 1.2rem !important;
+        }
+    </style>
     @stack('head')
 
 </head>
@@ -53,8 +58,8 @@
         @include('layouts.sidebar')
 
         <div class="content-wrapper" style="margin-top: 45px">
-            @include('sweetalert::alert')
             @yield('content')
+            @include('sweetalert::alert')
         </div>
 
         @include('layouts.footer')

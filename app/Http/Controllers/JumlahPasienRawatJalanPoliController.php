@@ -64,14 +64,14 @@ class JumlahPasienRawatJalanPoliController extends Controller
             $data->nama_poli = $validatedData['nama_poli'];
             $data->jumlah = $validatedData['jumlah'];
             $data->save();
-            Alert::success('Sukses!', 'Data kelas ' . $validatedData['nama_poli'] . ' berhasil ditambahkan');
+            Alert::success('Sukses!', 'Data poli ' . $validatedData['nama_poli'] . ' berhasil ditambahkan');
         } else {
             $updatedData = LayananJumlahPasienRalan::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('nama_poli', $validatedData['nama_poli'])->firstOrFail();
             $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];
             $updatedData->nama_poli = $validatedData['nama_poli'];
             $updatedData->jumlah = $validatedData['jumlah'];
             $updatedData->save();
-            Alert::success('Sukses!', 'Data kelas ' . $validatedData['nama_poli'] . ' berhasil diperbarui');
+            Alert::success('Sukses!', 'Data poli ' . $validatedData['nama_poli'] . ' berhasil diperbarui');
         }
 
         return Redirect::to('/pasien-ralan-poli'); 

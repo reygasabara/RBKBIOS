@@ -39,6 +39,10 @@ class JumlahLayananLaboratoriumParameterController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'nama_layanan' => ucwords(strtolower($request->input('nama_layanan'))),
+        ]);
+
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'nama_layanan' => 'required|string',

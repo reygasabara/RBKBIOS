@@ -11,14 +11,12 @@
                 <h3 class="box-title">Log Pengiriman Data</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
-                        <div class="input-group-btn">
-                            {{-- <a href="/visite-pertama/input" class="btn btn-success">Input</a> --}}
-                            <form action="/run-command" method="get">
+                        {{-- <div class="input-group-btn">
+                            <form action="/run-command" method="post">
                                 @csrf
-                                <button type="submit">Jalankan Perintah</button>
+                                <button type="submit" class="btn btn-success">Kirim data</button>
                             </form>
-
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

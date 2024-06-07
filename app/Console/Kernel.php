@@ -13,11 +13,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('send:penerimaan')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:pengeluaran')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:saldo-operasional')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:saldo-pengelolaan-kas')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:saldo-dana-kelolaan')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:penerimaan')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:pengeluaran')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:saldo-operasional')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:saldo-pengelolaan-kas')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:saldo-dana-kelolaan')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
 
 
         $schedule->command('send:dokter-spesialis')->yearlyOn(1, 1, '15:30')->appendOutputTo('storage/logs/laravel.log');
@@ -36,17 +36,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:sanitarian')->yearlyOn(1, 1, '15:30')->appendOutputTo('storage/logs/laravel.log');
 
         
-        $schedule->command('send:jumlah-pasien-ranap')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-pasien-igd')->everyMinute()->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-layanan-lab-sampel')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-layanan-lab-parameter')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-tindakan-operasi')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-layanan-radiologi')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-layanan-forensik')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-kunjungan-ralan')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-pasien-ralan')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-pasien-bpjs-non-bpjs')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:jumlah-layanan-farmasi')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-pasien-ranap')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-pasien-igd')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-layanan-lab-sampel')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-layanan-lab-parameter')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-tindakan-operasi')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-layanan-radiologi')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-layanan-forensik')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-kunjungan-ralan')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-pasien-ralan')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-pasien-bpjs-non-bpjs')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:jumlah-layanan-farmasi')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:bor')->monthlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:toi')->monthlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:alos')->monthlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
@@ -55,11 +55,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:ikm')->monthlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');
 
 
-        $schedule->command('send:visite-dibawah-jam-10')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:visite-10-sampai-12')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:visite-diatas-jam-12')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:dpjp-tidak-visite')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
-        $schedule->command('send:visite-pertama')->dailyAt('09:15')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-dibawah-jam-10')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-10-sampai-12')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-diatas-jam-12')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:dpjp-tidak-visite')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
+        $schedule->command('send:visite-pertama')->dailyAt('09:25')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:rasio-pobo')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:pendapaatan-aset-blu')->cron('30 15 1 1,7 *')->appendOutputTo('storage/logs/laravel.log');
         $schedule->command('send:penyelenggaraan-rme')->quarterlyOn(1, '15:30')->appendOutputTo('storage/logs/laravel.log');

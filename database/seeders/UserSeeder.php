@@ -23,6 +23,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('adminrsb99'),
             'remember_token' => Str::random(10),
         ]);
-        $user->assignRole('admin');
+        $user->assignRole('Super Admin');
     }
 }

@@ -28,7 +28,8 @@
                                     account_circle
                                 </span>
                                 <br>
-                                <span class="text-center">{{ Auth::user()->name }}</span>
+                                <span class="text-center">{{ Auth::user()->name }}
+                                    [{{ Auth::user()->roles->pluck('name')->implode(', ') }}]</span>
                             </p>
 
                         </li>

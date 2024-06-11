@@ -32,7 +32,7 @@ class SendKepatuhanWaktuVisiteDpjp extends Command
     public function handle()
     {
         $this->info("[ " . Carbon::now() . " ] " . $this->description);
-        $targetDate = Carbon::now()->subDay()->format('Y-m-d');
+        $targetDate = Carbon::yesterday()->format('Y-m-d');
         $datas = IktKepatuhanWaktuVisiteDpjp::whereDate('tgl_transaksi', $targetDate)->get();
         $statusPengiriman = [];
 

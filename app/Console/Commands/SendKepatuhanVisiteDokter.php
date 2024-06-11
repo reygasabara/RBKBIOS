@@ -9,14 +9,14 @@ use App\Models\StatusPengiriman;
 use App\Models\LogPengirimanData;
 use Illuminate\Support\Facades\Http;
 
-class SendKepatuhanWaktuVisiteDokter extends Command
+class SendKepatuhanVisiteDokter extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:kepatuhan-waktu-visite-dokter';
+    protected $signature = 'send:kepatuhan-visite-dokter';
 
     /**
      * The console command description.

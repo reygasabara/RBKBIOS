@@ -106,6 +106,8 @@ class PenerimaanController extends Controller
             $data->jumlah = $validatedData['jumlah'];
             $data->save();
             Alert::success('Sukses!', 'Data dengan kode akun ' . $validatedData['kd_akun'] . ' berhasil ditambahkan');
+            // toast('Sukses!' . ' Data dengan kode akun ' . $validatedData['kd_akun'] . ' berhasil ditambahkan','success');
+
         } else {
             $updatedData = Penerimaan::where('tgl_transaksi', $validatedData['tgl_transaksi'])->where('kd_akun', $validatedData['kd_akun'])->firstOrFail();
             $updatedData->tgl_transaksi = $validatedData['tgl_transaksi'];

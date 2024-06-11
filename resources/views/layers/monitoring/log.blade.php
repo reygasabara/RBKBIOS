@@ -11,12 +11,14 @@
                 <h3 class="box-title">Log Pengiriman Data</h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 50px;">
-                        {{-- <div class="input-group-btn">
-                            <form action="/run-command" method="post">
+                        <div class="input-group-btn">
+                            <form id="runCommand" action="/run-command" method="post">
                                 @csrf
-                                <button type="submit" class="btn btn-success">Kirim data</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-play" aria-hidden="true"
+                                        style="margin-right: 3px;"></i>
+                                    Kirim data</button>
                             </form>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +89,21 @@
         <script>
             $(function() {
                 $('#table').DataTable();
+            });
+        </script>
+
+        <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+        <script>
+            $('#runCommand').click(function(event) {
+                Swal.fire({
+                    title: 'Harap tunggu!',
+                    html: 'Data sedang dalam proses pengiriman...<br><h1><i class="fa fa-spinner fa-spin text-primary"></i></h1> ',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    onBeforeOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
             });
         </script>
     @endpush

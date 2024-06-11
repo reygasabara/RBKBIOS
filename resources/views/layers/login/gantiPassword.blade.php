@@ -78,7 +78,7 @@
         }
 
         body {
-            background-color: #9aebff
+            background-color: #3C8DBC
         }
     </style>
 </head>
@@ -87,7 +87,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-8 col-md-offset-2">
-                <h1 class="login-title bold text-blue text-center" style="font-size: 40px;"><b>RBK</b>BIOS</h1>
+                <h1 class="login-title bold text-blue text-center" style="font-size: 40px; color: white"><b>RBK</b>BIOS
+                </h1>
                 <div class="account-wall">
                     <p class="text-primary text-center"><span class="material-symbols-outlined"
                             style="font-size:120px;">

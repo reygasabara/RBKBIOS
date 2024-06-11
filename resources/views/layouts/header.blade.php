@@ -29,7 +29,7 @@
                                 </span>
                                 <br>
                                 <span class="text-center">{{ Auth::user()->name }}
-                                    [{{ Auth::user()->roles->pluck('name')->implode(', ') }}]</span>
+                                    <b>[{{ Auth::user()->roles->pluck('name')->implode(', ') }}]</b></span>
                             </p>
 
                         </li>

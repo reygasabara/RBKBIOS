@@ -23,7 +23,7 @@ class SendJumlahLayananLabSampel extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mengirim data jumlah layanan laboratorium (sampel)';
 
     /**
      * Execute the console command.

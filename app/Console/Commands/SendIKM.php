@@ -23,7 +23,7 @@ class SendIKM extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mengirim data idneks kepuasan masyarakat';
 
     /**
      * Execute the console command.

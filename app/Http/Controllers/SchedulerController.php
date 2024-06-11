@@ -2,22 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 
 class SchedulerController extends Controller
 {
     public function runCommand()
     {
-        // $return_var = 0;
-        // exec('D:\RBKBIOS-main\RBKBIOS-main\schedule\runScheduler.bat', $output, $return_var);
-
-        // if ($return_var === 0) {
-        //     alert()->success('Sukses!', 'Command scheduler telah dijalankan.');
-        // } else {
-        //     alert()->error('Sukses!', 'Command scheduler gagal dijalankan.');
-        //     $this->info("Perintah gagal dijalankan.");
-        // }
         try {
             $output = shell_exec('php ../artisan send:penerimaan');
             Log::info($output);

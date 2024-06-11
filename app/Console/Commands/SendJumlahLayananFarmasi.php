@@ -23,7 +23,7 @@ class SendJumlahLayananFarmasi extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mengirim data jumlah layanan farmasi';
 
     /**
      * Execute the console command.

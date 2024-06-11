@@ -23,7 +23,7 @@ class SendBto extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mengirim data Bed Turn Over (BTO)';
 
     /**
      * Execute the console command.

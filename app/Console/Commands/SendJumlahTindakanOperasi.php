@@ -23,7 +23,7 @@ class SendJumlahTindakanOperasi extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mengirim data jumlah tindakan operasi';
 
     /**
      * Execute the console command.

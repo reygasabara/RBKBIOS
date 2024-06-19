@@ -24,7 +24,8 @@ class GantiPasswordController extends Controller
         $lama = $request->lama;
         $baru = $request->baru;
         $konfirmasi = $request->konfirmasi;
-        $user = User::first();
+        $user = Auth::user();
+        $user = User::find($user->id);
         
         if (password_verify($lama, $user->password)) {
             if ($baru == $konfirmasi) {
@@ -42,6 +43,6 @@ class GantiPasswordController extends Controller
             }
         } 
 
-        return back()->with('changePasswordError', 'Password gagal diperbarui! Data tidak valid');
+        return back()->with('changePasswordError', 'Password gagal diperbarui! Anda memasukkan password yang salah!');
     }
 }

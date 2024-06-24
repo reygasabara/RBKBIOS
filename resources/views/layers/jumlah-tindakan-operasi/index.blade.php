@@ -45,7 +45,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Klasifikasi Operasi</th>
                             <th>Jumlah</th>
                             <th>Aksi</th>

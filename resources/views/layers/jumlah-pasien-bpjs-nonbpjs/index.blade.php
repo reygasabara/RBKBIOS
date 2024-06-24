@@ -44,7 +44,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Jumlah BPJS</th>
                             <th>Jumlah Non-BPJS</th>
                             <th>Aksi</th>

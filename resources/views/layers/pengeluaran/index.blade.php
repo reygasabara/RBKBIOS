@@ -47,7 +47,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Kode Akun</th>
                             <th>Jumlah</th>
                             <th>Aksi</th>
@@ -60,7 +60,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $data['tgl_transaksi'] }}</td>
                                 <td>{{ $data['kd_akun'] }}</td>
-                                <td>{{ $data['jumlah'] }}</td>
+                                <td>{{ number_format($data['jumlah'], 0, ',', '.') }}</td>
                                 <td><a href="pengeluaran/delete/{{ $data['id'] }}" class="btn btn-danger"
                                         data-confirm-delete="true">Hapus</a></td>
                             </tr>

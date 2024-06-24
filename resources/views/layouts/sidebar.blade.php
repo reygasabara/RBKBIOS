@@ -1,9 +1,18 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{{ asset('img/user-with-border.png') }}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p><b>{{ Auth::user()->name }}</b></p>
+                <h6>{{ Auth::user()->roles->pluck('name')->implode(', ') }}</h6>
+            </div>
+        </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            {{-- <li class="header">KESEHATAN</li> --}}
+            <li class="header">DATA</li>
             @if (auth()->user()->hasAnyRole(['Super Admin', 'Admin', 'Pengelola Keuangan']))
                 <li class="treeview @if ($active[0] == 'keuangan') active @endif">
                     <a href="#">
@@ -353,6 +362,7 @@
             @endif
 
             @role('Super Admin')
+                <li class="header">ADMINISTRATOR</li>
                 <li class="treeview @if ($active[0] == 'monitoring') active @endif">
                     <a href="#">
                         <i class="fa fa-dashboard"></i> <span>Monitoring Pengiriman Data</span>

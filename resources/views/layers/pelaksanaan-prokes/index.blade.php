@@ -44,7 +44,7 @@
                 <table class="table-dark table" id="table">
                     <thead>
                         <tr>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Jumlah</th>
                         </tr>
                     </thead>

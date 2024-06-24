@@ -51,7 +51,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>PNS</th>
                             <th>PPPK</th>
                             <th>Anggota</th>

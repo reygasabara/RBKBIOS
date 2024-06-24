@@ -46,7 +46,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Kode Bank</th>
                             <th>No. Rekening</th>
                             <th>Saldo Akhir</th>
@@ -61,7 +61,7 @@
                                 <td>{{ $data['tgl_transaksi'] }}</td>
                                 <td>{{ $data['kdbank'] }}</td>
                                 <td>{{ $data['no_rekening'] }}</td>
-                                <td>{{ $data['saldo_akhir'] }}</td>
+                                <td>{{ number_format($data['saldo_akhir'], 0, ',', '.') }}</td>
                                 <td><a href="saldo-dana-kelolaan/delete/{{ $data['id'] }}" class="btn btn-danger"
                                         data-confirm-delete="true">Hapus</a></td>
                             </tr>

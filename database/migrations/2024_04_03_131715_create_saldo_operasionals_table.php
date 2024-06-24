@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->date('tgl_transaksi');
             $table->string('kdbank', 3);
-            $table->bigInteger('no_rekening');
+            $table->string('no_rekening');
             $table->string('unit');
-            $table->integer('saldo_akhir');
+            $table->unsignedInteger('saldo_akhir');
             $table->timestamps();
         });
     }

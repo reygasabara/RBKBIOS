@@ -46,7 +46,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Nilai Indeks</th>
                             <th>Aksi</th>
                         </tr>

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('saldo_pengelolaan_kas', function (Blueprint $table) {
             $table->id();
             $table->date('tgl_transaksi');
-            $table->string('no_bilyet', 20);
-            $table->integer('nilai_deposito')->limit(11);
-            $table->integer('nilai_bunga')->limit(8);
+            $table->string('no_bilyet', 50);
+            $table->integer('nilai_deposito')->limit(20);
+            $table->integer('nilai_bunga')->limit(20);
             $table->timestamps();
         });
     }

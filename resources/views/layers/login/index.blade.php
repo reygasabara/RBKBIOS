@@ -79,17 +79,15 @@
     </style>
 </head>
 
-<body class="">
-    <div class="container">
+<body class="" style="display: flex; height: 100vh;">
+    <div class="container" style="margin:auto;">
         <div class="row">
             <div class="col-sm-6 col-md-4 col-md-offset-4">
-                <h1 class="login-title bold text-blue text-center" style="font-size: 40px; color: white"><b>RBK</b>BIOS
-                </h1>
                 <div class="account-wall">
-                    <p class="text-primary text-center"><span class="material-symbols-outlined"
-                            style="font-size:120px;">
-                            account_circle
-                        </span></p>
+                    <h1 class="login-title bold text-blue text-center" style="font-size: 40px;"><b>RBK</b>BIOS
+                    </h1>
+                    <p class="text-primary text-center"><img src="{{ asset('img/user-with-border.png') }}"
+                            class="img-circle" alt="User Image" style="width: 100px">
 
                     <form class="form-signin" action="/login" method="POST">
                         @if (session()->has('loginError'))

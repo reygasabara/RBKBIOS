@@ -49,7 +49,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>Kedokteran Forensik</th>
                             <th>Psikiatri Forensik</th>
                             <th>Sentral Visum dan Medikolegal</th>

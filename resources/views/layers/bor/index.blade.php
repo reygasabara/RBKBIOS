@@ -45,7 +45,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>BOR</th>
                             <th>Aksi</th>
                         </tr>

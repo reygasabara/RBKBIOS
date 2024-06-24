@@ -46,7 +46,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>No. Bilyet</th>
                             <th>Nilai Deposito</th>
                             <th>Nilai Bunga</th>
@@ -60,8 +60,8 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $data['tgl_transaksi'] }}</td>
                                 <td>{{ $data['no_bilyet'] }}</td>
-                                <td>{{ $data['nilai_deposito'] }}</td>
-                                <td>{{ $data['nilai_bunga'] }}</td>
+                                <td>{{ number_format($data['nilai_deposito'], 0, ',', '.') }}</td>
+                                <td>{{ number_format($data['nilai_bunga'], 0, ',', '.') }}</td>
                                 <td><a href="saldo-pengelolaan-kas/delete/{{ $data['id'] }}" class="btn btn-danger"
                                         data-confirm-delete="true">Hapus</a></td>
                             </tr>

@@ -39,6 +39,8 @@ class SaldoRekeningOperasionalController extends Controller
      */
     public function store(Request $request)
     {
+        $request['jumlah'] = str_replace('.', '', $request['jumlah']);
+        $request['jumlah'] =intval($request['jumlah']);
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required|date_format:Y-m-d|before_or_equal:today',
             'kdbank' => 'required|numeric|in:002,008,009,011,013,014,016,019,022,026,028,031,032,037,040,041,042,045,046,048,050,067,089,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,147,153,200,213,330,422,426,427,441,451,484,494,506,517,521,547,553,555,601,773,781,949,950,990,201|regex:/^\d{3}$/',

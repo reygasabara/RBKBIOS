@@ -53,8 +53,8 @@
                     </div>
                     <div class="form-group">
                         <label for="saldoAkhir">Saldo Akhir</label>
-                        <input type="number" class="form-control" value="{{ old('saldo_akhir') }}" id="saldoAkhir"
-                            name="saldo_akhir" placeholder="Masukkan saldo akhir" required>
+                        <input type="text" class="form-control" value="{{ old('saldo_akhir') }}" id="saldoAkhir"
+                            name="saldo_akhir" placeholder="Masukkan saldo akhir" oninput="formatRibuan(this)" required>
                     </div>
                 </div>
 
@@ -65,3 +65,26 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        function formatRibuan(input) {
+            // Ambil nilai input sebagai string
+            var value = input.value.toString();
+
+            // Hapus semua karakter non-digit dari nilai input
+            var cleanedValue = value.replace(/\D/g, '');
+
+            // Format angka dengan tanda titik sebagai pemisah ribuan
+            var formattedValue = formatNumber(cleanedValue);
+
+            // Update nilai input dengan format yang diformat
+            input.value = formattedValue;
+        }
+
+        function formatNumber(numberString) {
+            // Format angka dengan tanda titik sebagai pemisah ribuan
+            return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+    </script>
+@endpush

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('penerimaans', function (Blueprint $table) {
             $table->id();
             $table->date('tgl_transaksi');
-            $table->integer('kd_akun');
-            $table->integer('jumlah');
+            $table->string('kdbank', 3);
+            $table->unsignedInteger('jumlah');
             $table->timestamps();
         });
     }

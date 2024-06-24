@@ -44,7 +44,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Tanggak Transaksi</th>
+                            <th>Tanggal Transaksi</th>
                             <th>POBO</th>
                             <th>Aksi</th>
                         </tr>
